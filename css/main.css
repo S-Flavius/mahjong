@@ -10282,5 +10282,16 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 }
 
 html {
-  background-color: hsl(153deg, 53%, 53%);
+  background-color: darkorange;
+}
+
+.box {
+  height: 20em;
+}
+
+.navbar .navbar-brand {
+  background: #121212;
+  text-align: center;
+  display: block;
+  width: 100%;
 }

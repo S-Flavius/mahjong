@@ -5,7 +5,6 @@
 // You can easily customize Bulma with your own variables.
 // Just uncomment the following block to see the result.
 
-
 // 1. Import the initial variables
 @import "../node_modules/bulma/sass/utilities/initial-variables";
 
@@ -28,6 +27,19 @@ $primary-invert: $pink-invert;
 
 @import "../node_modules/bulma/bulma";
 
+
 html {
-  background-color: $green;
+  background-color: darkorange;
 }
+
+.box {
+  height: 20em;
+}
+
+.navbar .navbar-brand {
+  background: #121212;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+
