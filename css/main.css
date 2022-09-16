@@ -10285,8 +10285,11 @@ html {
   background-color: darkorange;
 }
 
-.box {
+.game {
+  column-count: 9;
+  background: white;
   height: 45em;
+  width: 100%;
 }
 
 .navbar .navbar-brand {
@@ -10294,4 +10297,19 @@ html {
   text-align: center;
   display: block;
   width: 100%;
+}
+
+.white-piece {
+  background: white;
+  width: 10px;
+  height: 10px;
+}
+
+.black-piece {
+  background: black;
+  width: 10px;
+  height: 10px;
+}
+.black-piece:hover {
+  background: darkgrey;
 }
