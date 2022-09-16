@@ -17,6 +17,7 @@ function createGame() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0]
   ];
 
+
   let pieceWidth = document.getElementById('game').offsetWidth / layout[0].length;
   let pieceHeight = document.getElementById('game').offsetHeight / layout.length;
 
