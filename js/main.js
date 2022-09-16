@@ -30,7 +30,7 @@ function createGame() {
           if (selected.length === 0) {
             selected.push(piece)
           } else {
-            if (selected[0].id === piece.id) {
+            if (selected[0].id === piece.id && selected[0] !== piece) {
               selected[0].className = 'white-piece'
               piece.className = 'white-piece'
               selected = []
