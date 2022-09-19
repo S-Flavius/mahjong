@@ -10299,17 +10299,22 @@ html {
   width: 100%;
 }
 
-.white-piece {
+.empty-place {
   background: white;
   width: 10px;
   height: 10px;
 }
 
-.black-piece {
-  background: black;
+.taken-place {
+  background: transparent;
   width: 10px;
   height: 10px;
 }
-.black-piece:hover {
+
+.taken-place:hover {
   background: darkgrey;
+}
+
+.selected {
+  background: rebeccapurple;
 }
