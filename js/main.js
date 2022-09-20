@@ -99,7 +99,9 @@ function selectPieces(piece) {
     if (selected.length === 0) {  //  Highlight selected piece
       selected.push(piece)
       selected[0].className = 'selected'
-    } else if (selected[0].innerHTML === piece.innerHTML && selected[0] !== piece) { // Remove selected pieces if they're of the same type
+    } else if (selected[0] === piece) {
+      selected = []
+    } else if (selected[0].innerHTML === piece.innerHTML) { // Remove selected pieces if they're of the same type
       selected[0].className = 'empty-place'
       piece.className = 'empty-place'
 
