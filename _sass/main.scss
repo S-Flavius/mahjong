@@ -32,11 +32,35 @@ html {
   background-color: darkorange;
 }
 
-.game {
-  column-count: 9;
+#game {
   background: white;
-  height: 45em;
-  width: 30%;
+  height: 50em;
+  width: 50%;
+}
+
+.tile.is-ancestor {
+  margin: 0;
+  padding: 0;
+}
+
+.tile.is-ancestor:not(:last-child) {
+  margin: 0;
+  padding: 0;
+}
+
+.tile.is-parent {
+  margin: 0;
+  padding: 0;
+}
+
+.tile.is-child {
+  margin: 0;
+  padding: 0;
+}
+
+.tile {
+  margin: 0;
+  padding: 0;
 }
 
 .navbar .navbar-brand {
