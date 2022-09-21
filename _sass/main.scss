@@ -29,42 +29,42 @@ $primary-invert: $pink-invert;
 
 
 html {
-  background-color: darkorange;
+  background-color: #444444;
 }
 
 #game {
-  background: white;
-  height: 50em;
-  width: 50%;
+  background: #fdd947;
+  height: 42em;
+  width: 35em;
 }
 
 .tile.is-ancestor {
   margin: 0;
   padding: 0;
-  width: 50px;
-  height: 100px;
+  width: auto;
+  height: auto;
 }
 
 .tile.is-ancestor:not(:last-child) {
   margin: 0;
   padding: 0;
-  width: 50px;
-  height: 100px;
+  width: auto;
+  height: auto;
 }
 
 .tile.is-parent {
   margin: 0;
   padding: 0;
-  width: 50px;
-  height: 100px;
+  width: auto;
+  height: auto;
 }
 
 
 .tile {
   margin: 0;
   padding: 0;
-  width: 50px;
-  height: 100px;
+  width: auto;
+  height: auto;
 }
 
 .navbar .navbar-brand {
@@ -74,17 +74,10 @@ html {
   width: 100%;
 }
 
-.empty-place {
+.piece {
   background: transparent;
-  width: 10px;
-  height: 10px;
-  position: absolute;
-}
-
-.taken-place {
-  background: transparent;
-  width: 50px;
-  height: 100px;
+  width: auto;
+  height: auto;
   position: absolute;
 
   &:hover {

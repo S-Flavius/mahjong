@@ -27,10 +27,6 @@ document.getElementById('snake').addEventListener('click', () => {
 })
 
 function changeLayout(layoutNr) {
-  for (let child of document.getElementById('dropdown-menu').children[0].children) {
-    child.className = child.className.replaceAll('is-active', '')
-  }
-
   layoutNumber = layoutNr
   chosenLayout = layouts[layoutNumber].map(x => x)
   newGame()
@@ -50,7 +46,7 @@ function createGame() {
 
   document.getElementById('dropdown-menu').children[0].children[layoutNumber].className += ' is-active'
 
-  let pieceWidth = document.getElementById('game').offsetWidth / chosenLayout[0].length;
+  let pieceWidth = document.getElementById('game').offsetHeight / 1.2 / chosenLayout[0].length;
   let pieceHeight = document.getElementById('game').offsetHeight / chosenLayout.length;
 
   shuffleArray(pieces);
@@ -63,13 +59,11 @@ function createGame() {
   while (hasPieces) {
     hasPieces = false
     for (let rowIndex = 0; rowIndex < chosenLayout.length; rowIndex++) {
-      const row = chosenLayout[rowIndex];
-      for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
-        const square = row[columnIndex];
+      for (let columnIndex = 0; columnIndex < chosenLayout[rowIndex].length; columnIndex++) {
         let piece = document.createElement('div');
-        if (square !== 0) {
+        if (chosenLayout[rowIndex][columnIndex] !== 0) {
           hasPieces = true
-          piece.className = 'taken-place'
+          piece.className = 'piece'
 
           piece.innerHTML = '<img src="img/Pieces/' + pieces[Math.floor(curPiece)] + '" alt="Mahjong piece">'
           curPiece += 0.5;
@@ -79,8 +73,10 @@ function createGame() {
         piece.style.width = `${pieceWidth}px`;
         piece.style.height = `${pieceHeight}px`;
         piece.style.left = `${rowIndex * pieceWidth}px`;
+        // piece.style.left = `${rowIndex * pieceWidth - square*5}px`;
         piece.style.top = `${columnIndex * pieceHeight}px`;
-        if (piece.className === 'taken-place') grid.children[rowIndex].children[columnIndex].appendChild(piece);
+        // piece.style.top = `${columnIndex * pieceHeight + square * 10}px`;
+        grid.children[rowIndex].children[columnIndex].appendChild(piece);
       }
     }
   }
@@ -88,20 +84,17 @@ function createGame() {
 
 function selectPieces(piece) {
 
-  // Don't select empty spaces
-  if (piece.className !== 'empty-place') {
-    if (selected.length === 0) {  //  Highlight selected piece
-      selected.push(piece)
-      selected[0].className = 'selected'
-    } else if (selected[0] === piece) { // Deselect the currently chosen piece
-      selected = []
-      piece.className = 'taken-place'
-    } else if (selected[0].innerHTML === piece.innerHTML) { // Remove selected pieces if they're of the same type
-      selected[0].remove()
-      piece.remove()
+  if (selected.length === 0) {  // Highlight selected piece
+    selected.push(piece)
+    selected[0].className = 'selected'
+  } else if (selected[0] === piece) { // Deselect the currently chosen piece
+    selected = []
+    piece.className = 'piece'
+  } else if (selected[0].innerHTML === piece.innerHTML) { // Remove selected pieces if they're of the same type
+    selected[0].remove()
+    piece.remove()
 
-      selected = []
-    }
+    selected = []
   }
 }
 
@@ -112,5 +105,10 @@ function newGame() {
       col.innerHTML = ''
     }
   }
+
+  for (let child of document.getElementById('dropdown-menu').children[0].children) {
+    child.className = child.className.replaceAll(' is-active', '')
+  }
+
   createGame();
 }
