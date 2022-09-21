@@ -41,22 +41,30 @@ html {
 .tile.is-ancestor {
   margin: 0;
   padding: 0;
+  width: 50px;
+  height: 100px;
 }
 
 .tile.is-ancestor:not(:last-child) {
   margin: 0;
   padding: 0;
+  width: 50px;
+  height: 100px;
 }
 
 .tile.is-parent {
   margin: 0;
   padding: 0;
+  width: 50px;
+  height: 100px;
 }
 
 
 .tile {
   margin: 0;
   padding: 0;
+  width: 50px;
+  height: 100px;
 }
 
 .navbar .navbar-brand {
@@ -67,15 +75,17 @@ html {
 }
 
 .empty-place {
-  background: white;
+  background: transparent;
   width: 10px;
   height: 10px;
+  position: absolute;
 }
 
 .taken-place {
   background: transparent;
-  width: 10px;
-  height: 10px;
+  width: 50px;
+  height: 100px;
+  position: absolute;
 
   &:hover {
     background: darkgrey;
@@ -83,5 +93,6 @@ html {
 }
 
 .selected {
+  position: absolute;
   background: rebeccapurple;
 }

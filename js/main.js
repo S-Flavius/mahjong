@@ -97,11 +97,8 @@ function selectPieces(piece) {
       selected = []
       piece.className = 'taken-place'
     } else if (selected[0].innerHTML === piece.innerHTML) { // Remove selected pieces if they're of the same type
-      selected[0].className = 'empty-place'
-      piece.className = 'empty-place'
-
-      selected[0].innerHTML = ''
-      piece.innerHTML = ''
+      selected[0].remove()
+      piece.remove()
 
       selected = []
     }
