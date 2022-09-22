@@ -87,3 +87,4 @@ src/main/resources/template/persistenceTemplate.xml
 node_modules
 dist
 .cache
+/.idea/codeStyles/codeStyleConfig.xml

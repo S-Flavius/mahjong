@@ -55,25 +55,50 @@ function generateGrid() {
   const grid = document.getElementById('game')
   for (let i = 0; i < layouts[layoutNumber].length; i++) {
     const row = document.createElement('div')
-    row.className = 'tile is-ancestor'
+    row.className = "tile is-ancestor";
     for (let j = 0; j < layouts[layoutNumber][i].length; j++) {
-      const col = document.createElement('div')
-      col.className = 'tile is-parent'
-      row.appendChild(col)
+      const col = document.createElement("div");
+      col.className = "tile is-parent";
+      row.appendChild(col);
     }
-    grid.appendChild(row)
+    grid.appendChild(row);
   }
+}
+
+function generatePiece(rowIndex, columnIndex, pieces, curPiece, pieceWidth, pieceHeight) {
+  let piecesOnPosition = chosenLayout[rowIndex][columnIndex];
+  let piece = document.createElement("div");
+  piece.className = "piece";
+  piece.innerHTML = "<img src=\"img/Pieces/" + pieces[Math.floor(curPiece)] + "\" alt=\"Mahjong piece\">";
+  piece.addEventListener("click", () => selectPieces(piece));
+  piece.style.zIndex = piecesOnPosition;
+  chosenLayout[rowIndex][columnIndex]--;
+  piece.style.width = `${pieceWidth}px`;
+  piece.style.height = `${pieceHeight}px`;
+  piece.style.left = `${rowIndex * pieceWidth - (piecesOnPosition - 1
+  ) * 9}px`;
+  piece.style.top = `${columnIndex * pieceHeight + (piecesOnPosition - 1
+  ) * 7}px`;
+  document.getElementById("game").children[rowIndex].children[columnIndex].appendChild(piece);
 }
 
 function createGame() {
 
-  generateGrid()
+  generateGrid();
 
-  chosenLayout = JSON.parse(JSON.stringify(layouts[layoutNumber]))
+  chosenLayout = JSON.parse(JSON.stringify(layouts[layoutNumber]));
 
-  let pieces = ['MJd1-.svg.png', 'MJd2-.svg.png', 'MJd3-.svg.png', 'MJf1-.svg.png', 'MJf2-.svg.png', 'MJf3-.svg.png', 'MJf4-.svg.png', 'MJh1-.svg.png', 'MJh2-.svg.png', 'MJh3-.svg.png', 'MJh4-.svg.png', 'MJh5-.svg.png', 'MJh6-.svg.png', 'MJh7-.svg.png', 'MJh8-.svg.png', 'MJs1-.svg.png', 'MJs2-.svg.png', 'MJs3-.svg.png', 'MJs4-.svg.png', 'MJs5-.svg.png', 'MJs6-.svg.png', 'MJs7-.svg.png', 'MJs8-.svg.png', 'MJs9-.svg.png', 'MJt1-.svg.png', 'MJt2-.svg.png', 'MJt3-.svg.png', 'MJt4-.svg.png', 'MJt5-.svg.png', 'MJt6-.svg.png', 'MJt7-.svg.png', 'MJt8-.svg.png', 'MJt9-.svg.png', 'MJw1-.svg.png', 'MJw2-.svg.png', 'MJw3-.svg.png', 'MJw4-.svg.png', 'MJw5-.svg.png', 'MJw6-.svg.png', 'MJw7-.svg.png', 'MJw8-.svg.png', 'MJw9-.svg.png']
+  let pieces = [
+    "MJd1-.svg.png", "MJd2-.svg.png", "MJd3-.svg.png", "MJf1-.svg.png", "MJf2-.svg.png", "MJf3-.svg.png",
+    "MJf4-.svg.png", "MJh1-.svg.png", "MJh2-.svg.png", "MJh3-.svg.png", "MJh4-.svg.png", "MJh5-.svg.png",
+    "MJh6-.svg.png", "MJh7-.svg.png", "MJh8-.svg.png", "MJs1-.svg.png", "MJs2-.svg.png", "MJs3-.svg.png",
+    "MJs4-.svg.png", "MJs5-.svg.png", "MJs6-.svg.png", "MJs7-.svg.png", "MJs8-.svg.png", "MJs9-.svg.png",
+    "MJt1-.svg.png", "MJt2-.svg.png", "MJt3-.svg.png", "MJt4-.svg.png", "MJt5-.svg.png", "MJt6-.svg.png",
+    "MJt7-.svg.png", "MJt8-.svg.png", "MJt9-.svg.png", "MJw1-.svg.png", "MJw2-.svg.png", "MJw3-.svg.png",
+    "MJw4-.svg.png", "MJw5-.svg.png", "MJw6-.svg.png", "MJw7-.svg.png", "MJw8-.svg.png", "MJw9-.svg.png"
+  ];
 
-  document.getElementById('dropdown-menu').children[0].children[layoutNumber].className += ' is-active'
+  document.getElementById("dropdown-menu").children[0].children[layoutNumber].className += " is-active";
 
   let pieceWidth = document.getElementById('game').offsetHeight / 1.2 / chosenLayout[0].length;
   let pieceHeight = document.getElementById('game').offsetHeight / chosenLayout.length;
@@ -82,32 +107,19 @@ function createGame() {
 
   let curPiece = 0;
 
-  let grid = document.getElementById('game')
-
+  //TO-DO refactor this!!! 😅
   let hasPieces = true
   while (hasPieces) {
-    hasPieces = false
+    hasPieces = false;
     for (let rowIndex = 0; rowIndex < chosenLayout.length; rowIndex++) {
-      for (let columnIndex = 0; columnIndex < chosenLayout[rowIndex].length; columnIndex++) {
-        if (chosenLayout[rowIndex][columnIndex] !== 0) {
-          hasPieces = true
-
-          if (Math.random() < 0.5) {
-            let piecesOnPosition = chosenLayout[rowIndex][columnIndex];
-            let piece = document.createElement('div');
-            piece.className = 'piece'
-
-            piece.innerHTML = '<img src="img/Pieces/' + pieces[Math.floor(curPiece)] + '" alt="Mahjong piece">'
-            curPiece += 0.5;
-            piece.addEventListener('click', () => selectPieces(piece))
-            piece.style.zIndex = piecesOnPosition;
-            chosenLayout[rowIndex][columnIndex]--;
-            piece.style.width = `${pieceWidth}px`;
-            piece.style.height = `${pieceHeight}px`;
-            piece.style.left = `${rowIndex * pieceWidth - (piecesOnPosition - 1) * 9}px`;
-            piece.style.top = `${columnIndex * pieceHeight + (piecesOnPosition - 1) * 7}px`;
-            grid.children[rowIndex].children[columnIndex].appendChild(piece);
-          }
+      for (let columnIndex = 0;
+           columnIndex < chosenLayout[rowIndex].length;
+           columnIndex++) {
+        if (chosenLayout[rowIndex][columnIndex] === 0) continue;
+        hasPieces = true;
+        if (Math.random() < 0.5) {
+          generatePiece(rowIndex, columnIndex, pieces, curPiece, pieceWidth, pieceHeight);
+          curPiece += 0.5;
         }
       }
     }
