@@ -10286,7 +10286,7 @@ html {
 }
 
 #game {
-  background: #fdd947;
+  background: lightyellow;
   height: 42em;
   width: 35em;
 }
@@ -10332,7 +10332,6 @@ html {
   height: auto;
   position: absolute;
 }
-
 .piece:hover {
   background: darkgrey;
 }

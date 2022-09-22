@@ -72,6 +72,7 @@ function createGame() {
     for (let rowIndex = 0; rowIndex < chosenLayout.length; rowIndex++) {
       for (let columnIndex = 0; columnIndex < chosenLayout[rowIndex].length; columnIndex++) {
         if (chosenLayout[rowIndex][columnIndex] !== 0) {
+          let piecesOnPosition = chosenLayout[rowIndex][columnIndex];
           let piece = document.createElement('div');
           hasPieces = true
           piece.className = 'piece'
@@ -79,13 +80,12 @@ function createGame() {
           piece.innerHTML = '<img src="img/Pieces/' + pieces[Math.floor(curPiece)] + '" alt="Mahjong piece">'
           curPiece += 0.5;
           piece.addEventListener('click', () => selectPieces(piece))
+          piece.style.zIndex = piecesOnPosition;
           chosenLayout[rowIndex][columnIndex]--;
           piece.style.width = `${pieceWidth}px`;
           piece.style.height = `${pieceHeight}px`;
-          piece.style.left = `${rowIndex * pieceWidth}px`;
-          // piece.style.left = `${rowIndex * pieceWidth - square*5}px`;
-          piece.style.top = `${columnIndex * pieceHeight}px`;
-          // piece.style.top = `${columnIndex * pieceHeight + square * 10}px`;
+          piece.style.left = `${rowIndex * pieceWidth - (piecesOnPosition - 1) * 9}px`;
+          piece.style.top = `${columnIndex * pieceHeight + (piecesOnPosition - 1) * 7}px`;
           grid.children[rowIndex].children[columnIndex].appendChild(piece);
         }
       }
