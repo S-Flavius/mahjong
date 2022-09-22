@@ -1,60 +1,74 @@
-window.onload = () => createGame()
+window.onload = () => createGame();
 
 
-document.getElementById('new-game').addEventListener('click', newGame)
+document.getElementById("new-game").addEventListener("click", newGame);
 
 
-let selected = []
-let lastMove = []
+let selected = [];
+let lastMove = [];
 
 
 let layouts = [// flower
-  [[0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0], [1, 1, 1, 0, 0, 0, 1, 1, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 1, 0, 0, 0]],
+  [
+    [0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0],
+    [1, 1, 1, 0, 0, 0, 1, 1, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0],
+    [0, 0, 0, 1, 1, 1, 0, 0, 0]
+  ],
 
   // pyramid
-  [[0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 1, 2, 1, 1, 0, 0], [0, 0, 1, 2, 3, 2, 1, 0, 0], [1, 1, 2, 3, 4, 3, 2, 1, 1], [0, 0, 1, 2, 3, 2, 1, 0, 0], [0, 0, 1, 1, 2, 1, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0]],
+  [
+    [0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 1, 2, 1, 1, 0, 0], [0, 0, 1, 2, 3, 2, 1, 0, 0],
+    [1, 1, 2, 3, 4, 3, 2, 1, 1], [0, 0, 1, 2, 3, 2, 1, 0, 0], [0, 0, 1, 1, 2, 1, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0]
+  ],
 
   // snake
-  [[1, 2, 0, 1, 1, 2, 1, 1, 0], [1, 2, 0, 1, 2, 3, 2, 1, 0], [1, 3, 0, 1, 1, 4, 4, 1, 0], [1, 2, 0, 0, 0, 0, 3, 0, 0], [3, 2, 0, 0, 0, 1, 2, 3, 0], [0, 2, 0, 0, 0, 2, 0, 0, 0], [0, 2, 3, 0, 4, 3, 0, 0, 0], [0, 0, 3, 0, 4, 0, 0, 0, 0], [0, 0, 3, 3, 4, 0, 0, 0, 0]]];
+  [
+    [1, 2, 0, 1, 1, 2, 1, 1, 0], [1, 2, 0, 1, 2, 3, 2, 1, 0], [1, 3, 0, 1, 1, 4, 4, 1, 0], [1, 2, 0, 0, 0, 0, 3, 0, 0],
+    [3, 2, 0, 0, 0, 1, 2, 3, 0], [0, 2, 0, 0, 0, 2, 0, 0, 0], [0, 2, 3, 0, 4, 3, 0, 0, 0], [0, 0, 3, 0, 4, 0, 0, 0, 0],
+    [0, 0, 3, 3, 4, 0, 0, 0, 0]
+  ]
+];
 
 
 let layoutNumber = 0;
 let chosenLayout = 0;
 
-document.getElementById('flower').addEventListener('click', () => {
-  changeLayout(0)
-})
-document.getElementById('pyramid').addEventListener('click', () => {
-  changeLayout(1)
-})
+document.getElementById("flower").addEventListener("click", () => {
+  changeLayout(0);
+});
+document.getElementById("pyramid").addEventListener("click", () => {
+  changeLayout(1);
+});
 
-document.getElementById('snake').addEventListener('click', () => {
+document.getElementById("snake").addEventListener("click", () => {
   changeLayout(2);
-})
+});
 
-document.getElementById('undo').addEventListener('click', () => {
-  lastMove[0].hidden = false
-  lastMove[1].hidden = false
-})
+document.getElementById("undo").addEventListener("click", () => {
+  lastMove[0].hidden = false;
+  lastMove[1].hidden = false;
+});
 
 function changeLayout(layoutNr) {
-  document.getElementById('dropdown-menu').style.display = 'none'
-  layoutNumber = layoutNr
-  newGame()
+  document.getElementById("dropdown-menu").style.display = "none";
+  layoutNumber = layoutNr;
+  newGame();
 }
 
 // https://stackoverflow.com/a/12646864
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(Math.random() * (i + 1
+    ));
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
 
 function generateGrid() {
-  const grid = document.getElementById('game')
+  const grid = document.getElementById("game");
   for (let i = 0; i < layouts[layoutNumber].length; i++) {
-    const row = document.createElement('div')
+    const row = document.createElement("div");
     row.className = "tile is-ancestor";
     for (let j = 0; j < layouts[layoutNumber][i].length; j++) {
       const col = document.createElement("div");
@@ -100,21 +114,19 @@ function createGame() {
 
   document.getElementById("dropdown-menu").children[0].children[layoutNumber].className += " is-active";
 
-  let pieceWidth = document.getElementById('game').offsetHeight / 1.2 / chosenLayout[0].length;
-  let pieceHeight = document.getElementById('game').offsetHeight / chosenLayout.length;
+  let pieceWidth = document.getElementById("game").offsetHeight / 1.2 / chosenLayout[0].length;
+  let pieceHeight = document.getElementById("game").offsetHeight / chosenLayout.length;
 
   shuffleArray(pieces);
 
   let curPiece = 0;
 
   //TO-DO refactor this!!! 😅
-  let hasPieces = true
+  let hasPieces = true;
   while (hasPieces) {
     hasPieces = false;
     for (let rowIndex = 0; rowIndex < chosenLayout.length; rowIndex++) {
-      for (let columnIndex = 0;
-           columnIndex < chosenLayout[rowIndex].length;
-           columnIndex++) {
+      for (let columnIndex = 0; columnIndex < chosenLayout[rowIndex].length; columnIndex++) {
         if (chosenLayout[rowIndex][columnIndex] === 0) continue;
         hasPieces = true;
         if (Math.random() < 0.5) {
@@ -129,44 +141,44 @@ function createGame() {
 function selectPieces(piece) {
 
   if (selected.length === 0) {  // Highlight selected piece
-    selected.push(piece)
-    selected[0].className = 'selected'
+    selected.push(piece);
+    selected[0].className = "selected";
   } else if (selected[0] === piece) { // Deselect the currently chosen piece
-    selected = []
-    piece.className = 'piece'
+    selected = [];
+    piece.className = "piece";
   } else if (selected[0].innerHTML === piece.innerHTML) { // Remove selected pieces if they're of the same type
     // Completely delete the pieces after the 2nd move if they are still hidden
     if (lastMove.length === 2) {
       for (const piece of lastMove) {
         if (piece.hidden) {
-          piece.remove()
+          piece.remove();
         }
       }
     }
 
     // Save the last move for the undo button
-    lastMove = [selected[0], piece]
+    lastMove = [selected[0], piece];
 
     // Make sure the pieces won't still be selected after undo
-    selected[0].className = 'piece'
-    piece.className = 'piece'
-    selected[0].hidden = true
-    piece.hidden = true
+    selected[0].className = "piece";
+    piece.className = "piece";
+    selected[0].hidden = true;
+    piece.hidden = true;
 
-    selected = []
+    selected = [];
   }
 }
 
 function newGame() {
-  const grid = document.getElementById('game')
+  const grid = document.getElementById("game");
   for (const row of grid.children) {
     for (const col of row.children) {
-      col.innerHTML = ''
+      col.innerHTML = "";
     }
   }
 
-  for (let child of document.getElementById('dropdown-menu').children[0].children) {
-    child.className = child.className.replaceAll(' is-active', '')
+  for (let child of document.getElementById("dropdown-menu").children[0].children) {
+    child.className = child.className.replaceAll(" is-active", "");
   }
 
 
