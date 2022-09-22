@@ -38,6 +38,7 @@ document.getElementById('undo').addEventListener('click', () => {
 })
 
 function changeLayout(layoutNr) {
+  document.getElementById('dropdown-menu').style.display = 'none'
   layoutNumber = layoutNr
   newGame()
 }
@@ -135,6 +136,7 @@ function newGame() {
   for (let child of document.getElementById('dropdown-menu').children[0].children) {
     child.className = child.className.replaceAll(' is-active', '')
   }
+
 
   createGame();
 }
