@@ -5,6 +5,7 @@ document.getElementById('new-game').addEventListener('click', newGame)
 
 
 let selected = []
+let lastMove = []
 
 
 let layouts = [// flower
@@ -15,6 +16,7 @@ let layouts = [// flower
 
   // snake
   [[1, 2, 0, 1, 1, 2, 1, 1, 0], [1, 2, 0, 1, 2, 3, 2, 1, 0], [1, 3, 0, 1, 1, 4, 4, 1, 0], [1, 2, 0, 0, 0, 0, 3, 0, 0], [3, 2, 0, 0, 0, 1, 2, 3, 0], [0, 2, 0, 0, 0, 2, 0, 0, 0], [0, 2, 3, 0, 4, 3, 0, 0, 0], [0, 0, 3, 0, 4, 0, 0, 0, 0], [0, 0, 3, 3, 4, 0, 0, 0, 0]]];
+
 
 let layoutNumber = 0;
 let chosenLayout = 0;
@@ -28,6 +30,11 @@ document.getElementById('pyramid').addEventListener('click', () => {
 
 document.getElementById('snake').addEventListener('click', () => {
   changeLayout(2);
+})
+
+document.getElementById('undo').addEventListener('click', () => {
+  lastMove[0].hidden = false
+  lastMove[1].hidden = false
 })
 
 function changeLayout(layoutNr) {
@@ -95,8 +102,23 @@ function selectPieces(piece) {
     selected = []
     piece.className = 'piece'
   } else if (selected[0].innerHTML === piece.innerHTML) { // Remove selected pieces if they're of the same type
-    selected[0].remove()
-    piece.remove()
+    // Completely delete the pieces after the 2nd move if they are still hidden
+    if (lastMove.length === 2) {
+      for (const piece of lastMove) {
+        if (piece.hidden) {
+          piece.remove()
+        }
+      }
+    }
+
+    // Save the last move for the undo button
+    lastMove = [selected[0], piece]
+
+    // Make sure the pieces won't still be selected after undo
+    selected[0].className = 'piece'
+    piece.className = 'piece'
+    selected[0].hidden = true
+    piece.hidden = true
 
     selected = []
   }
