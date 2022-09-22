@@ -51,7 +51,24 @@ function shuffleArray(array) {
   }
 }
 
+function generateGrid() {
+  const grid = document.getElementById('game')
+  for (let i = 0; i < layouts[layoutNumber].length; i++) {
+    const row = document.createElement('div')
+    row.className = 'tile is-ancestor'
+    for (let j = 0; j < layouts[layoutNumber][i].length; j++) {
+      const col = document.createElement('div')
+      col.className = 'tile is-parent'
+      row.appendChild(col)
+    }
+    grid.appendChild(row)
+  }
+}
+
 function createGame() {
+
+  generateGrid()
+
   chosenLayout = JSON.parse(JSON.stringify(layouts[layoutNumber]))
 
   let pieces = ['MJd1-.svg.png', 'MJd2-.svg.png', 'MJd3-.svg.png', 'MJf1-.svg.png', 'MJf2-.svg.png', 'MJf3-.svg.png', 'MJf4-.svg.png', 'MJh1-.svg.png', 'MJh2-.svg.png', 'MJh3-.svg.png', 'MJh4-.svg.png', 'MJh5-.svg.png', 'MJh6-.svg.png', 'MJh7-.svg.png', 'MJh8-.svg.png', 'MJs1-.svg.png', 'MJs2-.svg.png', 'MJs3-.svg.png', 'MJs4-.svg.png', 'MJs5-.svg.png', 'MJs6-.svg.png', 'MJs7-.svg.png', 'MJs8-.svg.png', 'MJs9-.svg.png', 'MJt1-.svg.png', 'MJt2-.svg.png', 'MJt3-.svg.png', 'MJt4-.svg.png', 'MJt5-.svg.png', 'MJt6-.svg.png', 'MJt7-.svg.png', 'MJt8-.svg.png', 'MJt9-.svg.png', 'MJw1-.svg.png', 'MJw2-.svg.png', 'MJw3-.svg.png', 'MJw4-.svg.png', 'MJw5-.svg.png', 'MJw6-.svg.png', 'MJw7-.svg.png', 'MJw8-.svg.png', 'MJw9-.svg.png']
