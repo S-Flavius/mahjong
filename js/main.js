@@ -1,11 +1,11 @@
 window.onload = () => createGame();
 
-
 document.getElementById("new-game").addEventListener("click", newGame);
 
 
 let selected = [];
 let lastMove = [];
+let availableMoves = [];
 
 
 let layouts = [// flower
@@ -83,6 +83,7 @@ function generatePiece(rowIndex, columnIndex, pieces, curPiece, pieceWidth, piec
   let piecesOnPosition = chosenLayout[rowIndex][columnIndex];
   let piece = document.createElement("div");
   piece.className = "piece";
+  piece.id = "row: " + columnIndex + " col: " + rowIndex; // TODO: check why rIndex and cIndex are swapped
   piece.innerHTML = "<img src=\"img/Pieces/" + pieces[Math.floor(curPiece)] + "\" alt=\"Mahjong piece\">";
   piece.addEventListener("click", () => selectPieces(piece));
   piece.style.zIndex = chosenLayout[0].length - columnIndex + piecesOnPosition;
@@ -95,6 +96,36 @@ function generatePiece(rowIndex, columnIndex, pieces, curPiece, pieceWidth, piec
   piece.style.top = `${columnIndex * 0.84 * pieceHeight + (piecesOnPosition - 1
   ) * 7}px`;
   document.getElementById("game").children[rowIndex].children[columnIndex].appendChild(piece);
+}
+
+function checkAvailableMoves() {
+  let pieces = document.getElementsByClassName("piece");
+
+  for (let piece of pieces) {
+    let neighbourLeft;
+    let neighbourRight;
+    for (const piece1 of pieces) {
+      let [rowPiece, rowPiece1] = [piece.id.indexOf("row: "), rowPiece1 = piece1.id.indexOf("row: ")];
+      let [colPiece, colPiece1] = [piece.id.indexOf("col: "), colPiece1 = piece1.id.indexOf("col: ")];
+      let [commaPiece, commaPiece1] = [piece.id.indexOf(","), commaPiece1 = piece1.id.indexOf(",")];
+
+      if (Number.parseInt(piece.id.substring(rowPiece + 5, commaPiece)) ===
+          Number.parseInt(piece1.id.substring(rowPiece1 + 5, commaPiece))) {
+        if (Number.parseInt(piece.id.substring(colPiece + 5)) === Number.parseInt(piece1.id.substring(colPiece1 + 5)) -
+            1) {
+          neighbourLeft = true;
+        } else if (Number.parseInt(piece.id.substring(colPiece + 5)) ===
+                   Number.parseInt(piece1.id.substring(colPiece1 + 5)) + 1) {
+          neighbourRight = true;
+        }
+      }
+    }
+    if (neighbourLeft && neighbourRight) continue;
+    availableMoves.push(piece);
+
+  }
+
+  return true;
 }
 
 function createGame() {
@@ -136,6 +167,8 @@ function createGame() {
       }
     }
   }
+
+  checkAvailableMoves();
 }
 
 function selectPieces(piece) {
@@ -146,7 +179,7 @@ function selectPieces(piece) {
   } else if (selected[0] === piece) { // Deselect the currently chosen piece
     selected = [];
     piece.className = "piece";
-  } else if (selected[0].innerHTML === piece.innerHTML) { // Remove selected pieces if they're of the same type
+  } else if (selected[0].innerHTML === piece.innerHTML && availableMoves.includes(piece)) { // Remove selected pieces if they're of the same type && the move is legal
     // Completely delete the pieces after the 2nd move if they are still hidden
     if (lastMove.length === 2) {
       for (const piece of lastMove) {
