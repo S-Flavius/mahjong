@@ -85,13 +85,14 @@ function generatePiece(rowIndex, columnIndex, pieces, curPiece, pieceWidth, piec
   piece.className = "piece";
   piece.innerHTML = "<img src=\"img/Pieces/" + pieces[Math.floor(curPiece)] + "\" alt=\"Mahjong piece\">";
   piece.addEventListener("click", () => selectPieces(piece));
-  piece.style.zIndex = piecesOnPosition;
+  piece.style.zIndex = chosenLayout[0].length - columnIndex + piecesOnPosition;
   chosenLayout[rowIndex][columnIndex]--;
   piece.style.width = `${pieceWidth}px`;
   piece.style.height = `${pieceHeight}px`;
-  piece.style.left = `${rowIndex * pieceWidth - (piecesOnPosition - 1
-  ) * 9}px`;
-  piece.style.top = `${columnIndex * pieceHeight + (piecesOnPosition - 1
+  piece.style.left = `${rowIndex * (0.77 * pieceWidth
+  ) - (piecesOnPosition - 1
+                        ) * 9}px`;
+  piece.style.top = `${columnIndex * 0.84 * pieceHeight + (piecesOnPosition - 1
   ) * 7}px`;
   document.getElementById("game").children[rowIndex].children[columnIndex].appendChild(piece);
 }
@@ -129,10 +130,9 @@ function createGame() {
       for (let columnIndex = 0; columnIndex < chosenLayout[rowIndex].length; columnIndex++) {
         if (chosenLayout[rowIndex][columnIndex] === 0) continue;
         hasPieces = true;
-        if (Math.random() < 0.5) {
-          generatePiece(rowIndex, columnIndex, pieces, curPiece, pieceWidth, pieceHeight);
-          curPiece += 0.5;
-        }
+        if (Math.random() >= 0.5) continue;
+        generatePiece(rowIndex, columnIndex, pieces, curPiece, pieceWidth, pieceHeight);
+        curPiece += 0.5;
       }
     }
   }
