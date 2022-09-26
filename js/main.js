@@ -110,30 +110,40 @@ function checkAvailableMoves() {
   for (let piece of pieces) {
     let neighbourLeft;
     let neighbourRight;
+
     for (const piece1 of pieces) {
       if (piece.hidden || piece1.hidden) continue;
       if (piece1 === piece) continue;
-      let [rowPiece, rowPiece1] = [piece.id.indexOf("row: "), piece1.id.indexOf("row: ")];
-      let [colPiece, colPiece1] = [piece.id.indexOf("col: "), piece1.id.indexOf("col: ")];
+
+      let [rowLocationPiece, rowLocationPiece1] = [piece.id.indexOf("row: "), piece1.id.indexOf("row: ")];
+      let [colLocationPiece, colLocationPiece1] = [piece.id.indexOf("col: "), piece1.id.indexOf("col: ")];
       let [commaLocationPiece, commaLocationPiece1] = [piece.id.indexOf(","), piece1.id.indexOf(",")];
 
-      if (Number.parseInt(piece.id.substring(rowPiece + 5, commaLocationPiece)) ===
-          Number.parseInt(piece1.id.substring(rowPiece1 + 5, commaLocationPiece1))) {
-        if (Number.parseInt(piece.id.substring(colPiece + 5)) === Number.parseInt(piece1.id.substring(colPiece1 + 5)) -
-            1) {
+      let [rowPiece, rowPiece1] = [
+        Number.parseInt(piece.id.substring(rowLocationPiece + 5, commaLocationPiece)),
+        Number.parseInt(piece1.id.substring(rowLocationPiece1 + 5, commaLocationPiece1))
+      ];
+      let [colPiece, colPiece1] = [
+        Number.parseInt(piece.id.substring(colLocationPiece + 5)),
+        Number.parseInt(piece1.id.substring(colLocationPiece1 + 5))
+      ];
+
+
+      if (rowPiece === rowPiece1) {
+        if (colPiece === colPiece1 - 1) {
           neighbourLeft = true;
-        } else if (Number.parseInt(piece.id.substring(colPiece + 5)) ===
-                   Number.parseInt(piece1.id.substring(colPiece1 + 5)) + 1) {
+        } else if (colPiece === colPiece1 + 1) {
           neighbourRight = true;
+        } else if (colPiece === colPiece1 && piece.style.zIndex >= piece1.style.zIndex) {
+          availableMoves.push(piece);
+          [neighbourLeft, neighbourRight] = [true, true];
         }
       }
     }
+
     if (neighbourLeft && neighbourRight) continue;
     availableMoves.push(piece);
-
   }
-
-  return true;
 }
 
 function createGame() {
