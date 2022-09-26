@@ -189,6 +189,30 @@ function createGame() {
   checkAvailableMoves();
 }
 
+function checkGameState() {
+  if (document.getElementsByClassName("piece").length === 2) {
+    setTimeout(() => {
+      alert("You won!");
+    }, 100);
+  } else {
+    let winnable = false;
+    for (let piece of availableMoves) {
+      if (piece.hidden) continue;
+      for (let piece1 of availableMoves) {
+        if (piece1.hidden) continue;
+        if (piece.innerHTML === piece1.innerHTML) {
+          winnable = true;
+        }
+      }
+    }
+    if (!winnable) {
+      setTimeout(() => {
+        alert("You lost!");
+      }, 100);
+    }
+  }
+}
+
 function selectPieces(piece) {
   if (!availableMoves.includes(piece)) return;
   if (selected.length === 0) {  // Highlight selected piece
@@ -225,7 +249,7 @@ function selectPieces(piece) {
     checkAvailableMoves();
   }
 
-
+  checkGameState();
 }
 
 function newGame() {
