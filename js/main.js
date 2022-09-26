@@ -190,14 +190,19 @@ function createGame() {
 }
 
 function selectPieces(piece) {
-  if (!availableMoves.includes(piece)) { return; }
+  if (!availableMoves.includes(piece)) return;
   if (selected.length === 0) {  // Highlight selected piece
     selected.push(piece);
     selected[0].className = "selected";
   } else if (selected[0] === piece) { // Deselect the currently chosen piece
     selected = [];
     piece.className = "piece";
-  } else if (selected[0].innerHTML === piece.innerHTML) { // Remove selected pieces if they're of the same type && the move is legal
+  } else if (selected[0].innerHTML !== piece.innerHTML) { // If the pieces are not the same, select the new one
+    selected[0].className = "piece";
+    piece.className = "selected";
+    selected[0] = piece;
+  } else {
+    // Remove selected pieces if they're of the same type && the move is legal
     // Completely delete the pieces after the 2nd move if they are still hidden
     if (lastMove.length === 2) {
       for (const piece of lastMove) {
