@@ -10282,11 +10282,10 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 }
 
 html {
-  background-color: #444444;
+  background-color: darkslategrey;
 }
 
 #game {
-  background: lightyellow;
   height: 51em;
   width: 42.5em;
 }
