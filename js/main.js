@@ -111,6 +111,7 @@ function checkAvailableMoves() {
     let neighbourLeft;
     let neighbourRight;
 
+    let maxHeight = piece.style.zIndex;
     for (const piece1 of pieces) {
       if (piece.hidden || piece1.hidden) continue;
       if (piece1 === piece) continue;
@@ -129,19 +130,19 @@ function checkAvailableMoves() {
       ];
 
 
-      if (rowPiece === rowPiece1) {
+      if (rowPiece === rowPiece1 && piece.style.zIndex === piece1.style.zIndex) {
         if (colPiece === colPiece1 - 1) {
           neighbourLeft = true;
         } else if (colPiece === colPiece1 + 1) {
           neighbourRight = true;
-        } else if (colPiece === colPiece1 && piece.style.zIndex >= piece1.style.zIndex) {
-          availableMoves.push(piece);
-          [neighbourLeft, neighbourRight] = [true, true];
         }
       }
+      if (rowPiece === rowPiece1 && colPiece === colPiece1 && piece.style.zIndex < piece1.style.zIndex) {
+        maxHeight = Math.max(maxHeight, piece1.style.zIndex);
+      }
     }
-
     if (neighbourLeft && neighbourRight) continue;
+    if (piece.style.zIndex !== maxHeight) continue;
     availableMoves.push(piece);
   }
 }
