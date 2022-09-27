@@ -6,7 +6,11 @@ document.getElementById("new-game").addEventListener("click", newGame);
 let selected = [];
 let lastMove = [];
 let availableMoves = [];
+let totalHints = 5;
+let currentHints = totalHints;
 
+let hintButton = document.getElementById("hint");
+hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
 
 let layouts = [// flower
   [
@@ -40,7 +44,6 @@ document.getElementById("flower").addEventListener("click", () => {
 document.getElementById("pyramid").addEventListener("click", () => {
   changeLayout(1);
 });
-
 document.getElementById("snake").addEventListener("click", () => {
   changeLayout(2);
 });
@@ -53,6 +56,34 @@ document.getElementById("undo").addEventListener("click", () => {
   lastMove[0].hidden = false;
   lastMove[1].hidden = false;
   checkAvailableMoves();
+});
+
+document.getElementById("hint").addEventListener("click", () => {
+  hintButton.innerText = `Hint (${--currentHints}/${totalHints})`;
+
+  let hints = [];
+  for (let piece of availableMoves) {
+    if (piece.hidden) continue;
+    for (let piece1 of availableMoves) {
+      if (piece1.hidden || piece === piece1) continue;
+      if (piece.innerHTML === piece1.innerHTML) {
+        hints.push([piece, piece1]);
+      }
+    }
+  }
+
+  let chosenHint = hints[Math.floor(Math.random() * hints.length)];
+
+  hintButton.disabled = true;
+  chosenHint[0].className += " hint";
+  chosenHint[1].className += " hint";
+
+  setTimeout(() => {
+    for (const piece of document.getElementsByClassName("piece")) {
+      piece.className = piece.className.replace(" hint", "");
+    }
+    if (currentHints > 0) hintButton.disabled = false;
+  }, 1500);
 });
 
 function changeLayout(layoutNr) {

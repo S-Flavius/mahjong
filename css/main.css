@@ -10331,8 +10331,14 @@ html {
   height: auto;
   position: absolute;
 }
+
 .piece:hover {
   background: darkgrey;
+}
+
+.hint {
+  z-index: 99;
+  background: #ffe08a;
 }
 
 .selected {

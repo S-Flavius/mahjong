@@ -84,6 +84,11 @@ html {
   }
 }
 
+.hint {
+  z-index: 99;
+  background: bulmaRgba($yellow, 70);
+}
+
 .selected {
   position: absolute;
   background: rebeccapurple;
