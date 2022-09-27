@@ -200,7 +200,7 @@ function checkGameState() {
     for (let piece of availableMoves) {
       if (piece.hidden) continue;
       for (let piece1 of availableMoves) {
-        if (piece1.hidden) continue;
+        if (piece1.hidden || piece === piece1) continue;
         if (piece.innerHTML === piece1.innerHTML) {
           winnable = true;
         }
