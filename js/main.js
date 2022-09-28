@@ -203,7 +203,6 @@ function createGame() {
 
   let curPiece = 0;
 
-  //TO-DO refactor this!!! 😅
   let hasPieces = true;
   while (hasPieces) {
     hasPieces = false;
@@ -291,6 +290,9 @@ function newGame() {
       col.innerHTML = "";
     }
   }
+
+  currentHints = totalHints;
+  hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
 
   for (let child of document.getElementById("dropdown-menu").children[0].children) {
     child.className = child.className.replaceAll(" is-active", "");
