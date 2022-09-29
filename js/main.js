@@ -100,11 +100,6 @@ document.getElementById("reshuffle").addEventListener("click", () => {
     let piece1 = pieces[i];
     let piece2 = pieces[Math.floor(Math.random() * pieces.length)];
 
-    //
-    // let tempZ = piece1.style.zIndex;
-    // piece1.style.zIndex = piece2.style.zIndex;
-    // piece2.style.zIndex = tempZ;
-
     let tempStyle = piece1.style.cssText;
     piece1.style.cssText = piece2.style.cssText;
     piece2.style.cssText = tempStyle;
@@ -142,8 +137,9 @@ function generateGrid() {
   }
 }
 
-function generatePiece(rowIndex, columnIndex, pieces, curPiece, pieceWidth, pieceHeight) {
-  let piecesOnPosition = chosenLayout[rowIndex][columnIndex];
+
+function generatePiece(colIndex, rowIndex, pieces, curPiece, pieceWidth, pieceHeight) {
+  let piecesOnPosition = chosenLayout[colIndex][rowIndex];
   let piece = document.createElement("div");
   piece.className = "piece";
   piece.id = "row: " + rowIndex + ", col: " + colIndex;
@@ -159,7 +155,7 @@ function generatePiece(rowIndex, columnIndex, pieces, curPiece, pieceWidth, piec
                         ) * 9}px`;
   piece.style.top = `${rowIndex * 0.84 * pieceHeight + (piecesOnPosition - 1
   ) * 7}px`;
-  document.getElementById("game").children[rowIndex].children[columnIndex].appendChild(piece);
+  document.getElementById("game").children[colIndex].children[rowIndex].appendChild(piece);
 }
 
 function checkAvailableMoves() {
@@ -318,6 +314,9 @@ function newGame() {
       col.innerHTML = "";
     }
   }
+
+  currentHints = totalHints;
+  hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
 
   for (let child of document.getElementById("dropdown-menu").children[0].children) {
     child.className = child.className.replaceAll(" is-active", "");
