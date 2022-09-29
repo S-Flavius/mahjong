@@ -319,6 +319,9 @@ function newGame() {
     }
   }
 
+  currentHints = totalHints;
+  hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
+
   for (let child of document.getElementById("dropdown-menu").children[0].children) {
     child.className = child.className.replaceAll(" is-active", "");
   }
