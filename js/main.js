@@ -86,6 +86,33 @@ document.getElementById("hint").addEventListener("click", () => {
   }, 1500);
 });
 
+document.getElementById("reshuffle").addEventListener("click", () => {
+  if (selected.length !== 0) {
+    selected[0].className = "piece";
+    selected = [];
+  }
+
+  //  https://stackoverflow.com/a/64457744/15403179
+  let pieces = document.querySelectorAll(".piece:not([hidden])");
+
+
+  for (let i = 0; i < pieces.length; i++) {
+    let piece1 = pieces[i];
+    let piece2 = pieces[Math.floor(Math.random() * pieces.length)];
+
+    //
+    // let tempZ = piece1.style.zIndex;
+    // piece1.style.zIndex = piece2.style.zIndex;
+    // piece2.style.zIndex = tempZ;
+
+    let tempStyle = piece1.style.cssText;
+    piece1.style.cssText = piece2.style.cssText;
+    piece2.style.cssText = tempStyle;
+  }
+  checkAvailableMoves();
+});
+
+
 function changeLayout(layoutNr) {
   document.getElementById("dropdown-menu").style.display = "none";
   layoutNumber = layoutNr;
@@ -119,17 +146,18 @@ function generatePiece(rowIndex, columnIndex, pieces, curPiece, pieceWidth, piec
   let piecesOnPosition = chosenLayout[rowIndex][columnIndex];
   let piece = document.createElement("div");
   piece.className = "piece";
-  piece.id = "row: " + columnIndex + ", col: " + rowIndex; // TODO: check why rIndex and cIndex are swapped
+  piece.id = "row: " + rowIndex + ", col: " + colIndex;
   piece.innerHTML = "<img src=\"img/Pieces/" + pieces[Math.floor(curPiece)] + "\" alt=\"Mahjong piece\">";
   piece.addEventListener("click", () => selectPieces(piece));
-  piece.style.zIndex = chosenLayout[0].length - columnIndex + piecesOnPosition;
-  chosenLayout[rowIndex][columnIndex]--;
+  piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100
+  ) + colIndex * 10 + piecesOnPosition;
+  chosenLayout[colIndex][rowIndex]--;
   piece.style.width = `${pieceWidth}px`;
   piece.style.height = `${pieceHeight}px`;
-  piece.style.left = `${rowIndex * (0.77 * pieceWidth
+  piece.style.left = `${colIndex * (0.77 * pieceWidth
   ) - (piecesOnPosition - 1
                         ) * 9}px`;
-  piece.style.top = `${columnIndex * 0.84 * pieceHeight + (piecesOnPosition - 1
+  piece.style.top = `${rowIndex * 0.84 * pieceHeight + (piecesOnPosition - 1
   ) * 7}px`;
   document.getElementById("game").children[rowIndex].children[columnIndex].appendChild(piece);
 }
@@ -139,10 +167,8 @@ function checkAvailableMoves() {
   let pieces = document.getElementsByClassName("piece");
 
   for (let piece of pieces) {
-    let neighbourLeft;
-    let neighbourRight;
+    let neighbourLeft, neighbourRight, maxHeight = piece.style.zIndex;
 
-    let maxHeight = piece.style.zIndex;
     for (const piece1 of pieces) {
       if (piece.hidden || piece1.hidden) continue;
       if (piece1 === piece) continue;
@@ -160,16 +186,18 @@ function checkAvailableMoves() {
         Number.parseInt(piece1.id.substring(colLocationPiece1 + 5))
       ];
 
+      let heightPiece = piece.style.zIndex % 10;
+      let heightPiece1 = piece1.style.zIndex % 10;
 
-      if (rowPiece === rowPiece1 && piece.style.zIndex === piece1.style.zIndex) {
+      if (rowPiece === rowPiece1 && heightPiece === heightPiece1) {
         if (colPiece === colPiece1 - 1) {
           neighbourLeft = true;
         } else if (colPiece === colPiece1 + 1) {
           neighbourRight = true;
         }
       }
-      if (rowPiece === rowPiece1 && colPiece === colPiece1 && piece.style.zIndex < piece1.style.zIndex) {
-        maxHeight = Math.max(maxHeight, piece1.style.zIndex);
+      if (rowPiece === rowPiece1 && colPiece === colPiece1 && heightPiece < heightPiece1) {
+        maxHeight = Math.max(maxHeight, heightPiece1);
       }
     }
     if (neighbourLeft && neighbourRight) continue;
@@ -203,16 +231,15 @@ function createGame() {
 
   let curPiece = 0;
 
-  //TO-DO refactor this!!! 😅
   let hasPieces = true;
   while (hasPieces) {
     hasPieces = false;
-    for (let rowIndex = 0; rowIndex < chosenLayout.length; rowIndex++) {
-      for (let columnIndex = 0; columnIndex < chosenLayout[rowIndex].length; columnIndex++) {
-        if (chosenLayout[rowIndex][columnIndex] === 0) continue;
+    for (let colIndex = 0; colIndex < chosenLayout.length; colIndex++) {
+      for (let rowIndex = 0; rowIndex < chosenLayout[colIndex].length; rowIndex++) {
+        if (chosenLayout[colIndex][rowIndex] === 0) continue;
         hasPieces = true;
         if (Math.random() >= 0.5) continue;
-        generatePiece(rowIndex, columnIndex, pieces, curPiece, pieceWidth, pieceHeight);
+        generatePiece(colIndex, rowIndex, pieces, curPiece, pieceWidth, pieceHeight);
         curPiece += 0.5;
       }
     }
