@@ -98,11 +98,15 @@ document.getElementById("reshuffle").addEventListener("click", () => {
 
   for (let i = 0; i < pieces.length; i++) {
     let piece1 = pieces[i];
+
+    //piece2 could be piece1. In that case, nothing changes
     let piece2 = pieces[Math.floor(Math.random() * pieces.length)];
 
-    let tempStyle = piece1.style.cssText;
-    piece1.style.cssText = piece2.style.cssText;
-    piece2.style.cssText = tempStyle;
+    [
+      piece1.style.cssText, piece2.style.cssText, piece1.id, piece2.id
+    ] = [
+      piece2.style.cssText, piece1.style.cssText, piece2.id, piece1.id
+    ];
   }
   checkAvailableMoves();
 });
