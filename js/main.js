@@ -247,6 +247,8 @@ function createGame() {
   }
 
   if (!isGameWinnable()) newGame();
+  chosenManually = false;
+
   checkAvailableMoves();
 }
 
@@ -345,7 +347,6 @@ function newGame() {
     layoutNumber = Math.floor(Math.random() * layouts.length);
   }
 
-  chosenManually = false;
 
   const grid = document.getElementById("game");
   for (const row of grid.children) {
