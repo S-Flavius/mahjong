@@ -204,29 +204,6 @@ function checkAvailableMoves() {
   }
 }
 
-function isGameWinnable() {
-
-  let allPieces = document.getElementsByClassName("piece");
-  checkAvailableMoves();
-
-  for (let i = 0; i < allPieces.length; i++) {
-    checkAvailableMoves();
-    for (const piece of availableMoves) {
-      for (const piece1 of availableMoves) {
-        if (piece === piece1) continue;
-        if (piece.innerHTML === piece1.innerHTML) {
-          piece.hidden = true;
-          piece1.hidden = true;
-        }
-      }
-    }
-  }
-
-  if (Array.from(allPieces).filter(piece => !piece.hidden).length !== 0) return false;
-  for (let piece of allPieces) piece.hidden = false;
-  return true;
-}
-
 function createGame() {
 
   generateGrid();
@@ -268,6 +245,28 @@ function createGame() {
 
   if (!isGameWinnable()) newGame();
   checkAvailableMoves();
+}
+
+function isGameWinnable() {
+  let allPieces = document.getElementsByClassName("piece");
+  checkAvailableMoves();
+
+  for (let i = 0; i < allPieces.length; i++) {
+    checkAvailableMoves();
+    for (const piece of availableMoves) {
+      for (const piece1 of availableMoves) {
+        if (piece === piece1) continue;
+        if (piece.innerHTML === piece1.innerHTML) {
+          piece.hidden = true;
+          piece1.hidden = true;
+        }
+      }
+    }
+  }
+
+  if (Array.from(allPieces).filter(piece => !piece.hidden).length !== 0) return false;
+  for (let piece of allPieces) piece.hidden = false;
+  return true;
 }
 
 function checkGameState() {
@@ -334,6 +333,9 @@ function selectPieces(piece) {
 }
 
 function newGame() {
+
+  layoutNumber = Math.floor(Math.random() * layouts.length);
+
   const grid = document.getElementById("game");
   for (const row of grid.children) {
     for (const col of row.children) {
