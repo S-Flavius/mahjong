@@ -254,7 +254,7 @@ function isGameWinnable() {
   let allPieces = document.getElementsByClassName("piece");
   checkAvailableMoves();
 
-  for (let i = 0; i < allPieces.length; i++) {
+  for (let i = 0; i < allPieces.length / 2; i++) {
     checkAvailableMoves();
     for (const piece of availableMoves) {
       for (const piece1 of availableMoves) {
@@ -263,6 +263,10 @@ function isGameWinnable() {
           piece.hidden = true;
           piece1.hidden = true;
         }
+      }
+      if (Array.from(allPieces).filter(piece => !piece.hidden).length === 0) {
+        for (let piece of allPieces) piece.hidden = false;
+        return true;
       }
     }
   }
