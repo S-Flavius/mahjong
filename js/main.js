@@ -37,6 +37,7 @@ let layouts = [// flower
 
 let layoutNumber = 0;
 let chosenLayout = 0;
+let chosenManually = false;
 
 document.getElementById("flower").addEventListener("click", () => {
   changeLayout(0);
@@ -114,6 +115,8 @@ document.getElementById("reshuffle").addEventListener("click", () => {
 function changeLayout(layoutNr) {
   document.getElementById("dropdown-menu").style.display = "none";
   layoutNumber = layoutNr;
+  chosenManually = true;
+
   newGame();
 }
 
@@ -334,7 +337,11 @@ function selectPieces(piece) {
 
 function newGame() {
 
-  layoutNumber = Math.floor(Math.random() * layouts.length);
+  if (!chosenManually) {
+    layoutNumber = Math.floor(Math.random() * layouts.length);
+  }
+
+  chosenManually = false;
 
   const grid = document.getElementById("game");
   for (const row of grid.children) {
