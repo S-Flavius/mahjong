@@ -217,11 +217,24 @@ function createGame() {
   chosenLayout = JSON.parse(JSON.stringify(layouts[layoutNumber]));
 
   let pieces = [
-    "MJd1-.svg", "MJd2-.svg", "MJd3-.svg", "MJf1-.svg", "MJf2-.svg", "MJf3-.svg", "MJf4-.svg", "MJh1-.svg", "MJh2-.svg",
-    "MJh3-.svg", "MJh4-.svg", "MJh5-.svg", "MJh6-.svg", "MJh7-.svg", "MJh8-.svg", "MJs1-.svg", "MJs2-.svg", "MJs3-.svg",
-    "MJs4-.svg", "MJs5-.svg", "MJs6-.svg", "MJs7-.svg", "MJs8-.svg", "MJs9-.svg", "MJt2-.svg", "MJt3-.svg", "MJt4-.svg",
-    "MJt5-.svg", "MJt6-.svg", "MJt7-.svg", "MJt8-.svg", "MJt9-.svg", "MJw1-.svg", "MJw2-.svg", "MJw3-.svg", "MJw4-.svg",
-    "MJw5-.svg", "MJw6-.svg", "MJw7-.svg", "MJw8-.svg", "MJw9-.svg"
+    "bamboo1.svg", "bamboo1.svg", "bamboo1.svg", "bamboo1.svg", "bamboo2.svg", "bamboo2.svg", "bamboo2.svg",
+    "bamboo2.svg", "bamboo3.svg", "bamboo3.svg", "bamboo3.svg", "bamboo3.svg", "bamboo4.svg", "bamboo4.svg",
+    "bamboo4.svg", "bamboo4.svg", "bamboo5.svg", "bamboo5.svg", "bamboo5.svg", "bamboo5.svg", "bamboo6.svg",
+    "bamboo6.svg", "bamboo6.svg", "bamboo6.svg", "bamboo7.svg", "bamboo7.svg", "bamboo7.svg", "bamboo7.svg",
+    "bamboo8.svg", "bamboo8.svg", "bamboo8.svg", "bamboo8.svg", "bamboo9.svg", "bamboo9.svg", "bamboo9.svg",
+    "bamboo9.svg", "char1.svg", "char1.svg", "char1.svg", "char1.svg", "char2.svg", "char2.svg", "char2.svg",
+    "char2.svg", "char3.svg", "char3.svg", "char3.svg", "char3.svg", "char4.svg", "char4.svg", "char4.svg", "char4.svg",
+    "char5.svg", "char5.svg", "char5.svg", "char5.svg", "char6.svg", "char6.svg", "char6.svg", "char6.svg", "char7.svg",
+    "char7.svg", "char7.svg", "char7.svg", "char8.svg", "char8.svg", "char8.svg", "char8.svg", "char9.svg", "char9.svg",
+    "char9.svg", "char9.svg", "dot1.svg", "dot1.svg", "dot1.svg", "dot1.svg", "dot2.svg", "dot2.svg", "dot2.svg",
+    "dot2.svg", "dot3.svg", "dot3.svg", "dot3.svg", "dot3.svg", "dot4.svg", "dot4.svg", "dot4.svg", "dot4.svg",
+    "dot5.svg", "dot5.svg", "dot5.svg", "dot5.svg", "dot6.svg", "dot6.svg", "dot6.svg", "dot6.svg", "dot7.svg",
+    "dot7.svg", "dot7.svg", "dot7.svg", "dot8.svg", "dot8.svg", "dot8.svg", "dot8.svg", "dot9.svg", "dot9.svg",
+    "dot9.svg", "dot9.svg", "fBamboo.svg", "fChrysanthemum.svg", "fOrchid.svg", "fPlum.svg", "gDrag.svg", "gDrag.svg",
+    "gDrag.svg", "gDrag.svg", "rDrag.svg", "rDrag.svg", "rDrag.svg", "rDrag.svg", "wDrag.svg", "wDrag.svg", "wDrag.svg",
+    "wDrag.svg", "seasA.svg", "seasSpring.svg", "seasSummer.svg", "seasWinter.svg", "windE.svg", "windE.svg",
+    "windE.svg", "windE.svg", "windN.svg", "windN.svg", "windN.svg", "windN.svg", "windS.svg", "windS.svg", "windS.svg",
+    "windS.svg", "windW.svg", "windW.svg", "windW.svg", "windW.svg"
   ];
 
   document.getElementById("dropdown-menu").children[0].children[layoutNumber].className += " is-active";
