@@ -1,16 +1,6 @@
 window.onload = () => createGame();
 
-document.getElementById("new-game").addEventListener("click", newGame);
-
-document.onreadystatechange = function () {
-  document.getElementById("load").hidden = false;
-
-  let state = document.readyState;
-  if (state === "complete") {
-    document.getElementById("load").hidden = true;
-  }
-};
-
+document.getElementById('new-game').addEventListener('click', newGame);
 
 let selected = [];
 let lastMove = [];
@@ -18,49 +8,42 @@ let availableMoves = [];
 let totalHints = 5;
 let currentHints = totalHints;
 
-let hintButton = document.getElementById("hint");
+let hintButton = document.getElementById('hint');
 hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
 
 let layouts = [// flower
-  [
-    [0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0],
-    [1, 1, 1, 0, 0, 0, 1, 1, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0]
-  ],
+  [[0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0],
+   [1, 1, 1, 0, 0, 0, 1, 1, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0],
+   [0, 0, 0, 1, 1, 1, 0, 0, 0]],
 
   // pyramid
-  [
-    [0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 1, 2, 1, 1, 0, 0], [0, 0, 1, 2, 3, 2, 1, 0, 0],
-    [1, 1, 2, 3, 4, 3, 2, 1, 1], [0, 0, 1, 2, 3, 2, 1, 0, 0], [0, 0, 1, 1, 2, 1, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0, 0]
-  ],
+  [[0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 1, 2, 1, 1, 0, 0], [0, 0, 1, 2, 3, 2, 1, 0, 0],
+   [1, 1, 2, 3, 4, 3, 2, 1, 1], [0, 0, 1, 2, 3, 2, 1, 0, 0], [0, 0, 1, 1, 2, 1, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0],
+   [0, 0, 0, 0, 1, 0, 0, 0, 0]],
 
   // snake
-  [
-    [1, 2, 0, 1, 1, 2, 1, 1, 0], [1, 2, 0, 1, 2, 3, 2, 1, 0], [1, 3, 0, 1, 1, 4, 4, 1, 0], [1, 2, 0, 0, 0, 0, 3, 0, 0],
-    [3, 2, 0, 0, 0, 1, 2, 3, 0], [0, 2, 0, 0, 0, 2, 0, 0, 0], [0, 2, 3, 0, 4, 3, 0, 0, 0], [0, 0, 3, 0, 4, 0, 0, 0, 0],
-    [0, 0, 3, 3, 4, 0, 0, 0, 0]
-  ]
-];
+  [[1, 2, 0, 1, 1, 2, 1, 1, 0], [1, 2, 0, 1, 2, 3, 2, 1, 0], [1, 3, 0, 1, 1, 4, 4, 1, 0], [1, 2, 0, 0, 0, 0, 3, 0, 0],
+   [3, 2, 0, 0, 0, 1, 2, 3, 0], [0, 2, 0, 0, 0, 2, 0, 0, 0], [0, 2, 3, 0, 4, 3, 0, 0, 0], [0, 0, 3, 0, 4, 0, 0, 0, 0],
+   [0, 0, 3, 3, 4, 0, 0, 0, 0]]];
 
 
 let layoutNumber = 0;
 let chosenLayout = 0;
 let chosenManually = false;
 
-document.getElementById("flower").addEventListener("click", () => {
+document.getElementById('flower').addEventListener('click', () => {
   changeLayout(0);
 });
-document.getElementById("pyramid").addEventListener("click", () => {
+document.getElementById('pyramid').addEventListener('click', () => {
   changeLayout(1);
 });
-document.getElementById("snake").addEventListener("click", () => {
+document.getElementById('snake').addEventListener('click', () => {
   changeLayout(2);
 });
 
-document.getElementById("undo").addEventListener("click", () => {
+document.getElementById('undo').addEventListener('click', () => {
   if (selected.length !== 0) {
-    selected[0].className = "piece";
+    selected[0].className = 'piece';
     selected = [];
   }
   lastMove[0].hidden = false;
@@ -68,7 +51,7 @@ document.getElementById("undo").addEventListener("click", () => {
   checkAvailableMoves();
 });
 
-document.getElementById("hint").addEventListener("click", () => {
+document.getElementById('hint').addEventListener('click', () => {
   hintButton.innerText = `Hint (${--currentHints}/${totalHints})`;
 
   let hints = [];
@@ -85,25 +68,25 @@ document.getElementById("hint").addEventListener("click", () => {
   let chosenHint = hints[Math.floor(Math.random() * hints.length)];
 
   hintButton.disabled = true;
-  chosenHint[0].className += " hint";
-  chosenHint[1].className += " hint";
+  chosenHint[0].className += ' hint';
+  chosenHint[1].className += ' hint';
 
   setTimeout(() => {
-    for (const piece of document.getElementsByClassName("piece")) {
-      piece.className = piece.className.replace(" hint", "");
+    for (const piece of document.getElementsByClassName('piece')) {
+      piece.className = piece.className.replace(' hint', '');
     }
     if (currentHints > 0) hintButton.disabled = false;
   }, 1500);
 });
 
-document.getElementById("reshuffle").addEventListener("click", () => {
+document.getElementById('reshuffle').addEventListener('click', () => {
   if (selected.length !== 0) {
-    selected[0].className = "piece";
+    selected[0].className = 'piece';
     selected = [];
   }
 
   //  https://stackoverflow.com/a/64457744/15403179
-  let pieces = document.querySelectorAll(".piece:not([hidden])");
+  let pieces = document.querySelectorAll('.piece:not([hidden])');
 
 
   for (let i = 0; i < pieces.length; i++) {
@@ -112,17 +95,14 @@ document.getElementById("reshuffle").addEventListener("click", () => {
     //piece2 could be piece1. In that case, nothing changes
     let piece2 = pieces[Math.floor(Math.random() * pieces.length)];
 
-    [
-      piece1.style.cssText, piece2.style.cssText, piece1.id, piece2.id
-    ] = [
-      piece2.style.cssText, piece1.style.cssText, piece2.id, piece1.id
-    ];
+    [piece1.style.cssText, piece2.style.cssText, piece1.id, piece2.id] = [piece2.style.cssText, piece1.style.cssText,
+                                                                          piece2.id, piece1.id];
   }
   checkAvailableMoves();
 });
 
 function changeLayout(layoutNr) {
-  document.getElementById("dropdown-menu").style.display = "none";
+  document.getElementById('dropdown-menu').style.display = 'none';
   layoutNumber = layoutNr;
   chosenManually = true;
 
@@ -132,20 +112,19 @@ function changeLayout(layoutNr) {
 // https://stackoverflow.com/a/12646864
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1
-    ));
+    const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
 
 function generateGrid() {
-  const grid = document.getElementById("game");
+  const grid = document.getElementById('game');
   for (let i = 0; i < layouts[layoutNumber].length; i++) {
-    const row = document.createElement("div");
-    row.className = "tile is-ancestor";
+    const row = document.createElement('div');
+    row.className = 'tile is-ancestor';
     for (let j = 0; j < layouts[layoutNumber][i].length; j++) {
-      const col = document.createElement("div");
-      col.className = "tile is-parent";
+      const col = document.createElement('div');
+      col.className = 'tile is-parent';
       row.appendChild(col);
     }
     grid.appendChild(row);
@@ -154,30 +133,25 @@ function generateGrid() {
 
 function generatePiece(colIndex, rowIndex, pieces, curPiece, pieceWidth, pieceHeight) {
   let piecesOnPosition = chosenLayout[colIndex][rowIndex];
-  let piece = document.createElement("div");
-  piece.className = "piece";
-  piece.id = "row: " + rowIndex + ", col: " + colIndex;
+  let piece = document.createElement('div');
+  piece.className = 'piece';
+  piece.id = 'row: ' + rowIndex + ', col: ' + colIndex;
   // noinspection HtmlRequiredAltAttribute
-  piece.innerHTML =
-    `<img style="position: absolute" src="img/Pieces/svg/basePiece.svg"><img style="position:absolute;" src="img/Pieces/svg/${pieces[Math.floor(
-      curPiece)]}">`;
-  piece.addEventListener("click", () => selectPieces(piece));
-  piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100
-  ) + colIndex * 10 + piecesOnPosition;
+  piece.innerHTML = `<img style='position: absolute' src='img/Pieces/svg/basePiece.svg'><img style='position:absolute;' src='img/Pieces/svg/${pieces[Math.floor(
+    curPiece)]}'>`;
+  piece.addEventListener('click', () => selectPieces(piece));
+  piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100) + colIndex * 10 + piecesOnPosition;
   chosenLayout[colIndex][rowIndex]--;
   piece.style.width = `${pieceWidth}px`;
   piece.style.height = `${pieceHeight}px`;
-  piece.style.left = `${colIndex * (0.77 * pieceWidth
-  ) - (piecesOnPosition - 1
-                        ) * 9}px`;
-  piece.style.top = `${rowIndex * 0.84 * pieceHeight + (piecesOnPosition - 1
-  ) * 7}px`;
-  document.getElementById("game").children[colIndex].children[rowIndex].appendChild(piece);
+  piece.style.left = `${colIndex * (0.77 * pieceWidth) - (piecesOnPosition - 1) * 9}px`;
+  piece.style.top = `${rowIndex * 0.84 * pieceHeight + (piecesOnPosition - 1) * 7}px`;
+  document.getElementById('game').children[colIndex].children[rowIndex].appendChild(piece);
 }
 
 function checkAvailableMoves() {
   availableMoves = [];
-  let pieces = document.getElementsByClassName("piece");
+  let pieces = document.getElementsByClassName('piece');
 
   for (let piece of pieces) {
     let neighbourLeft, neighbourRight, maxHeight = piece.style.zIndex;
@@ -186,18 +160,14 @@ function checkAvailableMoves() {
       if (piece.hidden || piece1.hidden) continue;
       if (piece1 === piece) continue;
 
-      let [rowLocationPiece, rowLocationPiece1] = [piece.id.indexOf("row: "), piece1.id.indexOf("row: ")];
-      let [colLocationPiece, colLocationPiece1] = [piece.id.indexOf("col: "), piece1.id.indexOf("col: ")];
-      let [commaLocationPiece, commaLocationPiece1] = [piece.id.indexOf(","), piece1.id.indexOf(",")];
+      let [rowLocationPiece, rowLocationPiece1] = [piece.id.indexOf('row: '), piece1.id.indexOf('row: ')];
+      let [colLocationPiece, colLocationPiece1] = [piece.id.indexOf('col: '), piece1.id.indexOf('col: ')];
+      let [commaLocationPiece, commaLocationPiece1] = [piece.id.indexOf(','), piece1.id.indexOf(',')];
 
-      let [rowPiece, rowPiece1] = [
-        Number.parseInt(piece.id.substring(rowLocationPiece + 5, commaLocationPiece)),
-        Number.parseInt(piece1.id.substring(rowLocationPiece1 + 5, commaLocationPiece1))
-      ];
-      let [colPiece, colPiece1] = [
-        Number.parseInt(piece.id.substring(colLocationPiece + 5)),
-        Number.parseInt(piece1.id.substring(colLocationPiece1 + 5))
-      ];
+      let [rowPiece, rowPiece1] = [Number.parseInt(piece.id.substring(rowLocationPiece + 5, commaLocationPiece)),
+                                   Number.parseInt(piece1.id.substring(rowLocationPiece1 + 5, commaLocationPiece1))];
+      let [colPiece, colPiece1] = [Number.parseInt(piece.id.substring(colLocationPiece + 5)),
+                                   Number.parseInt(piece1.id.substring(colLocationPiece1 + 5))];
 
       let heightPiece = piece.style.zIndex % 10;
       let heightPiece1 = piece1.style.zIndex % 10;
@@ -219,51 +189,37 @@ function checkAvailableMoves() {
   }
 }
 
-function isLoading(needsLoading) {
-  if (needsLoading) {
-    document.getElementById("load").hidden = false;
-  } else {
-    document.getElementById("load").hidden = true;
-
-    setTimeout(() => {
-      document.getElementById("game").hidden = false;
-
-    }, 10000);
-
-  }
-}
-
 function createGame() {
 
   generateGrid();
 
   chosenLayout = JSON.parse(JSON.stringify(layouts[layoutNumber]));
 
-  let pieces = [
-    "bamboo1.svg", "bamboo1.svg", "bamboo1.svg", "bamboo1.svg", "bamboo2.svg", "bamboo2.svg", "bamboo2.svg",
-    "bamboo2.svg", "bamboo3.svg", "bamboo3.svg", "bamboo3.svg", "bamboo3.svg", "bamboo4.svg", "bamboo4.svg",
-    "bamboo4.svg", "bamboo4.svg", "bamboo5.svg", "bamboo5.svg", "bamboo5.svg", "bamboo5.svg", "bamboo6.svg",
-    "bamboo6.svg", "bamboo6.svg", "bamboo6.svg", "bamboo7.svg", "bamboo7.svg", "bamboo7.svg", "bamboo7.svg",
-    "bamboo8.svg", "bamboo8.svg", "bamboo8.svg", "bamboo8.svg", "bamboo9.svg", "bamboo9.svg", "bamboo9.svg",
-    "bamboo9.svg", "char1.svg", "char1.svg", "char1.svg", "char1.svg", "char2.svg", "char2.svg", "char2.svg",
-    "char2.svg", "char3.svg", "char3.svg", "char3.svg", "char3.svg", "char4.svg", "char4.svg", "char4.svg", "char4.svg",
-    "char5.svg", "char5.svg", "char5.svg", "char5.svg", "char6.svg", "char6.svg", "char6.svg", "char6.svg", "char7.svg",
-    "char7.svg", "char7.svg", "char7.svg", "char8.svg", "char8.svg", "char8.svg", "char8.svg", "char9.svg", "char9.svg",
-    "char9.svg", "char9.svg", "dot1.svg", "dot1.svg", "dot1.svg", "dot1.svg", "dot2.svg", "dot2.svg", "dot2.svg",
-    "dot2.svg", "dot3.svg", "dot3.svg", "dot3.svg", "dot3.svg", "dot4.svg", "dot4.svg", "dot4.svg", "dot4.svg",
-    "dot5.svg", "dot5.svg", "dot5.svg", "dot5.svg", "dot6.svg", "dot6.svg", "dot6.svg", "dot6.svg", "dot7.svg",
-    "dot7.svg", "dot7.svg", "dot7.svg", "dot8.svg", "dot8.svg", "dot8.svg", "dot8.svg", "dot9.svg", "dot9.svg",
-    "dot9.svg", "dot9.svg", "fBamboo.svg", "fChrysanthemum.svg", "fOrchid.svg", "fPlum.svg", "gDrag.svg", "gDrag.svg",
-    "gDrag.svg", "gDrag.svg", "rDrag.svg", "rDrag.svg", "rDrag.svg", "rDrag.svg", "wDrag.svg", "wDrag.svg", "wDrag.svg",
-    "wDrag.svg", "seasAutumn.svg", "seasSpring.svg", "seasSummer.svg", "seasWinter.svg", "windE.svg", "windE.svg",
-    "windE.svg", "windE.svg", "windN.svg", "windN.svg", "windN.svg", "windN.svg", "windS.svg", "windS.svg", "windS.svg",
-    "windS.svg", "windW.svg", "windW.svg", "windW.svg", "windW.svg"
-  ];
+  let pieces = ['bamboo1.svg', 'bamboo1.svg', 'bamboo1.svg', 'bamboo1.svg', 'bamboo2.svg', 'bamboo2.svg', 'bamboo2.svg',
+                'bamboo2.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo4.svg', 'bamboo4.svg',
+                'bamboo4.svg', 'bamboo4.svg', 'bamboo5.svg', 'bamboo5.svg', 'bamboo5.svg', 'bamboo5.svg', 'bamboo6.svg',
+                'bamboo6.svg', 'bamboo6.svg', 'bamboo6.svg', 'bamboo7.svg', 'bamboo7.svg', 'bamboo7.svg', 'bamboo7.svg',
+                'bamboo8.svg', 'bamboo8.svg', 'bamboo8.svg', 'bamboo8.svg', 'bamboo9.svg', 'bamboo9.svg', 'bamboo9.svg',
+                'bamboo9.svg', 'char1.svg', 'char1.svg', 'char1.svg', 'char1.svg', 'char2.svg', 'char2.svg',
+                'char2.svg', 'char2.svg', 'char3.svg', 'char3.svg', 'char3.svg', 'char3.svg', 'char4.svg', 'char4.svg',
+                'char4.svg', 'char4.svg', 'char5.svg', 'char5.svg', 'char5.svg', 'char5.svg', 'char6.svg', 'char6.svg',
+                'char6.svg', 'char6.svg', 'char7.svg', 'char7.svg', 'char7.svg', 'char7.svg', 'char8.svg', 'char8.svg',
+                'char8.svg', 'char8.svg', 'char9.svg', 'char9.svg', 'char9.svg', 'char9.svg', 'dot1.svg', 'dot1.svg',
+                'dot1.svg', 'dot1.svg', 'dot2.svg', 'dot2.svg', 'dot2.svg', 'dot2.svg', 'dot3.svg', 'dot3.svg',
+                'dot3.svg', 'dot3.svg', 'dot4.svg', 'dot4.svg', 'dot4.svg', 'dot4.svg', 'dot5.svg', 'dot5.svg',
+                'dot5.svg', 'dot5.svg', 'dot6.svg', 'dot6.svg', 'dot6.svg', 'dot6.svg', 'dot7.svg', 'dot7.svg',
+                'dot7.svg', 'dot7.svg', 'dot8.svg', 'dot8.svg', 'dot8.svg', 'dot8.svg', 'dot9.svg', 'dot9.svg',
+                'dot9.svg', 'dot9.svg', 'fBamboo.svg', 'fChrysanthemum.svg', 'fOrchid.svg', 'fPlum.svg', 'gDrag.svg',
+                'gDrag.svg', 'gDrag.svg', 'gDrag.svg', 'rDrag.svg', 'rDrag.svg', 'rDrag.svg', 'rDrag.svg', 'wDrag.svg',
+                'wDrag.svg', 'wDrag.svg', 'wDrag.svg', 'seasAutumn.svg', 'seasSpring.svg', 'seasSummer.svg',
+                'seasWinter.svg', 'windE.svg', 'windE.svg', 'windE.svg', 'windE.svg', 'windN.svg', 'windN.svg',
+                'windN.svg', 'windN.svg', 'windS.svg', 'windS.svg', 'windS.svg', 'windS.svg', 'windW.svg', 'windW.svg',
+                'windW.svg', 'windW.svg'];
 
-  document.getElementById("dropdown-menu").children[0].children[layoutNumber].className += " is-active";
+  document.getElementById('dropdown-menu').children[0].children[layoutNumber].className += ' is-active';
 
-  let pieceWidth = document.getElementById("game").offsetHeight / 1.2 / chosenLayout[0].length;
-  let pieceHeight = document.getElementById("game").offsetHeight / chosenLayout.length;
+  let pieceWidth = document.getElementById('game').offsetHeight / 1.2 / chosenLayout[0].length;
+  let pieceHeight = document.getElementById('game').offsetHeight / chosenLayout.length;
 
   shuffleArray(pieces);
 
@@ -290,7 +246,7 @@ function createGame() {
 }
 
 function isGameWinnable() {
-  let allPieces = document.getElementsByClassName("piece");
+  let allPieces = document.getElementsByClassName('piece');
   checkAvailableMoves();
 
   for (let i = 0; i < allPieces.length / 2; i++) {
@@ -316,9 +272,9 @@ function isGameWinnable() {
 }
 
 function checkGameState() {
-  if (document.getElementsByClassName("piece").length === 2) {
+  if (document.getElementsByClassName('piece').length === 2) {
     setTimeout(() => {
-      alert("You won!");
+      alert('You won!');
     }, 100);
   } else {
     let winnable = false;
@@ -333,7 +289,7 @@ function checkGameState() {
     }
     if (!winnable) {
       setTimeout(() => {
-        alert("You lost!");
+        alert('You lost!');
       }, 100);
     }
   }
@@ -343,13 +299,13 @@ function selectPieces(piece) {
   if (!availableMoves.includes(piece)) return;
   if (selected.length === 0) {  // Highlight selected piece
     selected.push(piece);
-    selected[0].className = "selected";
+    selected[0].className = 'selected';
   } else if (selected[0] === piece) { // Deselect the currently chosen piece
     selected = [];
-    piece.className = "piece";
+    piece.className = 'piece';
   } else if (selected[0].innerHTML !== piece.innerHTML) { // If the pieces are not the same, select the new one
-    selected[0].className = "piece";
-    piece.className = "selected";
+    selected[0].className = 'piece';
+    piece.className = 'selected';
     selected[0] = piece;
   } else {
     // Remove selected pieces if they're of the same type && the move is legal
@@ -366,8 +322,8 @@ function selectPieces(piece) {
     lastMove = [selected[0], piece];
 
     // Make sure the pieces won't still be selected after undo
-    selected[0].className = "piece";
-    piece.className = "piece";
+    selected[0].className = 'piece';
+    piece.className = 'piece';
     selected[0].hidden = true;
     piece.hidden = true;
 
@@ -385,18 +341,18 @@ function newGame() {
   }
 
 
-  const grid = document.getElementById("game");
+  const grid = document.getElementById('game');
   for (const row of grid.children) {
     for (const col of row.children) {
-      col.innerHTML = "";
+      col.innerHTML = '';
     }
   }
 
   currentHints = totalHints;
   hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
 
-  for (let child of document.getElementById("dropdown-menu").children[0].children) {
-    child.className = child.className.replaceAll(" is-active", "");
+  for (let child of document.getElementById('dropdown-menu').children[0].children) {
+    child.className = child.className.replaceAll(' is-active', '');
   }
 
 

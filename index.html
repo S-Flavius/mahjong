@@ -1,75 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta charset='utf-8'>
+  <meta content='IE=edge' http-equiv='X-UA-Compatible'>
+  <meta content='width=device-width, initial-scale=1' name='viewport'>
   <title>Mahjong</title>
-  <link href="css/main.css" rel="stylesheet">
+  <link href='css/main.css' rel='stylesheet'>
 </head>
 <body>
-<nav class="navbar ">
-  <div class="navbar-brand has-text-white">
+<nav class='navbar '>
+  <div class='navbar-brand has-text-white'>
     <h1><b>Mahjong</b></h1>
   </div>
 </nav>
-<section class="container">
-  <div id="load"></div>
+<section class='container'>
 
-  <div class="container" id="game">
-  </div>
-  <div class="container is-4-desktop">
+  <div class='container' id='game'></div>
+  <div class='container is-4-desktop'>
     <div>
-      <div class="dropdown">
-        <div class="dropdown-trigger">
-          <button aria-controls="dropdown-menu" aria-haspopup="true" class="button" id="dropDownButton">
-            <span>Layouts</span>
-            <span class="icon is-small">
-              <i aria-hidden="true" class="fas fa-angle-down"></i>
+      <div class='dropdown'>
+        <div class='dropdown-trigger'>
+          <button aria-controls='dropdown-menu' aria-haspopup='true' class='button' id='dropDownButton'>
+            <span>Layouts</span> <span class='icon is-small'>
+              <i aria-hidden='true' class='fas fa-angle-down'></i>
             </span>
           </button>
         </div>
-        <div class="dropdown-menu" id="dropdown-menu" role="menu">
-          <div class="dropdown-content">
-            <a class="dropdown-item" id="flower">
-              Flower
-            </a>
-            <a class="dropdown-item" id="pyramid">
-              Pyramid
-            </a>
-            <a class="dropdown-item" id="snake">
-              Snake
-            </a>
+        <div class='dropdown-menu' id='dropdown-menu' role='menu'>
+          <div class='dropdown-content'>
+            <a class='dropdown-item' id='flower'> Flower </a> <a class='dropdown-item' id='pyramid'> Pyramid </a> <a
+            class='dropdown-item'
+            id='snake'> Snake </a>
           </div>
         </div>
       </div>
 
     </div>
-    <button class="row" id="new-game">New game</button>
-    <button class="row" id="hint">Hint</button>
-    <button class="row" id="undo">Undo move</button>
-    <button class="row" id="reshuffle">Reshuffle</button>
+    <button class='row' id='new-game'>New game</button>
+    <button class='row' id='hint'>Hint</button>
+    <button class='row' id='undo'>Undo move</button>
+    <button class='row' id='reshuffle'>Reshuffle</button>
 
   </div>
 </section>
 
-<footer class="footer has-text-centered">
+<footer class='footer has-text-centered'>
   <h2><b>Made by</b></h2>
-  <img src="img/Branding/github.png"><a href="https://www.github.com/s-flavius">S-Flavius</a>
-  <br>
-  <img src="made-with-bulma.png">
-  <br>
+  <img src='img/Branding/github.png'><a href='https://www.github.com/s-flavius'>S-Flavius</a> <br>
+  <img src='made-with-bulma.png'> <br>
   <div>
-    <img height="50em" src="img/Branding/Bug.png" width="50em">
-    <h2>Please report any bugs on <a href="https://github.com/S-Flavius/mahjong/issues">the project's
-      repository</a>
+    <img height='50em' src='img/Branding/Bug.png' width='50em'>
+    <h2>Please report any bugs on <a href='https://github.com/S-Flavius/mahjong/issues'>the project's repository</a>
     </h2>
   </div>
 </footer>
-<script src="lib/main.js" type="text/javascript"></script>
-<script src="js/vendor/modernizr-3.10.0.min.js"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js"></script>
-<script src="js/plugins.js"></script>
-<script src="js/main.js"></script>
+<script src='lib/main.js' type='text/javascript'></script>
+<script src='js/vendor/modernizr-3.10.0.min.js'></script>
+<script src='https://polyfill.io/v3/polyfill.min.js'></script>
+<script src='js/plugins.js'></script>
+<script src='js/main.js'></script>
 </body>
 </html>

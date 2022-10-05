@@ -6,100 +6,103 @@
 // Just uncomment the following block to see the result.
 
 // 1. Import the initial variables
-@import "../node_modules/bulma/sass/utilities/initial-variables";
+@import '../node_modules/bulma/sass/utilities/initial-variables';
 
 // 2. Set your own initial variables
 // Update the blue shade, used for links
-$blue: #06bcef;
+$blue              : #06BCEF;
 // Add pink and its invert
-$pink: #ff8080;
-$pink-invert: #fff;
+$pink              : #FF8080;
+$pink-invert       : #FFF;
 // Update the sans-serif font family
-$family-sans-serif: "Helvetica", "Arial", sans-serif;
+$family-sans-serif : 'Helvetica', 'Arial', sans-serif;
 
 // 3. Set the derived variables
 // Use the new pink as the primary color
-$primary: $pink;
-$primary-invert: $pink-invert;
+$primary           : $pink;
+$primary-invert    : $pink-invert;
 
 // 4. Import the rest of Bulma
 
 
-@import "../node_modules/bulma/bulma";
+@import '../node_modules/bulma/bulma';
 
 
 html {
-  background-color: #4A484B;
+  background-color : #4A484B;
 }
 
 #game {
-  height: 51em;
-  width: 42.5em;
+  height : 51em;
+  width  : 42.5em;
 }
 
 .tile.is-ancestor {
-  margin: 0;
-  padding: 0;
-  width: auto;
-  height: auto;
+  height  : auto;
+  margin  : 0;
+  padding : 0;
+  width   : auto;
 }
 
 .tile.is-ancestor:not(:last-child) {
-  margin: 0;
-  padding: 0;
-  width: auto;
-  height: auto;
+  height  : auto;
+  margin  : 0;
+  padding : 0;
+  width   : auto;
 }
 
 .tile.is-parent {
-  margin: 0;
-  padding: 0;
-  width: auto;
-  height: auto;
+  height  : auto;
+  margin  : 0;
+  padding : 0;
+  width   : auto;
 }
 
 .tile {
-  margin: 0;
-  padding: 0;
-  width: auto;
-  height: auto;
+  height  : auto;
+  margin  : 0;
+  padding : 0;
+  width   : auto;
 }
 
 .navbar .navbar-brand {
-  background: #121212;
-  text-align: center;
-  display: block;
-  width: 100%;
+  background : #121212;
+  display    : block;
+  font-size  : x-large;
+  text-align : center;
+  width      : 100%;
 }
 
 .piece {
-  background: transparent;
-  width: auto;
-  height: auto;
-  position: absolute;
+  background : transparent;
+  height     : auto;
+  position   : absolute;
+  width      : auto;
 
   &:hover {
-    background: darkgrey;
+    background : darkgrey;
   }
 }
 
 .hint {
-  z-index: 99;
-  background: bulmaRgba($yellow, 70);
+  background : bulmaRgba($yellow, 70);
+  z-index    : 99;
 }
 
 .selected {
-  position: absolute;
-  background: rebeccapurple;
+  background : rebeccapurple;
+  position   : absolute;
 }
 
 #load {
-  top: calc(50% - 279px / 2);
-  left: calc(50% - 489px / 2);
+  height   : 279px;
+  left     : calc(50% - 489px / 2);
 
-  width: 489px;
-  height: 279px;
-  position: fixed;
-  z-index: 9999;
-  background: url('/img/loading/sliding_square_loader_view.gif') center center;
+  position : fixed;
+  top      : calc(50% - 279px / 2);
+  width    : 489px;
+  z-index  : 9999;
 }
+
+
+//Loading https://codepen.io/kathykato/pen/YzKGrqd
