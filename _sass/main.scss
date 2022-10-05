@@ -29,7 +29,7 @@ $primary-invert: $pink-invert;
 
 
 html {
-  background-color: darkslategrey;
+  background-color: #4A484B;
 }
 
 #game {
@@ -57,7 +57,6 @@ html {
   width: auto;
   height: auto;
 }
-
 
 .tile {
   margin: 0;
@@ -92,4 +91,15 @@ html {
 .selected {
   position: absolute;
   background: rebeccapurple;
+}
+
+#load {
+  top: calc(50% - 279px / 2);
+  left: calc(50% - 489px / 2);
+
+  width: 489px;
+  height: 279px;
+  position: fixed;
+  z-index: 9999;
+  background: url('/img/loading/sliding_square_loader_view.gif') center center;
 }

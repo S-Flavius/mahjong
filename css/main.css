@@ -10282,7 +10282,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 }
 
 html {
-  background-color: darkslategrey;
+  background-color: #4A484B;
 }
 
 #game {
@@ -10343,4 +10343,14 @@ html {
 .selected {
   position: absolute;
   background: rebeccapurple;
+}
+
+#load {
+  top: calc(50% - 139.5px);
+  left: calc(50% - 244.5px);
+  width: 489px;
+  height: 279px;
+  position: fixed;
+  z-index: 9999;
+  background: url("/img/loading/sliding_square_loader_view.gif") center center;
 }

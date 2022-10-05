@@ -2,6 +2,15 @@ window.onload = () => createGame();
 
 document.getElementById("new-game").addEventListener("click", newGame);
 
+document.onreadystatechange = function () {
+  document.getElementById("load").hidden = false;
+
+  let state = document.readyState;
+  if (state === "complete") {
+    document.getElementById("load").hidden = true;
+  }
+};
+
 
 let selected = [];
 let lastMove = [];
@@ -148,7 +157,10 @@ function generatePiece(colIndex, rowIndex, pieces, curPiece, pieceWidth, pieceHe
   let piece = document.createElement("div");
   piece.className = "piece";
   piece.id = "row: " + rowIndex + ", col: " + colIndex;
-  piece.innerHTML = "<img src=\"img/Pieces/" + pieces[Math.floor(curPiece)] + "\" alt=\"Mahjong piece\">";
+  // noinspection HtmlRequiredAltAttribute
+  piece.innerHTML =
+    `<img style="position: absolute" src="img/Pieces/svg/basePiece.svg"><img style="position:absolute;" src="img/Pieces/svg/${pieces[Math.floor(
+      curPiece)]}">`;
   piece.addEventListener("click", () => selectPieces(piece));
   piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100
   ) + colIndex * 10 + piecesOnPosition;
@@ -207,6 +219,20 @@ function checkAvailableMoves() {
   }
 }
 
+function isLoading(needsLoading) {
+  if (needsLoading) {
+    document.getElementById("load").hidden = false;
+  } else {
+    document.getElementById("load").hidden = true;
+
+    setTimeout(() => {
+      document.getElementById("game").hidden = false;
+
+    }, 10000);
+
+  }
+}
+
 function createGame() {
 
   generateGrid();
@@ -214,13 +240,24 @@ function createGame() {
   chosenLayout = JSON.parse(JSON.stringify(layouts[layoutNumber]));
 
   let pieces = [
-    "MJd1-.svg.png", "MJd2-.svg.png", "MJd3-.svg.png", "MJf1-.svg.png", "MJf2-.svg.png", "MJf3-.svg.png",
-    "MJf4-.svg.png", "MJh1-.svg.png", "MJh2-.svg.png", "MJh3-.svg.png", "MJh4-.svg.png", "MJh5-.svg.png",
-    "MJh6-.svg.png", "MJh7-.svg.png", "MJh8-.svg.png", "MJs1-.svg.png", "MJs2-.svg.png", "MJs3-.svg.png",
-    "MJs4-.svg.png", "MJs5-.svg.png", "MJs6-.svg.png", "MJs7-.svg.png", "MJs8-.svg.png", "MJs9-.svg.png",
-    "MJt1-.svg.png", "MJt2-.svg.png", "MJt3-.svg.png", "MJt4-.svg.png", "MJt5-.svg.png", "MJt6-.svg.png",
-    "MJt7-.svg.png", "MJt8-.svg.png", "MJt9-.svg.png", "MJw1-.svg.png", "MJw2-.svg.png", "MJw3-.svg.png",
-    "MJw4-.svg.png", "MJw5-.svg.png", "MJw6-.svg.png", "MJw7-.svg.png", "MJw8-.svg.png", "MJw9-.svg.png"
+    "bamboo1.svg", "bamboo1.svg", "bamboo1.svg", "bamboo1.svg", "bamboo2.svg", "bamboo2.svg", "bamboo2.svg",
+    "bamboo2.svg", "bamboo3.svg", "bamboo3.svg", "bamboo3.svg", "bamboo3.svg", "bamboo4.svg", "bamboo4.svg",
+    "bamboo4.svg", "bamboo4.svg", "bamboo5.svg", "bamboo5.svg", "bamboo5.svg", "bamboo5.svg", "bamboo6.svg",
+    "bamboo6.svg", "bamboo6.svg", "bamboo6.svg", "bamboo7.svg", "bamboo7.svg", "bamboo7.svg", "bamboo7.svg",
+    "bamboo8.svg", "bamboo8.svg", "bamboo8.svg", "bamboo8.svg", "bamboo9.svg", "bamboo9.svg", "bamboo9.svg",
+    "bamboo9.svg", "char1.svg", "char1.svg", "char1.svg", "char1.svg", "char2.svg", "char2.svg", "char2.svg",
+    "char2.svg", "char3.svg", "char3.svg", "char3.svg", "char3.svg", "char4.svg", "char4.svg", "char4.svg", "char4.svg",
+    "char5.svg", "char5.svg", "char5.svg", "char5.svg", "char6.svg", "char6.svg", "char6.svg", "char6.svg", "char7.svg",
+    "char7.svg", "char7.svg", "char7.svg", "char8.svg", "char8.svg", "char8.svg", "char8.svg", "char9.svg", "char9.svg",
+    "char9.svg", "char9.svg", "dot1.svg", "dot1.svg", "dot1.svg", "dot1.svg", "dot2.svg", "dot2.svg", "dot2.svg",
+    "dot2.svg", "dot3.svg", "dot3.svg", "dot3.svg", "dot3.svg", "dot4.svg", "dot4.svg", "dot4.svg", "dot4.svg",
+    "dot5.svg", "dot5.svg", "dot5.svg", "dot5.svg", "dot6.svg", "dot6.svg", "dot6.svg", "dot6.svg", "dot7.svg",
+    "dot7.svg", "dot7.svg", "dot7.svg", "dot8.svg", "dot8.svg", "dot8.svg", "dot8.svg", "dot9.svg", "dot9.svg",
+    "dot9.svg", "dot9.svg", "fBamboo.svg", "fChrysanthemum.svg", "fOrchid.svg", "fPlum.svg", "gDrag.svg", "gDrag.svg",
+    "gDrag.svg", "gDrag.svg", "rDrag.svg", "rDrag.svg", "rDrag.svg", "rDrag.svg", "wDrag.svg", "wDrag.svg", "wDrag.svg",
+    "wDrag.svg", "seasAutumn.svg", "seasSpring.svg", "seasSummer.svg", "seasWinter.svg", "windE.svg", "windE.svg",
+    "windE.svg", "windE.svg", "windN.svg", "windN.svg", "windN.svg", "windN.svg", "windS.svg", "windS.svg", "windS.svg",
+    "windS.svg", "windW.svg", "windW.svg", "windW.svg", "windW.svg"
   ];
 
   document.getElementById("dropdown-menu").children[0].children[layoutNumber].className += " is-active";
