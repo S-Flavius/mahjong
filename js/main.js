@@ -145,7 +145,7 @@ function generatePiece(colIndex, rowIndex, pieces, curPiece, pieceWidth, pieceHe
   piece.style.width = `${pieceWidth}px`;
   piece.style.height = `${pieceHeight}px`;
   piece.style.left = `${colIndex * (0.77 * pieceWidth) - (piecesOnPosition - 1) * 9 + (chosenLayout.length / 10 * pieceWidth)}px`;
-  piece.style.top = `${rowIndex * 0.84 * pieceHeight + (piecesOnPosition - 1) * 7}px`;
+  piece.style.top = `${rowIndex * 0.84 * pieceHeight + (piecesOnPosition - 1) * 7 + 2}px`;
   document.getElementById('game').children[colIndex].children[rowIndex].appendChild(piece);
 }
 
