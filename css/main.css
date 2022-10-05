@@ -10331,7 +10331,6 @@ html {
   height: auto;
   position: absolute;
 }
-
 .piece:hover {
   background: darkgrey;
 }
