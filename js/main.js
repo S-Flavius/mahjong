@@ -2,6 +2,15 @@ window.onload = () => createGame();
 
 document.getElementById("new-game").addEventListener("click", newGame);
 
+document.onreadystatechange = function () {
+  document.getElementById("load").hidden = false;
+
+  let state = document.readyState;
+  if (state === "complete") {
+    document.getElementById("load").hidden = true;
+  }
+};
+
 
 let selected = [];
 let lastMove = [];
@@ -210,6 +219,20 @@ function checkAvailableMoves() {
   }
 }
 
+function isLoading(needsLoading) {
+  if (needsLoading) {
+    document.getElementById("load").hidden = false;
+  } else {
+    document.getElementById("load").hidden = true;
+
+    setTimeout(() => {
+      document.getElementById("game").hidden = false;
+
+    }, 10000);
+
+  }
+}
+
 function createGame() {
 
   generateGrid();
@@ -232,7 +255,7 @@ function createGame() {
     "dot7.svg", "dot7.svg", "dot7.svg", "dot8.svg", "dot8.svg", "dot8.svg", "dot8.svg", "dot9.svg", "dot9.svg",
     "dot9.svg", "dot9.svg", "fBamboo.svg", "fChrysanthemum.svg", "fOrchid.svg", "fPlum.svg", "gDrag.svg", "gDrag.svg",
     "gDrag.svg", "gDrag.svg", "rDrag.svg", "rDrag.svg", "rDrag.svg", "rDrag.svg", "wDrag.svg", "wDrag.svg", "wDrag.svg",
-    "wDrag.svg", "seasA.svg", "seasSpring.svg", "seasSummer.svg", "seasWinter.svg", "windE.svg", "windE.svg",
+    "wDrag.svg", "seasAutumn.svg", "seasSpring.svg", "seasSummer.svg", "seasWinter.svg", "windE.svg", "windE.svg",
     "windE.svg", "windE.svg", "windN.svg", "windN.svg", "windN.svg", "windN.svg", "windS.svg", "windS.svg", "windS.svg",
     "windS.svg", "windW.svg", "windW.svg", "windW.svg", "windW.svg"
   ];
