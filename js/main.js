@@ -11,35 +11,32 @@ let currentHints = totalHints;
 let hintButton = document.getElementById('hint');
 hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
 
-let layouts = [// flower
-  [[0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0],
-   [1, 1, 1, 0, 0, 0, 1, 1, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0],
-   [0, 0, 0, 1, 1, 1, 0, 0, 0]],
-
-  // pyramid
-  [[0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 1, 2, 1, 1, 0, 0], [0, 0, 1, 2, 3, 2, 1, 0, 0],
-   [1, 1, 2, 3, 4, 3, 2, 1, 1], [0, 0, 1, 2, 3, 2, 1, 0, 0], [0, 0, 1, 1, 2, 1, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0],
-   [0, 0, 0, 0, 1, 0, 0, 0, 0]],
-
-  // snake
-  [[1, 2, 0, 1, 1, 2, 1, 1, 0], [1, 2, 0, 1, 2, 3, 2, 1, 0], [1, 3, 0, 1, 1, 4, 4, 1, 0], [1, 2, 0, 0, 0, 0, 3, 0, 0],
-   [3, 2, 0, 0, 0, 1, 2, 3, 0], [0, 2, 0, 0, 0, 2, 0, 0, 0], [0, 2, 3, 0, 4, 3, 0, 0, 0], [0, 0, 3, 0, 4, 0, 0, 0, 0],
-   [0, 0, 3, 3, 4, 0, 0, 0, 0]]];
+let layouts = {
+  Flower : [[0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0],
+            [0, 0, 1, 0, 0, 0, 1, 0, 0], [1, 1, 1, 0, 0, 0, 1, 1, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0],
+            [0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 1, 0, 0, 0]],
+  Pyramid: [[0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 1, 2, 1, 1, 0, 0],
+            [0, 0, 1, 2, 3, 2, 1, 0, 0], [1, 1, 2, 3, 4, 3, 2, 1, 1], [0, 0, 1, 2, 3, 2, 1, 0, 0],
+            [0, 0, 1, 1, 2, 1, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0]],
+  Snake  : [[1, 2, 0, 1, 1, 2, 1, 1, 0], [1, 2, 0, 1, 2, 3, 2, 1, 0], [1, 3, 0, 1, 1, 4, 4, 1, 0],
+            [1, 2, 0, 0, 0, 0, 3, 0, 0], [3, 2, 0, 0, 0, 1, 2, 3, 0], [0, 2, 0, 0, 0, 2, 0, 0, 0],
+            [0, 2, 3, 0, 4, 3, 0, 0, 0], [0, 0, 3, 0, 4, 0, 0, 0, 0], [0, 0, 3, 3, 4, 0, 0, 0, 0]]
+};
 
 
-let layoutNumber = 0;
+let layoutKey = 'Flower';
 let chosenLayout = 0;
 let chosenManually = false;
 
-document.getElementById('flower').addEventListener('click', () => {
-  changeLayout(0);
-});
-document.getElementById('pyramid').addEventListener('click', () => {
-  changeLayout(1);
-});
-document.getElementById('snake').addEventListener('click', () => {
-  changeLayout(2);
-});
+for (let key in layouts) {
+  let element = document.createElement('a');
+  element.className = 'dropdown-item';
+  element.id = key.toString();
+  element.innerText = key.toString();
+  element.addEventListener('click', () => changeLayout(key));
+  document.getElementById('dropdown-menu').children[0].appendChild(element);
+}
+
 
 document.getElementById('undo').addEventListener('click', () => {
   if (selected.length !== 0) {
@@ -101,9 +98,9 @@ document.getElementById('reshuffle').addEventListener('click', () => {
   checkAvailableMoves();
 });
 
-function changeLayout(layoutNr) {
+function changeLayout(key) {
   document.getElementById('dropdown-menu').style.display = 'none';
-  layoutNumber = layoutNr;
+  layoutKey = key;
   chosenManually = true;
 
   newGame();
@@ -119,10 +116,10 @@ function shuffleArray(array) {
 
 function generateGrid() {
   const grid = document.getElementById('game');
-  for (let i = 0; i < layouts[layoutNumber].length; i++) {
+  for (let i = 0; i < layouts[layoutKey].length; i++) {
     const row = document.createElement('div');
     row.className = 'tile is-ancestor';
-    for (let j = 0; j < layouts[layoutNumber][i].length; j++) {
+    for (let j = 0; j < layouts[layoutKey][i].length; j++) {
       const col = document.createElement('div');
       col.className = 'tile is-parent';
       row.appendChild(col);
@@ -193,7 +190,7 @@ function createGame() {
 
   generateGrid();
 
-  chosenLayout = JSON.parse(JSON.stringify(layouts[layoutNumber]));
+  chosenLayout = JSON.parse(JSON.stringify(layouts[layoutKey]));
 
   let pieces = ['bamboo1.svg', 'bamboo1.svg', 'bamboo1.svg', 'bamboo1.svg', 'bamboo2.svg', 'bamboo2.svg', 'bamboo2.svg',
                 'bamboo2.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo4.svg', 'bamboo4.svg',
@@ -216,7 +213,11 @@ function createGame() {
                 'windN.svg', 'windN.svg', 'windS.svg', 'windS.svg', 'windS.svg', 'windS.svg', 'windW.svg', 'windW.svg',
                 'windW.svg', 'windW.svg'];
 
-  document.getElementById('dropdown-menu').children[0].children[layoutNumber].className += ' is-active';
+  let dropdownList = document.getElementById('dropdown-menu').children[0].children;
+  Array.from(dropdownList).forEach(e => {
+    if (e.id == layoutKey) e.class += ' is-active';
+  });
+
 
   let pieceWidth = document.getElementById('game').offsetHeight / 1.2 / chosenLayout[0].length;
   let pieceHeight = document.getElementById('game').offsetHeight / chosenLayout.length;
@@ -337,7 +338,7 @@ function selectPieces(piece) {
 function newGame() {
 
   if (!chosenManually) {
-    layoutNumber = Math.floor(Math.random() * layouts.length);
+    layoutKey = Math.floor(Math.random() * layouts.length);
   }
 
 
