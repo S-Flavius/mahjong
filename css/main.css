@@ -10322,6 +10322,7 @@ html {
   background: #121212;
   display: block;
   font-size: x-large;
+  position: fixed;
   text-align: center;
   width: 100%;
 }
