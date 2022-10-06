@@ -213,7 +213,7 @@ function createGame() {
 
   let dropdownList = document.getElementById('dropdown-menu').children[0].children;
   Array.from(dropdownList).forEach(e => {
-    if (e.id == layoutKey) e.class += ' is-active';
+    if (e.id == layoutKey) e.className += ' is-active';
   });
 
 
