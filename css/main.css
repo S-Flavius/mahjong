@@ -10287,6 +10287,7 @@ html {
 
 #game {
   height: 51em;
+  position: sticky;
   width: 42.5em;
 }
 
@@ -10329,9 +10330,9 @@ html {
 
 .piece {
   background: transparent;
-  height: auto;
+  height: 90.6px;
   position: absolute;
-  width: auto;
+  width: 75.5px;
 }
 .piece:hover {
   background: darkgrey;

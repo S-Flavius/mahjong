@@ -134,15 +134,13 @@ function generatePiece(colIndex, rowIndex, pieces, curPiece, pieceWidth, pieceHe
   piece.className = 'piece';
   piece.id = 'row: ' + rowIndex + ', col: ' + colIndex;
   // noinspection HtmlRequiredAltAttribute
-  piece.innerHTML = `<img style='position: absolute' src='img/Pieces/svg/basePiece.svg'><img style='position:absolute;' src='img/Pieces/svg/${pieces[Math.floor(
+  piece.innerHTML = `<img class='piece'  src='img/Pieces/svg/basePiece.svg'><img class='piece' src='img/Pieces/svg/${pieces[Math.floor(
     curPiece)]}'>`;
   piece.addEventListener('click', () => selectPieces(piece));
   piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100) + colIndex * 10 + piecesOnPosition;
   chosenLayout[colIndex][rowIndex]--;
-  piece.style.width = `${pieceWidth}px`;
-  piece.style.height = `${pieceHeight}px`;
-  piece.style.left = `${colIndex * (0.77 * pieceWidth) - (piecesOnPosition - 1) * 9 + (chosenLayout.length / 10 * pieceWidth)}px`;
-  piece.style.top = `${rowIndex * 0.84 * pieceHeight + (piecesOnPosition - 1) * 7 + 2}px`;
+  piece.style.left = `${colIndex * 58.135 - (piecesOnPosition - 1) * 9 + (chosenLayout.length / 10 * pieceWidth)}px`;
+  piece.style.top = `${rowIndex * 76.104 + (piecesOnPosition - 1) * 7 + 15}px`;
   document.getElementById('game').children[colIndex].children[rowIndex].appendChild(piece);
 }
 

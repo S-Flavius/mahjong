@@ -33,8 +33,9 @@ html {
 }
 
 #game {
-  height : 51em;
-  width  : 42.5em;
+  height   : 51em;
+  position : sticky;
+  width    : 42.5em;
 }
 
 .tile.is-ancestor {
@@ -76,9 +77,9 @@ html {
 
 .piece {
   background : transparent;
-  height     : auto;
+  height     : 90.6px;
   position   : absolute;
-  width      : auto;
+  width      : 75.5px;
 
   &:hover {
     background : darkgrey;
