@@ -128,18 +128,18 @@ function generateGrid() {
   }
 }
 
-function generatePiece(colIndex, rowIndex, pieces, curPiece, pieceWidth, pieceHeight) {
+function generatePiece(colIndex, rowIndex, pieces, curPiece) {
   let piecesOnPosition = chosenLayout[colIndex][rowIndex];
   let piece = document.createElement('div');
   piece.className = 'piece';
   piece.id = 'row: ' + rowIndex + ', col: ' + colIndex;
   // noinspection HtmlRequiredAltAttribute
-  piece.innerHTML = `<img class='piece'  src='img/Pieces/svg/basePiece.svg'><img class='piece' src='img/Pieces/svg/${pieces[Math.floor(
+  piece.innerHTML = `<img class='pieceImage'  src='img/Pieces/svg/basePiece.svg'><img  class='pieceImage' src='img/Pieces/svg/${pieces[Math.floor(
     curPiece)]}'>`;
   piece.addEventListener('click', () => selectPieces(piece));
   piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100) + colIndex * 10 + piecesOnPosition;
   chosenLayout[colIndex][rowIndex]--;
-  piece.style.left = `${colIndex * 58.135 - (piecesOnPosition - 1) * 9 + (chosenLayout.length / 10 * pieceWidth)}px`;
+  piece.style.left = `${colIndex * 58.135 - (piecesOnPosition - 1) * 9 + (chosenLayout.length / 10 * 75.5)}px`;
   piece.style.top = `${rowIndex * 76.104 + (piecesOnPosition - 1) * 7 + 15}px`;
   document.getElementById('game').children[colIndex].children[rowIndex].appendChild(piece);
 }
@@ -217,9 +217,6 @@ function createGame() {
   });
 
 
-  let pieceWidth = document.getElementById('game').offsetHeight / 1.2 / chosenLayout[0].length;
-  let pieceHeight = document.getElementById('game').offsetHeight / chosenLayout.length;
-
   shuffleArray(pieces);
 
   let curPiece = 0;
@@ -232,7 +229,7 @@ function createGame() {
         if (chosenLayout[colIndex][rowIndex] === 0) continue;
         hasPieces = true;
         if (Math.random() >= 0.5) continue;
-        generatePiece(colIndex, rowIndex, pieces, curPiece, pieceWidth, pieceHeight);
+        generatePiece(colIndex, rowIndex, pieces, curPiece);
         curPiece += 0.5;
       }
     }
@@ -298,13 +295,13 @@ function selectPieces(piece) {
   if (!availableMoves.includes(piece)) return;
   if (selected.length === 0) {  // Highlight selected piece
     selected.push(piece);
-    selected[0].className = 'selected';
+    selected[0].className += ' selected';
   } else if (selected[0] === piece) { // Deselect the currently chosen piece
     selected = [];
     piece.className = 'piece';
   } else if (selected[0].innerHTML !== piece.innerHTML) { // If the pieces are not the same, select the new one
     selected[0].className = 'piece';
-    piece.className = 'selected';
+    piece.className += ' selected';
     selected[0] = piece;
   } else {
     // Remove selected pieces if they're of the same type && the move is legal

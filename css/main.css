@@ -10334,18 +10334,30 @@ html {
   position: absolute;
   width: 75.5px;
 }
-.piece:hover {
-  background: darkgrey;
+
+.pieceImage {
+  background: transparent;
+  height: 90.6px;
+  position: absolute;
+  width: 75.5px;
+}
+
+.pieceImage:hover {
+  background: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  z-index: 99999;
 }
 
 .hint {
-  background: #ffe08a;
-  z-index: 99;
+  background: rgba(255, 224, 138, 0.7);
+  position: absolute;
+  z-index: 99999;
 }
 
 .selected {
-  background: rebeccapurple;
+  background: rgba(255, 71, 15, 0.7);
   position: absolute;
+  z-index: 99999;
 }
 
 #load {

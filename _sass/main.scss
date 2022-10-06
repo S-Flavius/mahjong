@@ -80,21 +80,33 @@ html {
   height     : 90.6px;
   position   : absolute;
   width      : 75.5px;
+}
+
+.pieceImage {
+  background : transparent;
+  height     : 90.6px;
+  position   : absolute;
+  width      : 75.5px;
 
   &:hover {
-    background : darkgrey;
+    background : bulmaRgba($white, 0.7);
+    position   : absolute;
+    z-index    : 99999;
   }
 }
 
 .hint {
-  background : bulmaRgba($yellow, 70);
-  z-index    : 99;
+  background : bulmaRgba($yellow, 0.7);
+  position   : absolute;
+  z-index    : 99999;
 }
 
 .selected {
-  background : rebeccapurple;
+  background : bulmaRgba($orange, 0.7);
   position   : absolute;
+  z-index    : 99999;
 }
+
 
 #load {
   height   : 279px;
