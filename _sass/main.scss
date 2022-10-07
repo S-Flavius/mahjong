@@ -33,7 +33,7 @@ html {
 }
 
 #game {
-  height   : 51em;
+  height   : 49.8em;
   position : sticky;
   width    : 42.5em;
 }
@@ -84,7 +84,7 @@ html {
 
 
 .pieceImage:hover {
-  background : bulmaRgba($white, 0.7);
+  background : bulmaRgba($pink, 0.4);
   position   : absolute;
   z-index    : 99999;
 }
@@ -99,13 +99,36 @@ html {
 }
 
 .hint {
-  background : bulmaRgba($yellow, 0.7);
+  background : bulmaRgba($yellow, 0.4);
 }
 
 .selected {
-  background : bulmaRgba($orange, 0.7);
+  background : bulmaRgba($green, 0.4);
 }
 
+body::-webkit-scrollbar {
+  width : 1rem;
+}
+
+body::-webkit-scrollbar-track {
+  background : #181818;
+}
+
+body::-webkit-scrollbar-thumb {
+  background : black;
+}
+
+.button {
+  background : #121212;
+  border     : 2px solid #121212;
+  color      : #FFF;
+
+  &:hover, &:active, &:focus {
+    background : darkslategrey;
+    border     : 2px solid #121212;
+    color      : white;
+  }
+}
 
 #load {
   height   : 279px;

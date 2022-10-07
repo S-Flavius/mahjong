@@ -10286,7 +10286,7 @@ html {
 }
 
 #game {
-  height: 51em;
+  height: 49.8em;
   position: sticky;
   width: 42.5em;
 }
@@ -10336,7 +10336,7 @@ html {
 }
 
 .pieceImage:hover {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 128, 128, 0.4);
   position: absolute;
   z-index: 99999;
 }
@@ -10350,11 +10350,35 @@ html {
 }
 
 .hint {
-  background: rgba(255, 224, 138, 0.7);
+  background: rgba(255, 224, 138, 0.4);
 }
 
 .selected {
-  background: rgba(255, 71, 15, 0.7);
+  background: rgba(72, 199, 142, 0.4);
+}
+
+body::-webkit-scrollbar {
+  width: 1rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: #181818;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: black;
+}
+
+.button {
+  background: #121212;
+  border: 2px solid #121212;
+  color: #FFF;
+}
+
+.button:hover, .button:active, .button:focus {
+  background: darkslategrey;
+  border: 2px solid #121212;
+  color: white;
 }
 
 #load {
