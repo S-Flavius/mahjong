@@ -10328,14 +10328,7 @@ html {
   width: 100%;
 }
 
-.piece {
-  background: transparent;
-  height: 90.6px;
-  position: absolute;
-  width: 75.5px;
-}
-
-.pieceImage {
+.piece, .basePiece, .pieceImage {
   background: transparent;
   height: 90.6px;
   position: absolute;
@@ -10348,16 +10341,20 @@ html {
   z-index: 99999;
 }
 
+.hint, .selected {
+  height: 90.6px;
+  pointer-events: none;
+  position: absolute;
+  width: 75.5px;
+  z-index: 99999;
+}
+
 .hint {
   background: rgba(255, 224, 138, 0.7);
-  position: absolute;
-  z-index: 99999;
 }
 
 .selected {
   background: rgba(255, 71, 15, 0.7);
-  position: absolute;
-  z-index: 99999;
 }
 
 #load {

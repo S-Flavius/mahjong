@@ -5,6 +5,7 @@ document.getElementById('new-game').addEventListener('click', newGame);
 let selected = [];
 let lastMove = [];
 let availableMoves = [];
+let unavailableMoves = [];
 let totalHints = 5;
 let currentHints = totalHints;
 
@@ -68,16 +69,24 @@ document.getElementById('hint').addEventListener('click', () => {
 
   let chosenHint = hints[Math.floor(Math.random() * hints.length)];
 
+  let [hintDiv, hintDiv1] = [document.createElement('div'), document.createElement('div')];
+  [hintDiv.className, hintDiv1.className] = ['hint', 'hint'];
+  [hintDiv.style.left, hintDiv1.style.left] = [chosenHint[0].style.left, chosenHint[1].style.left];
+  [hintDiv.style.top, hintDiv1.style.top] = [chosenHint[0].style.top, chosenHint[1].style.top];
+  [hintDiv.style.zIndex, hintDiv1.style.zIndex] = [Number.parseInt(chosenHint[0].style.zIndex) + 1 + '',
+                                                   Number.parseInt(chosenHint[1].style.zIndex) + 1 + ''];
+
+  document.getElementById('game').appendChild(hintDiv);
+  document.getElementById('game').appendChild(hintDiv1);
+
   hintButton.disabled = true;
-  chosenHint[0].className += ' hint';
-  chosenHint[1].className += ' hint';
 
   setTimeout(() => {
     for (const piece of document.getElementsByClassName('piece')) {
-      piece.className = piece.className.replace(' hint', '');
+      Array.from(document.getElementsByClassName('hint')).forEach(hint => hint.remove());
     }
     if (currentHints > 0) hintButton.disabled = false;
-  }, 1500);
+  }, 2500);
 });
 
 
@@ -152,7 +161,7 @@ function generatePiece(colIndex, rowIndex, pieces, curPiece) {
   piece.className = 'piece';
   piece.id = 'row: ' + rowIndex + ', col: ' + colIndex;
   // noinspection HtmlRequiredAltAttribute
-  piece.innerHTML = `<img class='pieceImage'  src='img/Pieces/svg/basePiece.svg'><img  class='pieceImage' src='img/Pieces/svg/${pieces[Math.floor(
+  piece.innerHTML = `<img class='basePiece'  src='img/Pieces/svg/basePiece.svg'><img  class='pieceImage' src='img/Pieces/svg/${pieces[Math.floor(
     curPiece)]}'>`;
   piece.addEventListener('click', () => selectPieces(piece));
   piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100) + colIndex * 10 + piecesOnPosition;
@@ -196,8 +205,7 @@ function checkAvailableMoves() {
         maxHeight = Math.max(maxHeight, heightPiece1);
       }
     }
-    if (neighbourLeft && neighbourRight) continue;
-    if (piece.style.zIndex !== maxHeight) continue;
+    if (neighbourLeft && neighbourRight || piece.style.zIndex !== maxHeight) continue;
     availableMoves.push(piece);
   }
 }
@@ -311,15 +319,27 @@ function checkGameState() {
 
 function selectPieces(piece) {
   if (!availableMoves.includes(piece)) return;
+  let selectedDiv = document.createElement('div');
+  selectedDiv.className = 'selected';
+
+  selectedDiv.style.left = piece.style.left;
+  selectedDiv.style.top = piece.style.top;
+  selectedDiv.style.zIndex = Number.parseInt(piece.style.zIndex) + 1 + '';
+
   if (selected.length === 0) {  // Highlight selected piece
     selected.push(piece);
-    selected[0].className += ' selected';
+
+    piece.parentNode.appendChild(selectedDiv);
+
   } else if (selected[0] === piece) { // Deselect the currently chosen piece
     selected = [];
-    piece.className = 'piece';
+
+    Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
   } else if (selected[0].innerHTML !== piece.innerHTML) { // If the pieces are not the same, select the new one
-    selected[0].className = 'piece';
-    piece.className += ' selected';
+    Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
+
+    piece.parentNode.appendChild(selectedDiv);
+
     selected[0] = piece;
   } else {
     // Remove selected pieces if they're of the same type && the move is legal
@@ -331,13 +351,13 @@ function selectPieces(piece) {
         }
       }
     }
+    Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
+    Array.from(document.getElementsByClassName('hint')).forEach(i => i.remove());
 
     // Save the last move for the undo button
     lastMove = [selected[0], piece];
 
     // Make sure the pieces won't still be selected after undo
-    selected[0].className = 'piece';
-    piece.className = 'piece';
     selected[0].hidden = true;
     piece.hidden = true;
 
