@@ -10374,11 +10374,15 @@ body::-webkit-scrollbar-thumb {
   border: 2px solid #121212;
   color: #FFF;
 }
-
 .button:hover, .button:active, .button:focus {
   background: darkslategrey;
   border: 2px solid #121212;
   color: white;
+}
+
+.button:disabled {
+  background: black;
+  border: 2px solid #121212;
 }
 
 #load {
