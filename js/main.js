@@ -6,8 +6,11 @@ let selected = [];
 let lastMove = [];
 let availableMoves = [];
 let unavailableMoves = [];
-let totalHints = 5;
+let totalHints;
 let currentHints = totalHints;
+let totalReshuffles;
+let totalUndos;
+
 
 let hintButton = document.getElementById('hint');
 hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
@@ -32,8 +35,14 @@ let layouts = {
   Tortoise: [[1, 0, 0, 0, 0, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 1, 0], [0, 0, 0, 1, 1, 1, 0, 0, 0],
              [0, 0, 2, 2, 2, 2, 2, 0, 1], [0, 1, 2, 3, 3, 3, 2, 1, 0], [0, 0, 2, 2, 2, 2, 2, 0, 0],
              [0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 1, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 0, 0, 0, 0, 0, 1]]
+};
 
-
+let difficulties = {
+  //difficulty : [Hints, reshuffles, undos]
+  Easy   : [100, 100, 100],
+  Medium : [5, 1, 1],
+  Hard   : [3, 0, 0],
+  EXTREME: [0, 0, 0]
 };
 
 
@@ -48,6 +57,21 @@ for (let key in layouts) {
   element.innerText = key.toString();
   element.addEventListener('click', () => changeLayout(key));
   document.getElementById('dropdown-menu').children[0].appendChild(element);
+}
+
+function changeDifficulty(key) {
+  difficulties[key][0] = totalHints;
+  difficulties[key][1] = totalReshuffles;
+  difficulties[key][2] = totalUndos;
+}
+
+for (let key in difficulties) {
+  let element = document.createElement('a');
+  element.className = 'dropdown-item';
+  element.id = key.toString();
+  element.innerText = key.toString();
+  element.addEventListener('click', () => changeDifficulty(key));
+  document.getElementById('dropdown-menu2').children[0].appendChild(element);
 }
 
 
