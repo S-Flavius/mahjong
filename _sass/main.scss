@@ -135,6 +135,11 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
+.dropdown-content, .dropdown-item {
+  background : #121212;
+  color      : white;
+}
+
 #load {
   height   : 279px;
   left     : calc(50% - 489px / 2);

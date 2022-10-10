@@ -10385,6 +10385,11 @@ body::-webkit-scrollbar-thumb {
   border: 2px solid #121212;
 }
 
+.dropdown-content, .dropdown-item {
+  background: #121212;
+  color: white;
+}
+
 #load {
   height: 279px;
   left: calc(50% - 244.5px);
