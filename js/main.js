@@ -75,7 +75,6 @@ for (let key in layouts) {
   document.getElementById('dropdown-menu').children[0].appendChild(element);
 }
 
-
 for (let key in difficulties) {
   let element = document.createElement('a');
   element.className = 'dropdown-item';
@@ -84,7 +83,6 @@ for (let key in difficulties) {
   element.addEventListener('click', () => changeDifficulty(key));
   document.getElementById('dropdown-menu2').children[0].appendChild(element);
 }
-
 
 document.getElementById('undo').addEventListener('click', () => {
   undoButton.innerText = `Undo (${--currentUndos}/${totalUndos})`;
@@ -445,13 +443,19 @@ function selectPieces(piece) {
     selected = [];
 
     Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
-  } else if (selected[0].innerHTML !== piece.innerHTML) { // If the pieces are not the same, select the new one
+  } else if (selected[0].innerHTML !== piece.innerHTML && !selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/)) {
+    // If the pieces are not the same, nor are they special ones select the new one
     Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
 
     piece.parentNode.appendChild(selectedDiv);
 
     selected[0] = piece;
   } else {
+
+    if (selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/) && (selected[0].innerHTML.match(
+      /f.*\.svg/) && !piece.innerHTML.match(/f.*\.svg/) || selected[0].innerHTML.match(
+      /seas.*\.svg/) && !piece.innerHTML.match(/seas.*\.svg/))) return;
+
     // Remove selected pieces if they're of the same type && the move is legal
     // Completely delete the pieces after the 2nd move if they are still hidden
     if (lastMove.length === 2) {
