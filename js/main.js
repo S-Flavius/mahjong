@@ -1,19 +1,29 @@
-window.onload = () => createGame();
+window.onload = () => {
+  changeDifficulty(difficultyKey);
+  changeLayout('Flower');
+};
 
 document.getElementById('new-game').addEventListener('click', newGame);
 
 let selected = [];
 let lastMove = [];
 let availableMoves = [];
-let unavailableMoves = [];
 let totalHints;
 let currentHints = totalHints;
 let totalReshuffles;
+let currentReshuffles = totalReshuffles;
 let totalUndos;
+let currentUndos = totalUndos;
 
 
 let hintButton = document.getElementById('hint');
 hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
+
+let reshuffleButton = document.getElementById('reshuffle');
+reshuffleButton.innerText = `Reshuffle (${totalReshuffles})`;
+
+let undoButton = document.getElementById('undo');
+undoButton.innerText = `Undo (${totalUndos})`;
 
 let layouts = {
   Flower  : [[0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0],
@@ -39,15 +49,21 @@ let layouts = {
 
 let difficulties = {
   //difficulty : [Hints, reshuffles, undos]
-  Easy   : [100, 100, 100],
-  Medium : [5, 1, 1],
-  Hard   : [3, 0, 0],
-  EXTREME: [0, 0, 0]
+  Easy      : {
+    hints: 100, reshuffles: 100, undos: 100
+  }, Medium : {
+    hints: 5, reshuffles: 1, undos: 1
+  }, Hard   : {
+    hints: 3, reshuffles: 0, undos: 0
+  }, EXTREME: {
+    hints: 0, reshuffles: 0, undos: 0
+  }
 };
 
 
 let layoutKey = 'Flower';
 let chosenLayout = 0;
+let difficultyKey = 'Easy';
 let chosenManually = false;
 
 for (let key in layouts) {
@@ -59,11 +75,6 @@ for (let key in layouts) {
   document.getElementById('dropdown-menu').children[0].appendChild(element);
 }
 
-function changeDifficulty(key) {
-  difficulties[key][0] = totalHints;
-  difficulties[key][1] = totalReshuffles;
-  difficulties[key][2] = totalUndos;
-}
 
 for (let key in difficulties) {
   let element = document.createElement('a');
@@ -76,6 +87,8 @@ for (let key in difficulties) {
 
 
 document.getElementById('undo').addEventListener('click', () => {
+  undoButton.innerText = `Undo (${--currentUndos}/${totalUndos})`;
+  if (currentUndos <= 0) undoButton.disabled = true;
   if (selected.length !== 0) {
     selected[0].className = 'piece';
     selected = [];
@@ -122,7 +135,7 @@ document.getElementById('hint').addEventListener('click', () => {
 });
 
 
-let reshuffles = 0;
+let curReshuffles = 0;
 document.getElementById('reshuffle').addEventListener('click', function reshuffle() {
   if (selected.length !== 0) {
     selected[0].className = 'piece';
@@ -146,15 +159,19 @@ document.getElementById('reshuffle').addEventListener('click', function reshuffl
 
   let clickable = availableMoves.filter(piece => !piece.hidden);
   if (clickable.length < 2) {
-    reshuffles++;
+    curReshuffles++;
 
-    if (reshuffles > 5) {
+    if (curReshuffles > 5) {
       alert('No more moves available. You lose!');
       newGame();
     }
     reshuffle();
   }
-  reshuffles = 0;
+  curReshuffles = 0;
+
+  reshuffleButton.innerText = `Reshuffle (${--currentReshuffles}/${totalReshuffles})`;
+  if (currentReshuffles <= 0) reshuffleButton.disabled = true;
+
 });
 
 document.getElementById('auto-move').addEventListener('click', () => {
@@ -189,6 +206,41 @@ function changeLayout(key) {
   chosenManually = true;
 
   newGame();
+}
+
+
+function changeDifficulty(key) {
+  document.getElementById('dropdown-menu2').style.display = 'none';
+  chosenManually = true;
+  difficultyKey = key;
+
+  newGame();
+}
+
+function calculateHelperValues() {
+  hintButton.disabled = false;
+  reshuffleButton.disabled = false;
+  undoButton.disabled = false;
+
+  totalHints = difficulties[difficultyKey]['hints'];
+  totalReshuffles = difficulties[difficultyKey]['reshuffles'];
+  totalUndos = difficulties[difficultyKey]['undos'];
+
+  currentHints = totalHints;
+  currentReshuffles = totalReshuffles;
+  currentUndos = totalUndos;
+
+  hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
+  reshuffleButton.innerText = `Reshuffle (${currentReshuffles}/${totalReshuffles})`;
+  undoButton.innerText = `Undo (${currentUndos}/${totalUndos})`;
+
+  if (totalHints <= 0) hintButton.disabled = true;
+  if (totalReshuffles <= 0) reshuffleButton.disabled = true;
+  if (totalUndos <= 0) undoButton.disabled = true;
+
+  Array.from(document.getElementById('dropdown-menu2').children[0].children).forEach(e => {
+    if (e.id == difficultyKey) e.className += ' is-active';
+  });
 }
 
 // https://stackoverflow.com/a/12646864
@@ -429,8 +481,11 @@ function selectPieces(piece) {
 function newGame() {
 
   if (!chosenManually) {
-    let keys = Object.keys(layouts);
-    layoutKey = keys[Math.floor(Math.random() * keys.length)];
+    let layoutKeys = Object.keys(layouts);
+    layoutKey = layoutKeys[Math.floor(Math.random() * layoutKeys.length)];
+
+    let difficultyKeys = Object.keys(difficulties);
+    difficultyKey = difficultyKeys[Math.floor(Math.random() * difficultyKeys.length)];
   }
 
 
@@ -442,12 +497,17 @@ function newGame() {
   }
 
   currentHints = totalHints;
-  hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
+  currentReshuffles = totalReshuffles;
+  currentUndos = totalUndos;
 
   for (let child of document.getElementById('dropdown-menu').children[0].children) {
     child.className = child.className.replaceAll(' is-active', '');
   }
+  for (let child of document.getElementById('dropdown-menu2').children[0].children) {
+    child.className = child.className.replaceAll(' is-active', '');
+  }
 
+  calculateHelperValues();
 
   createGame();
 }
