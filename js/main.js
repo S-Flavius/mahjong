@@ -493,6 +493,7 @@ function selectPieces(piece) {
 
 function newGame() {
 
+  selected = [];
   if (!chosenManually) {
     let layoutKeys = Object.keys(layouts);
     layoutKey = layoutKeys[Math.floor(Math.random() * layoutKeys.length)];
