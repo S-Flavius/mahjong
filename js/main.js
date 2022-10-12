@@ -373,6 +373,7 @@ function createGame() {
   chosenManually = false;
 
   checkAvailableMoves();
+  timer('start');
 }
 
 function isGameWinnable() {
@@ -403,6 +404,7 @@ function isGameWinnable() {
 
 function checkGameState() {
   if (document.getElementsByClassName('piece').length === 2) {
+    timer('end');
     setTimeout(() => {
       alert('You won!');
     }, 100);
@@ -514,4 +516,17 @@ function newGame() {
   calculateHelperValues();
 
   createGame();
+}
+
+let startTime;
+
+function timer(action) {
+  if (action == 'start') {
+    startTime = new Date().getTime();
+  }
+  if (action == 'end') {
+    let endTime = new Date().getTime(), timeDiff = endTime - startTime;
+    timeDiff /= 1000;
+    alert(timeDiff);
+  }
 }
