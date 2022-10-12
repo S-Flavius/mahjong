@@ -456,7 +456,14 @@ function selectPieces(piece) {
 
     if (selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/) && (selected[0].innerHTML.match(
       /f.*\.svg/) && !piece.innerHTML.match(/f.*\.svg/) || selected[0].innerHTML.match(
-      /seas.*\.svg/) && !piece.innerHTML.match(/seas.*\.svg/))) return;
+      /seas.*\.svg/) && !piece.innerHTML.match(/seas.*\.svg/))) {
+      Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
+      piece.parentNode.appendChild(selectedDiv);
+
+      selected[0] = piece;
+      return
+    }
+    ;
 
     // Remove selected pieces if they're of the same type && the move is legal
     // Completely delete the pieces after the 2nd move if they are still hidden
