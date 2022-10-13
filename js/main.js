@@ -17,13 +17,13 @@ let currentUndos = totalUndos;
 
 
 let hintButton = document.getElementById('hint');
-hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
+hintButton.innerHTML = `<div><img class='hint'/><p>(${currentHints}/${totalHints})</p></div>`;
 
 let reshuffleButton = document.getElementById('reshuffle');
-reshuffleButton.innerText = `Reshuffle (${totalReshuffles})`;
+reshuffleButton.innerHTML = `Reshuffle (${totalReshuffles})`;
 
 let undoButton = document.getElementById('undo');
-undoButton.innerText = `Undo (${totalUndos})`;
+undoButton.innerHTML = `<img class='undo'><p>(${currentUndos}/${totalUndos})</p>`;
 
 let layouts = {
   Flower  : [[0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0],
@@ -85,7 +85,7 @@ for (let key in difficulties) {
 }
 
 document.getElementById('undo').addEventListener('click', () => {
-  undoButton.innerText = `Undo (${--currentUndos}/${totalUndos})`;
+  undoButton.innerHTML = `<img class='undo'><p>(${--currentUndos}/${totalUndos})</p>`;
   if (currentUndos <= 0) undoButton.disabled = true;
   if (selected.length !== 0) {
     selected[0].className = 'piece';
@@ -97,7 +97,7 @@ document.getElementById('undo').addEventListener('click', () => {
 });
 
 document.getElementById('hint').addEventListener('click', () => {
-  hintButton.innerText = `Hint (${--currentHints}/${totalHints})`;
+  hintButton.innerHTML = `<div><img class='hint'/><p>(${--currentHints}/${totalHints})</p></div>`;
 
   let hints = [];
   for (let piece of availableMoves) {
@@ -167,7 +167,7 @@ document.getElementById('reshuffle').addEventListener('click', function reshuffl
   }
   curReshuffles = 0;
 
-  reshuffleButton.innerText = `Reshuffle (${--currentReshuffles}/${totalReshuffles})`;
+  reshuffleButton.innerHTML = `<img class='reshuffle'/><p>(${--currentReshuffles}/${totalReshuffles})</p>`;
   if (currentReshuffles <= 0) reshuffleButton.disabled = true;
 
 });
@@ -228,9 +228,9 @@ function calculateHelperValues() {
   currentReshuffles = totalReshuffles;
   currentUndos = totalUndos;
 
-  hintButton.innerText = `Hint (${currentHints}/${totalHints})`;
-  reshuffleButton.innerText = `Reshuffle (${currentReshuffles}/${totalReshuffles})`;
-  undoButton.innerText = `Undo (${currentUndos}/${totalUndos})`;
+  hintButton.innerHTML = `<img class='hint'/><p>(${currentHints}/${totalHints})</p>`;
+  reshuffleButton.innerHTML = `<img class='reshuffle'/><p>(${currentReshuffles}/${totalReshuffles})</p>`;
+  undoButton.innerHTML = `<img class='undo'.><p>(${currentUndos}/${totalUndos})</p>`;
 
   if (totalHints <= 0) hintButton.disabled = true;
   if (totalReshuffles <= 0) reshuffleButton.disabled = true;
@@ -269,7 +269,7 @@ function generatePiece(colIndex, rowIndex, pieces, curPiece) {
   piece.className = 'piece';
   piece.id = 'row: ' + rowIndex + ', col: ' + colIndex;
   // noinspection HtmlRequiredAltAttribute
-  piece.innerHTML = `<img class='basePiece'  src='img/Pieces/svg/basePiece.svg'><img  class='pieceImage' src='img/Pieces/svg/${pieces[Math.floor(
+  piece.innerHTML = `<img class='basePiece' src='img/Pieces/svg/basePiece.svg'><img  class='pieceImage' src='img/Pieces/svg/${pieces[Math.floor(
     curPiece)]}'>`;
   piece.addEventListener('click', () => selectPieces(piece));
   piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100) + colIndex * 10 + piecesOnPosition;
@@ -461,9 +461,9 @@ function selectPieces(piece) {
       piece.parentNode.appendChild(selectedDiv);
 
       selected[0] = piece;
-      return
+      return;
     }
-    ;
+
 
     // Remove selected pieces if they're of the same type && the move is legal
     // Completely delete the pieces after the 2nd move if they are still hidden

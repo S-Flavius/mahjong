@@ -10402,3 +10402,42 @@ body::-webkit-scrollbar-thumb {
   width: 489px;
   z-index: 9999;
 }
+
+#hint:hover > .hint {
+  background: url("../img/Icons/idea-lit.svg");
+}
+
+.hint {
+  background: url("../img/Icons/idea-unlit.svg");
+  float: left;
+  height: 16px;
+  padding: 16px;
+  position: relative;
+  width: 16px;
+}
+
+#reshuffle:hover > .reshuffle {
+  background: url("../img/Icons/reshuffle-lit.svg");
+}
+
+.reshuffle {
+  background: url("../img/Icons/reshuffle-unlit.svg");
+  float: left;
+  height: 16px;
+  padding: 16px;
+  position: relative;
+  width: 16px;
+}
+
+#undo:hover > .undo {
+  background: url("../img/Icons/undo-lit.svg");
+}
+
+.undo {
+  background: url("../img/Icons/undo-unlit.svg");
+  float: left;
+  height: 16px;
+  padding: 16px;
+  position: relative;
+  width: 16px;
+}
