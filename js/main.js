@@ -500,7 +500,7 @@ function selectPieces(piece) {
 
     selected = [];
     checkAvailableMoves();
-    undoButton.disabled = false;
+    undoButton.disabled = totalUndos <= 0;
   }
 
   checkGameState();
