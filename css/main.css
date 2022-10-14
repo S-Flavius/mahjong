@@ -10407,13 +10407,17 @@ body::-webkit-scrollbar-thumb {
   background: url("../img/Icons/idea-lit.svg");
 }
 
-.hint {
-  background: url("../img/Icons/idea-unlit.svg");
+.hint, .reshuffle, .undo {
   float: left;
   height: 16px;
-  padding: 16px;
+  margin: 5px;
+  padding: 10px;
   position: relative;
   width: 16px;
+}
+
+.hint {
+  background: url("../img/Icons/idea-unlit.svg");
 }
 
 #reshuffle:hover > .reshuffle {
@@ -10422,11 +10426,6 @@ body::-webkit-scrollbar-thumb {
 
 .reshuffle {
   background: url("../img/Icons/reshuffle-unlit.svg");
-  float: left;
-  height: 16px;
-  padding: 16px;
-  position: relative;
-  width: 16px;
 }
 
 #undo:hover > .undo {
@@ -10435,9 +10434,4 @@ body::-webkit-scrollbar-thumb {
 
 .undo {
   background: url("../img/Icons/undo-unlit.svg");
-  float: left;
-  height: 16px;
-  padding: 16px;
-  position: relative;
-  width: 16px;
 }
