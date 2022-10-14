@@ -10403,11 +10403,11 @@ body::-webkit-scrollbar-thumb {
   z-index: 9999;
 }
 
-#hint:hover > .hint {
+#hint:hover > .hint-button {
   background: url("../img/Icons/idea-lit.svg");
 }
 
-.hint, .reshuffle, .undo {
+.hint-button, .reshuffle-button, .undo-button {
   float: left;
   height: 16px;
   margin: 5px;
@@ -10416,22 +10416,22 @@ body::-webkit-scrollbar-thumb {
   width: 16px;
 }
 
-.hint {
+.hint-button {
   background: url("../img/Icons/idea-unlit.svg");
 }
 
-#reshuffle:hover > .reshuffle {
+#reshuffle:hover > .reshuffle-button {
   background: url("../img/Icons/reshuffle-lit.svg");
 }
 
-.reshuffle {
+.reshuffle-button {
   background: url("../img/Icons/reshuffle-unlit.svg");
 }
 
-#undo:hover > .undo {
+#undo:hover > .undo-button {
   background: url("../img/Icons/undo-lit.svg");
 }
 
-.undo {
+.undo-button {
   background: url("../img/Icons/undo-unlit.svg");
 }
