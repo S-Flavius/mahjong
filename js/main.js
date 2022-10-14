@@ -37,6 +37,7 @@ reshuffleButton.innerHTML = ``;
 
 let undoButton = document.getElementById('undo');
 undoButton.innerHTML = ``;
+undoButton.disabled = true;
 
 let layouts = {
   Flower  : [[0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0],
@@ -107,6 +108,7 @@ document.getElementById('undo').addEventListener('click', () => {
   lastMove[0].hidden = false;
   lastMove[1].hidden = false;
   checkAvailableMoves();
+  undoButton.disabled = true;
 });
 
 document.getElementById('hint').addEventListener('click', () => {
@@ -231,7 +233,6 @@ function changeDifficulty(key) {
 function calculateHelperValues() {
   hintButton.disabled = false;
   reshuffleButton.disabled = false;
-  undoButton.disabled = false;
 
   totalHints = difficulties[difficultyKey]['hints'];
   totalReshuffles = difficulties[difficultyKey]['reshuffles'];
@@ -337,27 +338,26 @@ function createGame() {
 
   chosenLayout = JSON.parse(JSON.stringify(layouts[layoutKey]));
 
-  let pieces = ['bamboo1.svg', 'bamboo1.svg', 'bamboo1.svg', 'bamboo1.svg', 'bamboo2.svg', 'bamboo2.svg',
-                'bamboo2.svg', 'bamboo2.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo3.svg',
-                'bamboo4.svg', 'bamboo4.svg', 'bamboo4.svg', 'bamboo4.svg', 'bamboo5.svg', 'bamboo5.svg',
-                'bamboo5.svg', 'bamboo5.svg', 'bamboo6.svg', 'bamboo6.svg', 'bamboo6.svg', 'bamboo6.svg',
-                'bamboo7.svg', 'bamboo7.svg', 'bamboo7.svg', 'bamboo7.svg', 'bamboo8.svg', 'bamboo8.svg',
-                'bamboo8.svg', 'bamboo8.svg', 'bamboo9.svg', 'bamboo9.svg', 'bamboo9.svg', 'bamboo9.svg', 'char1.svg',
-                'char1.svg', 'char1.svg', 'char1.svg', 'char2.svg', 'char2.svg', 'char2.svg', 'char2.svg',
-                'char3.svg', 'char3.svg', 'char3.svg', 'char3.svg', 'char4.svg', 'char4.svg', 'char4.svg',
-                'char4.svg', 'char5.svg', 'char5.svg', 'char5.svg', 'char5.svg', 'char6.svg', 'char6.svg',
-                'char6.svg', 'char6.svg', 'char7.svg', 'char7.svg', 'char7.svg', 'char7.svg', 'char8.svg',
-                'char8.svg', 'char8.svg', 'char8.svg', 'char9.svg', 'char9.svg', 'char9.svg', 'char9.svg', 'dot1.svg',
-                'dot1.svg', 'dot1.svg', 'dot1.svg', 'dot2.svg', 'dot2.svg', 'dot2.svg', 'dot2.svg', 'dot3.svg',
-                'dot3.svg', 'dot3.svg', 'dot3.svg', 'dot4.svg', 'dot4.svg', 'dot4.svg', 'dot4.svg', 'dot5.svg',
-                'dot5.svg', 'dot5.svg', 'dot5.svg', 'dot6.svg', 'dot6.svg', 'dot6.svg', 'dot6.svg', 'dot7.svg',
-                'dot7.svg', 'dot7.svg', 'dot7.svg', 'dot8.svg', 'dot8.svg', 'dot8.svg', 'dot8.svg', 'dot9.svg',
-                'dot9.svg', 'dot9.svg', 'dot9.svg', 'fBamboo.svg', 'fChrysanthemum.svg', 'fOrchid.svg', 'fPlum.svg',
-                'gDrag.svg', 'gDrag.svg', 'gDrag.svg', 'gDrag.svg', 'rDrag.svg', 'rDrag.svg', 'rDrag.svg',
-                'rDrag.svg', 'wDrag.svg', 'wDrag.svg', 'wDrag.svg', 'wDrag.svg', 'seasAutumn.svg', 'seasSpring.svg',
-                'seasSummer.svg', 'seasWinter.svg', 'windE.svg', 'windE.svg', 'windE.svg', 'windE.svg', 'windN.svg',
-                'windN.svg', 'windN.svg', 'windN.svg', 'windS.svg', 'windS.svg', 'windS.svg', 'windS.svg',
-                'windW.svg', 'windW.svg', 'windW.svg', 'windW.svg'];
+  let pieces = ['bamboo1.svg', 'bamboo1.svg', 'bamboo1.svg', 'bamboo1.svg', 'bamboo2.svg', 'bamboo2.svg', 'bamboo2.svg',
+                'bamboo2.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo4.svg', 'bamboo4.svg',
+                'bamboo4.svg', 'bamboo4.svg', 'bamboo5.svg', 'bamboo5.svg', 'bamboo5.svg', 'bamboo5.svg', 'bamboo6.svg',
+                'bamboo6.svg', 'bamboo6.svg', 'bamboo6.svg', 'bamboo7.svg', 'bamboo7.svg', 'bamboo7.svg', 'bamboo7.svg',
+                'bamboo8.svg', 'bamboo8.svg', 'bamboo8.svg', 'bamboo8.svg', 'bamboo9.svg', 'bamboo9.svg', 'bamboo9.svg',
+                'bamboo9.svg', 'char1.svg', 'char1.svg', 'char1.svg', 'char1.svg', 'char2.svg', 'char2.svg',
+                'char2.svg', 'char2.svg', 'char3.svg', 'char3.svg', 'char3.svg', 'char3.svg', 'char4.svg', 'char4.svg',
+                'char4.svg', 'char4.svg', 'char5.svg', 'char5.svg', 'char5.svg', 'char5.svg', 'char6.svg', 'char6.svg',
+                'char6.svg', 'char6.svg', 'char7.svg', 'char7.svg', 'char7.svg', 'char7.svg', 'char8.svg', 'char8.svg',
+                'char8.svg', 'char8.svg', 'char9.svg', 'char9.svg', 'char9.svg', 'char9.svg', 'dot1.svg', 'dot1.svg',
+                'dot1.svg', 'dot1.svg', 'dot2.svg', 'dot2.svg', 'dot2.svg', 'dot2.svg', 'dot3.svg', 'dot3.svg',
+                'dot3.svg', 'dot3.svg', 'dot4.svg', 'dot4.svg', 'dot4.svg', 'dot4.svg', 'dot5.svg', 'dot5.svg',
+                'dot5.svg', 'dot5.svg', 'dot6.svg', 'dot6.svg', 'dot6.svg', 'dot6.svg', 'dot7.svg', 'dot7.svg',
+                'dot7.svg', 'dot7.svg', 'dot8.svg', 'dot8.svg', 'dot8.svg', 'dot8.svg', 'dot9.svg', 'dot9.svg',
+                'dot9.svg', 'dot9.svg', 'fBamboo.svg', 'fChrysanthemum.svg', 'fOrchid.svg', 'fPlum.svg', 'gDrag.svg',
+                'gDrag.svg', 'gDrag.svg', 'gDrag.svg', 'rDrag.svg', 'rDrag.svg', 'rDrag.svg', 'rDrag.svg', 'wDrag.svg',
+                'wDrag.svg', 'wDrag.svg', 'wDrag.svg', 'seasAutumn.svg', 'seasSpring.svg', 'seasSummer.svg',
+                'seasWinter.svg', 'windE.svg', 'windE.svg', 'windE.svg', 'windE.svg', 'windN.svg', 'windN.svg',
+                'windN.svg', 'windN.svg', 'windS.svg', 'windS.svg', 'windS.svg', 'windS.svg', 'windW.svg', 'windW.svg',
+                'windW.svg', 'windW.svg'];
 
   let dropdownList = document.getElementById('dropdown-menu').children[0].children;
   Array.from(dropdownList).forEach(e => {
@@ -500,6 +500,7 @@ function selectPieces(piece) {
 
     selected = [];
     checkAvailableMoves();
+    undoButton.disabled = false;
   }
 
   checkGameState();
