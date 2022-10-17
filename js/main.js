@@ -342,7 +342,7 @@ function checkAvailableMoves() {
   }
 }
 
-function createGame() {
+async function createGame() {
 
   generateGrid();
 
@@ -516,7 +516,20 @@ function selectPieces(piece) {
   checkGameState();
 }
 
+function load() {
+  document.getElementById('loading-container').hidden = false;
+
+  setTimeout(async () => {
+    await createGame();
+
+    document.getElementById('loading-container').hidden = true;
+  }, 1);
+}
+
 function newGame() {
+
+  load();
+
 
   selected = [];
   if (!chosenManually) {
@@ -548,7 +561,7 @@ function newGame() {
 
   calculateHelperValues();
 
-  createGame();
+
 }
 
 let startTime;
