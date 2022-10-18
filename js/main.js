@@ -7,12 +7,11 @@ window.onload = () => {
 
     setTimeout(() => {
       window.scroll({
-                      top: 10, behavior: 'smooth'
+                      top: 10, behavior: 'smooth',
                     });
     }, 200);
   }
 };
-
 
 document.getElementById('new-game').addEventListener('click', newGame);
 
@@ -26,7 +25,6 @@ let currentReshuffles = totalReshuffles;
 let totalUndos;
 let currentUndos = totalUndos;
 
-
 let hintButton = document.getElementById('hint');
 hintButton.innerHTML = ``;
 
@@ -38,45 +36,98 @@ undoButton.innerHTML = ``;
 undoButton.disabled = true;
 
 let layouts = {
-  'Flower'  : [[0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 1, 1, 0, 0],
-               [0, 0, 1, 0, 0, 0, 1, 0, 0], [1, 1, 1, 0, 0, 0, 1, 1, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0],
-               [0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 1, 0, 0, 0]],
-  'Pyramid' : [[0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 1, 2, 1, 1, 0, 0],
-               [0, 0, 1, 2, 3, 2, 1, 0, 0], [1, 1, 2, 3, 4, 3, 2, 1, 1], [0, 0, 1, 2, 3, 2, 1, 0, 0],
-               [0, 0, 1, 1, 2, 1, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0]],
-  'Snake'   : [[1, 2, 0, 1, 1, 2, 1, 1, 0], [1, 2, 0, 1, 2, 3, 2, 1, 0], [1, 3, 0, 1, 1, 4, 4, 1, 0],
-               [1, 2, 0, 0, 0, 0, 3, 0, 0], [3, 2, 0, 0, 0, 1, 2, 3, 0], [0, 2, 0, 0, 0, 2, 0, 0, 0],
-               [0, 2, 3, 0, 4, 3, 0, 0, 0], [0, 0, 3, 0, 4, 0, 0, 0, 0], [0, 0, 3, 3, 4, 0, 0, 0, 0]],
-  'Stairs'  : [[1, 1, 1, 2, 2, 2], [1, 1, 1, 2, 2, 2], [2, 2, 2, 3, 3, 3], [2, 2, 2, 3, 3, 3], [3, 3, 3, 4, 4, 4],
-               [3, 3, 3, 4, 4, 4], [4, 4, 4, 5, 5, 5], [4, 4, 4, 6, 6, 6], [5, 5, 5, 7, 7, 7], [5, 5, 5, 7, 7, 8]],
-  'Mouse'   : [[0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 1, 2, 1, 0, 0, 0], [0, 0, 0, 0, 3, 0, 0, 0, 0],
-               [0, 0, 1, 2, 3, 2, 1, 0, 0], [0, 1, 2, 3, 3, 3, 2, 1, 0], [0, 1, 2, 3, 4, 3, 2, 1, 0],
-               [0, 1, 2, 3, 3, 3, 2, 1, 0], [0, 0, 1, 2, 3, 2, 1, 0, 0], [0, 0, 1, 2, 2, 2, 1, 0, 0],
-               [0, 0, 0, 1, 2, 1, 0, 0, 0], [0, 0, 0, 0, 2, 0, 0, 0, 0], [0, 0, 1, 2, 0, 0, 0, 0, 0],
-               [0, 0, 1, 0, 0, 0, 0, 0, 0]],
-  'Tortoise': [[1, 0, 0, 0, 0, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 1, 0], [0, 0, 0, 1, 1, 1, 0, 0, 0],
-               [0, 0, 2, 2, 2, 2, 2, 0, 1], [0, 1, 2, 3, 3, 3, 2, 1, 0], [0, 0, 2, 2, 2, 2, 2, 0, 0],
-               [0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 1, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 0, 0, 0, 0, 0, 1]],
-  'Test'    : [[0, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 0], [0, 0, 1, 2, 2, 1, 0, 0], [0, 0, 1, 2, 2, 1, 0, 0],
-               [1, 1, 2, 3, 3, 2, 1, 1], [1, 1, 2, 3, 3, 2, 1, 1], [2, 2, 3, 4, 4, 3, 2, 2], [2, 2, 3, 4, 4, 3, 2, 2],
-               [3, 3, 4, 5, 5, 4, 3, 3], [3, 3, 4, 5, 5, 4, 3, 3], [2, 2, 3, 4, 4, 3, 2, 2], [2, 2, 3, 4, 4, 3, 2, 2],
-               [1, 1, 2, 3, 3, 2, 1, 1], [1, 1, 2, 3, 3, 2, 1, 1], [0, 0, 1, 2, 2, 1, 0, 0], [0, 0, 1, 2, 2, 1, 0, 0],
-               [0, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 0]]
+  'Flower'                                  : [
+    [0, 0, 0, 1, 1, 1, 0, 0, 0],
+    [0, 0, 0, 1, 0, 1, 0, 0, 0],
+    [0, 0, 1, 1, 0, 1, 1, 0, 0],
+    [0, 0, 1, 0, 0, 0, 1, 0, 0],
+    [1, 1, 1, 0, 0, 0, 1, 1, 1],
+    [0, 0, 1, 0, 0, 0, 1, 0, 0],
+    [0, 0, 1, 1, 0, 1, 1, 0, 0],
+    [0, 0, 0, 1, 0, 1, 0, 0, 0],
+    [0, 0, 0, 1, 1, 1, 0, 0, 0]], 'Pyramid' : [
+    [0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 1, 1, 2, 1, 1, 0, 0],
+    [0, 0, 1, 2, 3, 2, 1, 0, 0],
+    [1, 1, 2, 3, 4, 3, 2, 1, 1],
+    [0, 0, 1, 2, 3, 2, 1, 0, 0],
+    [0, 0, 1, 1, 2, 1, 1, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0]], 'Snake'   : [
+    [1, 2, 0, 1, 1, 2, 1, 1, 0],
+    [1, 2, 0, 1, 2, 3, 2, 1, 0],
+    [1, 3, 0, 1, 1, 4, 4, 1, 0],
+    [1, 2, 0, 0, 0, 0, 3, 0, 0],
+    [3, 2, 0, 0, 0, 1, 2, 3, 0],
+    [0, 2, 0, 0, 0, 2, 0, 0, 0],
+    [0, 2, 3, 0, 4, 3, 0, 0, 0],
+    [0, 0, 3, 0, 4, 0, 0, 0, 0],
+    [0, 0, 3, 3, 4, 0, 0, 0, 0]], 'Stairs'  : [
+    [1, 1, 1, 2, 2, 2],
+    [1, 1, 1, 2, 2, 2],
+    [2, 2, 2, 3, 3, 3],
+    [2, 2, 2, 3, 3, 3],
+    [3, 3, 3, 4, 4, 4],
+    [3, 3, 3, 4, 4, 4],
+    [4, 4, 4, 5, 5, 5],
+    [4, 4, 4, 6, 6, 6],
+    [5, 5, 5, 7, 7, 7],
+    [5, 5, 5, 7, 7, 8]], 'Mouse'            : [
+    [0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 1, 2, 1, 0, 0, 0],
+    [0, 0, 0, 0, 3, 0, 0, 0, 0],
+    [0, 0, 1, 2, 3, 2, 1, 0, 0],
+    [0, 1, 2, 3, 3, 3, 2, 1, 0],
+    [0, 1, 2, 3, 4, 3, 2, 1, 0],
+    [0, 1, 2, 3, 3, 3, 2, 1, 0],
+    [0, 0, 1, 2, 3, 2, 1, 0, 0],
+    [0, 0, 1, 2, 2, 2, 1, 0, 0],
+    [0, 0, 0, 1, 2, 1, 0, 0, 0],
+    [0, 0, 0, 0, 2, 0, 0, 0, 0],
+    [0, 0, 1, 2, 0, 0, 0, 0, 0],
+    [0, 0, 1, 0, 0, 0, 0, 0, 0]], 'Tortoise': [
+    [1, 0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 1, 1, 0, 0, 0, 1, 1, 0],
+    [0, 0, 0, 1, 1, 1, 0, 0, 0],
+    [0, 0, 2, 2, 2, 2, 2, 0, 1],
+    [0, 1, 2, 3, 3, 3, 2, 1, 0],
+    [0, 0, 2, 2, 2, 2, 2, 0, 0],
+    [0, 0, 0, 1, 1, 1, 0, 0, 0],
+    [0, 1, 1, 0, 0, 0, 1, 1, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 1]], 'Test'    : [
+    [0, 0, 0, 1, 1, 0, 0, 0],
+    [0, 0, 0, 1, 1, 0, 0, 0],
+    [0, 0, 1, 2, 2, 1, 0, 0],
+    [0, 0, 1, 2, 2, 1, 0, 0],
+    [1, 1, 2, 3, 3, 2, 1, 1],
+    [1, 1, 2, 3, 3, 2, 1, 1],
+    [2, 2, 3, 4, 4, 3, 2, 2],
+    [2, 2, 3, 4, 4, 3, 2, 2],
+    [3, 3, 4, 5, 5, 4, 3, 3],
+    [3, 3, 4, 5, 5, 4, 3, 3],
+    [2, 2, 3, 4, 4, 3, 2, 2],
+    [2, 2, 3, 4, 4, 3, 2, 2],
+    [1, 1, 2, 3, 3, 2, 1, 1],
+    [1, 1, 2, 3, 3, 2, 1, 1],
+    [0, 0, 1, 2, 2, 1, 0, 0],
+    [0, 0, 1, 2, 2, 1, 0, 0],
+    [0, 0, 0, 1, 1, 0, 0, 0],
+    [0, 0, 0, 1, 1, 0, 0, 0]],
 };
 
 let difficulties = {
   //difficulty : [Hints, reshuffles, undos]
   Easy      : {
-    hints: 100, reshuffles: 100, undos: 100
+    hints: 100, reshuffles: 100, undos: 100,
   }, Medium : {
-    hints: 5, reshuffles: 1, undos: 1
+    hints: 5, reshuffles: 1, undos: 1,
   }, Hard   : {
-    hints: 3, reshuffles: 0, undos: 0
+    hints: 3, reshuffles: 0, undos: 0,
   }, EXTREME: {
-    hints: 0, reshuffles: 0, undos: 0
-  }
+    hints: 0, reshuffles: 0, undos: 0,
+  },
 };
-
 
 let layoutKey = 'Flower';
 let chosenLayout = 0;
@@ -130,12 +181,16 @@ document.getElementById('hint').addEventListener('click', () => {
 
   let chosenHint = hints[Math.floor(Math.random() * hints.length)];
 
-  let [hintDiv, hintDiv1] = [document.createElement('div'), document.createElement('div')];
+  let [hintDiv, hintDiv1] = [
+    document.createElement('div'), document.createElement('div')];
   [hintDiv.className, hintDiv1.className] = ['hint', 'hint'];
-  [hintDiv.style.left, hintDiv1.style.left] = [chosenHint[0].style.left, chosenHint[1].style.left];
-  [hintDiv.style.top, hintDiv1.style.top] = [chosenHint[0].style.top, chosenHint[1].style.top];
-  [hintDiv.style.zIndex, hintDiv1.style.zIndex] = [Number.parseInt(chosenHint[0].style.zIndex) + 1 + '',
-                                                   Number.parseInt(chosenHint[1].style.zIndex) + 1 + ''];
+  [hintDiv.style.left, hintDiv1.style.left] = [
+    chosenHint[0].style.left, chosenHint[1].style.left];
+  [hintDiv.style.top, hintDiv1.style.top] = [
+    chosenHint[0].style.top, chosenHint[1].style.top];
+  [hintDiv.style.zIndex, hintDiv1.style.zIndex] = [
+    Number.parseInt(chosenHint[0].style.zIndex) + 1 + '',
+    Number.parseInt(chosenHint[1].style.zIndex) + 1 + ''];
 
   document.getElementById('game').appendChild(hintDiv);
   document.getElementById('game').appendChild(hintDiv1);
@@ -144,51 +199,58 @@ document.getElementById('hint').addEventListener('click', () => {
 
   setTimeout(() => {
     for (const piece of document.getElementsByClassName('piece')) {
-      Array.from(document.getElementsByClassName('hint')).forEach(hint => hint.remove());
+      Array.from(document.getElementsByClassName('hint')).
+            forEach(hint => hint.remove());
     }
     if (currentHints > 0) hintButton.disabled = false;
   }, 2500);
 });
 
-
 let curReshuffles = 0;
-document.getElementById('reshuffle').addEventListener('click', function reshuffle() {
-  if (selected.length !== 0) {
-    selected[0].className = 'piece';
-    selected = [];
-  }
+document.getElementById('reshuffle').
+         addEventListener('click', function reshuffle() {
+           if (selected.length !== 0) {
+             selected[0].className = 'piece';
+             selected = [];
+           }
 
-  //  https://stackoverflow.com/a/64457744/15403179
-  let pieces = document.querySelectorAll('.piece:not([hidden])');
+           //  https://stackoverflow.com/a/64457744/15403179
+           let pieces = document.querySelectorAll('.piece:not([hidden])');
 
+           for (let i = 0; i < pieces.length; i++) {
+             let piece1 = pieces[i];
 
-  for (let i = 0; i < pieces.length; i++) {
-    let piece1 = pieces[i];
+             //piece2 could be piece1. In that case, nothing changes
+             let piece2 = pieces[Math.floor(Math.random() * pieces.length)];
 
-    //piece2 could be piece1. In that case, nothing changes
-    let piece2 = pieces[Math.floor(Math.random() * pieces.length)];
+             [
+               piece1.style.cssText,
+               piece2.style.cssText,
+               piece1.id,
+               piece2.id] = [
+               piece2.style.cssText,
+               piece1.style.cssText,
+               piece2.id,
+               piece1.id];
+           }
+           checkAvailableMoves();
 
-    [piece1.style.cssText, piece2.style.cssText, piece1.id, piece2.id] = [piece2.style.cssText, piece1.style.cssText,
-                                                                          piece2.id, piece1.id];
-  }
-  checkAvailableMoves();
+           let clickable = availableMoves.filter(piece => !piece.hidden);
+           if (clickable.length < 2) {
+             curReshuffles++;
 
-  let clickable = availableMoves.filter(piece => !piece.hidden);
-  if (clickable.length < 2) {
-    curReshuffles++;
+             if (curReshuffles > 5) {
+               alert('No more moves available. You lose!');
+               newGame();
+             }
+             reshuffle();
+           }
+           curReshuffles = 0;
 
-    if (curReshuffles > 5) {
-      alert('No more moves available. You lose!');
-      newGame();
-    }
-    reshuffle();
-  }
-  curReshuffles = 0;
+           reshuffleButton.innerHTML = `<img class='reshuffle-button'/><p>(${--currentReshuffles}/${totalReshuffles})</p>`;
+           if (currentReshuffles <= 0) reshuffleButton.disabled = true;
 
-  reshuffleButton.innerHTML = `<img class='reshuffle-button'/><p>(${--currentReshuffles}/${totalReshuffles})</p>`;
-  if (currentReshuffles <= 0) reshuffleButton.disabled = true;
-
-});
+         });
 
 document.getElementById('auto-move').addEventListener('click', () => {
   let pairs = [];
@@ -213,7 +275,8 @@ let cursor = 0;
 const KONAMI_CODE = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
 document.addEventListener('keydown', (e) => {
   cursor = (e.keyCode == KONAMI_CODE[cursor]) ? cursor + 1 : 0;
-  if (cursor == KONAMI_CODE.length) document.getElementById('auto-move').disabled = false;
+  if (cursor == KONAMI_CODE.length) document.getElementById(
+    'auto-move').disabled = false;
 });
 
 function changeLayout(key) {
@@ -222,15 +285,18 @@ function changeLayout(key) {
   chosenManually = true;
 
   let longestLine = 0;
-  Array.from(layouts[key]).forEach((line) => longestLine = Math.max(longestLine, line.length));
+  Array.from(layouts[key]).
+        forEach((line) => longestLine = Math.max(longestLine, line.length));
 
-  document.getElementById('game').style.height = `${(longestLine * 91 / 1.1)}px`; // Piece height is 90.6px
-  document.getElementById('game').style.width = `${(layouts[key].length * 75.5)}px`; // Piece width is 75.5px
-
+  document.getElementById('game').style.height = `${(longestLine * 91 /
+                                                     1.1)}px`; // Piece height
+                                                               // is 90.6px
+  document.getElementById('game').style.width = `${(layouts[key].length *
+                                                    75.5)}px`; // Piece width
+                                                               // is 75.5px
 
   newGame();
 }
-
 
 function changeDifficulty(key) {
   document.getElementById('dropdown-menu2').style.display = 'none';
@@ -260,9 +326,10 @@ function calculateHelperValues() {
   if (totalReshuffles <= 0) reshuffleButton.disabled = true;
   if (totalUndos <= 0) undoButton.disabled = true;
 
-  Array.from(document.getElementById('dropdown-menu2').children[0].children).forEach(e => {
-    if (e.id == difficultyKey) e.className += ' is-active';
-  });
+  Array.from(document.getElementById('dropdown-menu2').children[0].children).
+        forEach(e => {
+          if (e.id == difficultyKey) e.className += ' is-active';
+        });
 }
 
 // https://stackoverflow.com/a/12646864
@@ -296,11 +363,14 @@ function generatePiece(colIndex, rowIndex, pieces, curPiece) {
   piece.innerHTML = `<img class='basePiece' src='img/Pieces/svg/basePiece.svg'><img  class='pieceImage' src='img/Pieces/svg/${pieces[Math.floor(
     curPiece)]}'>`;
   piece.addEventListener('click', () => selectPieces(piece));
-  piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100) + colIndex * 10 + piecesOnPosition;
+  piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100) + colIndex *
+                       10 + piecesOnPosition;
   chosenLayout[colIndex][rowIndex]--;
-  piece.style.left = `${colIndex * 58.135 - (piecesOnPosition - 1) * 9 + (chosenLayout.length / 10 * 75.5)}px`;
+  piece.style.left = `${colIndex * 58.135 - (piecesOnPosition - 1) * 9 +
+                        (chosenLayout.length / 10 * 75.5)}px`;
   piece.style.top = `${rowIndex * 76.104 + (piecesOnPosition - 1) * 7 + 15}px`;
-  document.getElementById('game').children[colIndex].children[rowIndex].appendChild(piece);
+  document.getElementById(
+    'game').children[colIndex].children[rowIndex].appendChild(piece);
 }
 
 function checkAvailableMoves() {
@@ -314,14 +384,21 @@ function checkAvailableMoves() {
       if (piece.hidden || piece1.hidden) continue;
       if (piece1 === piece) continue;
 
-      let [rowLocationPiece, rowLocationPiece1] = [piece.id.indexOf('row: '), piece1.id.indexOf('row: ')];
-      let [colLocationPiece, colLocationPiece1] = [piece.id.indexOf('col: '), piece1.id.indexOf('col: ')];
-      let [commaLocationPiece, commaLocationPiece1] = [piece.id.indexOf(','), piece1.id.indexOf(',')];
+      let [rowLocationPiece, rowLocationPiece1] = [
+        piece.id.indexOf('row: '), piece1.id.indexOf('row: ')];
+      let [colLocationPiece, colLocationPiece1] = [
+        piece.id.indexOf('col: '), piece1.id.indexOf('col: ')];
+      let [commaLocationPiece, commaLocationPiece1] = [
+        piece.id.indexOf(','), piece1.id.indexOf(',')];
 
-      let [rowPiece, rowPiece1] = [Number.parseInt(piece.id.substring(rowLocationPiece + 5, commaLocationPiece)),
-                                   Number.parseInt(piece1.id.substring(rowLocationPiece1 + 5, commaLocationPiece1))];
-      let [colPiece, colPiece1] = [Number.parseInt(piece.id.substring(colLocationPiece + 5)),
-                                   Number.parseInt(piece1.id.substring(colLocationPiece1 + 5))];
+      let [rowPiece, rowPiece1] = [
+        Number.parseInt(
+          piece.id.substring(rowLocationPiece + 5, commaLocationPiece)),
+        Number.parseInt(
+          piece1.id.substring(rowLocationPiece1 + 5, commaLocationPiece1))];
+      let [colPiece, colPiece1] = [
+        Number.parseInt(piece.id.substring(colLocationPiece + 5)),
+        Number.parseInt(piece1.id.substring(colLocationPiece1 + 5))];
 
       let heightPiece = piece.style.zIndex % 10;
       let heightPiece1 = piece1.style.zIndex % 10;
@@ -333,11 +410,13 @@ function checkAvailableMoves() {
           neighbourRight = true;
         }
       }
-      if (rowPiece === rowPiece1 && colPiece === colPiece1 && heightPiece < heightPiece1) {
+      if (rowPiece === rowPiece1 && colPiece === colPiece1 && heightPiece <
+          heightPiece1) {
         maxHeight = Math.max(maxHeight, heightPiece1);
       }
     }
-    if (neighbourLeft && neighbourRight || piece.style.zIndex !== maxHeight) continue;
+    if (neighbourLeft && neighbourRight || piece.style.zIndex !==
+        maxHeight) continue;
     availableMoves.push(piece);
   }
 }
@@ -348,32 +427,157 @@ async function createGame() {
 
   chosenLayout = JSON.parse(JSON.stringify(layouts[layoutKey]));
 
-  let pieces = ['bamboo1.svg', 'bamboo1.svg', 'bamboo1.svg', 'bamboo1.svg', 'bamboo2.svg', 'bamboo2.svg', 'bamboo2.svg',
-                'bamboo2.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo4.svg', 'bamboo4.svg',
-                'bamboo4.svg', 'bamboo4.svg', 'bamboo5.svg', 'bamboo5.svg', 'bamboo5.svg', 'bamboo5.svg', 'bamboo6.svg',
-                'bamboo6.svg', 'bamboo6.svg', 'bamboo6.svg', 'bamboo7.svg', 'bamboo7.svg', 'bamboo7.svg', 'bamboo7.svg',
-                'bamboo8.svg', 'bamboo8.svg', 'bamboo8.svg', 'bamboo8.svg', 'bamboo9.svg', 'bamboo9.svg', 'bamboo9.svg',
-                'bamboo9.svg', 'char1.svg', 'char1.svg', 'char1.svg', 'char1.svg', 'char2.svg', 'char2.svg',
-                'char2.svg', 'char2.svg', 'char3.svg', 'char3.svg', 'char3.svg', 'char3.svg', 'char4.svg', 'char4.svg',
-                'char4.svg', 'char4.svg', 'char5.svg', 'char5.svg', 'char5.svg', 'char5.svg', 'char6.svg', 'char6.svg',
-                'char6.svg', 'char6.svg', 'char7.svg', 'char7.svg', 'char7.svg', 'char7.svg', 'char8.svg', 'char8.svg',
-                'char8.svg', 'char8.svg', 'char9.svg', 'char9.svg', 'char9.svg', 'char9.svg', 'dot1.svg', 'dot1.svg',
-                'dot1.svg', 'dot1.svg', 'dot2.svg', 'dot2.svg', 'dot2.svg', 'dot2.svg', 'dot3.svg', 'dot3.svg',
-                'dot3.svg', 'dot3.svg', 'dot4.svg', 'dot4.svg', 'dot4.svg', 'dot4.svg', 'dot5.svg', 'dot5.svg',
-                'dot5.svg', 'dot5.svg', 'dot6.svg', 'dot6.svg', 'dot6.svg', 'dot6.svg', 'dot7.svg', 'dot7.svg',
-                'dot7.svg', 'dot7.svg', 'dot8.svg', 'dot8.svg', 'dot8.svg', 'dot8.svg', 'dot9.svg', 'dot9.svg',
-                'dot9.svg', 'dot9.svg', 'fBamboo.svg', 'fChrysanthemum.svg', 'fOrchid.svg', 'fPlum.svg', 'gDrag.svg',
-                'gDrag.svg', 'gDrag.svg', 'gDrag.svg', 'rDrag.svg', 'rDrag.svg', 'rDrag.svg', 'rDrag.svg', 'wDrag.svg',
-                'wDrag.svg', 'wDrag.svg', 'wDrag.svg', 'seasAutumn.svg', 'seasSpring.svg', 'seasSummer.svg',
-                'seasWinter.svg', 'windE.svg', 'windE.svg', 'windE.svg', 'windE.svg', 'windN.svg', 'windN.svg',
-                'windN.svg', 'windN.svg', 'windS.svg', 'windS.svg', 'windS.svg', 'windS.svg', 'windW.svg', 'windW.svg',
-                'windW.svg', 'windW.svg'];
+  let pieces = [
+    'bamboo1.svg',
+    'bamboo1.svg',
+    'bamboo1.svg',
+    'bamboo1.svg',
+    'bamboo2.svg',
+    'bamboo2.svg',
+    'bamboo2.svg',
+    'bamboo2.svg',
+    'bamboo3.svg',
+    'bamboo3.svg',
+    'bamboo3.svg',
+    'bamboo3.svg',
+    'bamboo4.svg',
+    'bamboo4.svg',
+    'bamboo4.svg',
+    'bamboo4.svg',
+    'bamboo5.svg',
+    'bamboo5.svg',
+    'bamboo5.svg',
+    'bamboo5.svg',
+    'bamboo6.svg',
+    'bamboo6.svg',
+    'bamboo6.svg',
+    'bamboo6.svg',
+    'bamboo7.svg',
+    'bamboo7.svg',
+    'bamboo7.svg',
+    'bamboo7.svg',
+    'bamboo8.svg',
+    'bamboo8.svg',
+    'bamboo8.svg',
+    'bamboo8.svg',
+    'bamboo9.svg',
+    'bamboo9.svg',
+    'bamboo9.svg',
+    'bamboo9.svg',
+    'char1.svg',
+    'char1.svg',
+    'char1.svg',
+    'char1.svg',
+    'char2.svg',
+    'char2.svg',
+    'char2.svg',
+    'char2.svg',
+    'char3.svg',
+    'char3.svg',
+    'char3.svg',
+    'char3.svg',
+    'char4.svg',
+    'char4.svg',
+    'char4.svg',
+    'char4.svg',
+    'char5.svg',
+    'char5.svg',
+    'char5.svg',
+    'char5.svg',
+    'char6.svg',
+    'char6.svg',
+    'char6.svg',
+    'char6.svg',
+    'char7.svg',
+    'char7.svg',
+    'char7.svg',
+    'char7.svg',
+    'char8.svg',
+    'char8.svg',
+    'char8.svg',
+    'char8.svg',
+    'char9.svg',
+    'char9.svg',
+    'char9.svg',
+    'char9.svg',
+    'dot1.svg',
+    'dot1.svg',
+    'dot1.svg',
+    'dot1.svg',
+    'dot2.svg',
+    'dot2.svg',
+    'dot2.svg',
+    'dot2.svg',
+    'dot3.svg',
+    'dot3.svg',
+    'dot3.svg',
+    'dot3.svg',
+    'dot4.svg',
+    'dot4.svg',
+    'dot4.svg',
+    'dot4.svg',
+    'dot5.svg',
+    'dot5.svg',
+    'dot5.svg',
+    'dot5.svg',
+    'dot6.svg',
+    'dot6.svg',
+    'dot6.svg',
+    'dot6.svg',
+    'dot7.svg',
+    'dot7.svg',
+    'dot7.svg',
+    'dot7.svg',
+    'dot8.svg',
+    'dot8.svg',
+    'dot8.svg',
+    'dot8.svg',
+    'dot9.svg',
+    'dot9.svg',
+    'dot9.svg',
+    'dot9.svg',
+    'fBamboo.svg',
+    'fChrysanthemum.svg',
+    'fOrchid.svg',
+    'fPlum.svg',
+    'gDrag.svg',
+    'gDrag.svg',
+    'gDrag.svg',
+    'gDrag.svg',
+    'rDrag.svg',
+    'rDrag.svg',
+    'rDrag.svg',
+    'rDrag.svg',
+    'wDrag.svg',
+    'wDrag.svg',
+    'wDrag.svg',
+    'wDrag.svg',
+    'seasAutumn.svg',
+    'seasSpring.svg',
+    'seasSummer.svg',
+    'seasWinter.svg',
+    'windE.svg',
+    'windE.svg',
+    'windE.svg',
+    'windE.svg',
+    'windN.svg',
+    'windN.svg',
+    'windN.svg',
+    'windN.svg',
+    'windS.svg',
+    'windS.svg',
+    'windS.svg',
+    'windS.svg',
+    'windW.svg',
+    'windW.svg',
+    'windW.svg',
+    'windW.svg'];
 
-  let dropdownList = document.getElementById('dropdown-menu').children[0].children;
+  let dropdownList = document.getElementById(
+    'dropdown-menu').children[0].children;
   Array.from(dropdownList).forEach(e => {
     if (e.id == layoutKey) e.className += ' is-active';
   });
-
 
   shuffleArray(pieces);
 
@@ -383,7 +587,8 @@ async function createGame() {
   while (hasPieces) {
     hasPieces = false;
     for (let colIndex = 0; colIndex < chosenLayout.length; colIndex++) {
-      for (let rowIndex = 0; rowIndex < chosenLayout[colIndex].length; rowIndex++) {
+      for (let rowIndex = 0; rowIndex < chosenLayout[colIndex].length;
+           rowIndex++) {
         if (chosenLayout[colIndex][rowIndex] === 0) continue;
         hasPieces = true;
         if (Math.random() >= 0.5) continue;
@@ -421,7 +626,8 @@ function isGameWinnable() {
     }
   }
 
-  if (Array.from(allPieces).filter(piece => !piece.hidden).length !== 0) return false;
+  if (Array.from(allPieces).filter(piece => !piece.hidden).length !==
+      0) return false;
   for (let piece of allPieces) piece.hidden = false;
   return true;
 }
@@ -468,26 +674,32 @@ function selectPieces(piece) {
   } else if (selected[0] === piece) { // Deselect the currently chosen piece
     selected = [];
 
-    Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
-  } else if (selected[0].innerHTML !== piece.innerHTML && !selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/)) {
-    // If the pieces are not the same, nor are they special ones select the new one
-    Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
+    Array.from(document.getElementsByClassName('selected')).
+          forEach(i => i.remove());
+  } else if (selected[0].innerHTML !== piece.innerHTML &&
+             !selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/)) {
+    // If the pieces are not the same, nor are they special ones select the new
+    // one
+    Array.from(document.getElementsByClassName('selected')).
+          forEach(i => i.remove());
 
     piece.parentNode.appendChild(selectedDiv);
 
     selected[0] = piece;
   } else {
 
-    if (selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/) && (selected[0].innerHTML.match(
-      /f.*\.svg/) && !piece.innerHTML.match(/f.*\.svg/) || selected[0].innerHTML.match(
-      /seas.*\.svg/) && !piece.innerHTML.match(/seas.*\.svg/))) {
-      Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
+    if (selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/) &&
+        (selected[0].innerHTML.match(/f.*\.svg/) &&
+         !piece.innerHTML.match(/f.*\.svg/) ||
+         selected[0].innerHTML.match(/seas.*\.svg/) &&
+         !piece.innerHTML.match(/seas.*\.svg/))) {
+      Array.from(document.getElementsByClassName('selected')).
+            forEach(i => i.remove());
       piece.parentNode.appendChild(selectedDiv);
 
       selected[0] = piece;
       return;
     }
-
 
     // Remove selected pieces if they're of the same type && the move is legal
     // Completely delete the pieces after the 2nd move if they are still hidden
@@ -498,8 +710,10 @@ function selectPieces(piece) {
         }
       }
     }
-    Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
-    Array.from(document.getElementsByClassName('hint')).forEach(i => i.remove());
+    Array.from(document.getElementsByClassName('selected')).
+          forEach(i => i.remove());
+    Array.from(document.getElementsByClassName('hint')).
+          forEach(i => i.remove());
 
     // Save the last move for the undo button
     lastMove = [selected[0], piece];
@@ -521,7 +735,6 @@ function load() {
 
   setTimeout(async () => {
     await createGame();
-
     document.getElementById('loading-container').hidden = true;
   }, 1);
 }
@@ -530,16 +743,15 @@ function newGame() {
 
   load();
 
-
   selected = [];
   if (!chosenManually) {
     let layoutKeys = Object.keys(layouts);
     layoutKey = layoutKeys[Math.floor(Math.random() * layoutKeys.length)];
 
     let difficultyKeys = Object.keys(difficulties);
-    difficultyKey = difficultyKeys[Math.floor(Math.random() * difficultyKeys.length)];
+    difficultyKey = difficultyKeys[Math.floor(
+      Math.random() * difficultyKeys.length)];
   }
-
 
   const grid = document.getElementById('game');
   for (const row of grid.children) {
@@ -552,15 +764,16 @@ function newGame() {
   currentReshuffles = totalReshuffles;
   currentUndos = totalUndos;
 
-  for (let child of document.getElementById('dropdown-menu').children[0].children) {
+  for (let child of
+    document.getElementById('dropdown-menu').children[0].children) {
     child.className = child.className.replaceAll(' is-active', '');
   }
-  for (let child of document.getElementById('dropdown-menu2').children[0].children) {
+  for (let child of
+    document.getElementById('dropdown-menu2').children[0].children) {
     child.className = child.className.replaceAll(' is-active', '');
   }
 
   calculateHelperValues();
-
 
 }
 

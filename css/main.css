@@ -10450,7 +10450,6 @@ body::-webkit-scrollbar-thumb {
 * {
   box-sizing: border-box;
 }
-
 *::before, *::after {
   box-sizing: border-box;
 }
@@ -10459,10 +10458,10 @@ body::-webkit-scrollbar-thumb {
   font-family: "Roboto", sans-serif;
   font-size: 1rem;
   line-height: 1.5;
-  margin: 0;
-  margin: auto;
+  margin: 0 auto;
   min-height: 100vh;
   overflow: hidden;
+  padding: 150px;
   transform: scale(0.725);
   width: 50%;
 }
@@ -10480,17 +10479,16 @@ body::-webkit-scrollbar-thumb {
 .loading-text {
   font-size: 3.75rem;
   font-weight: 300;
-  margin: 0;
+  margin: 0 auto;
   position: relative;
-  top: 150px;
   white-space: nowrap;
+  width: 50%;
 }
-
 .loading-text::before {
   position: absolute;
   content: "";
   animation: dotMove 1800ms cubic-bezier(0.25, 0.25, 0.75, 0.75) infinite;
-  background: ghostwhite;
+  background: white;
   border-radius: 50%;
   height: 6px;
   left: 115px;
@@ -10498,19 +10496,16 @@ body::-webkit-scrollbar-thumb {
   width: 6px;
   z-index: 1;
 }
-
 .loading-text .letter {
   color: white;
   display: inline-block;
   letter-spacing: 8px;
   position: relative;
 }
-
 .loading-text .letter:nth-child(1) {
   transform: scale(1, 1.275);
   transform-origin: 100% 70%;
 }
-
 .loading-text .letter:nth-child(1)::before {
   position: absolute;
   content: "";
@@ -10522,12 +10517,10 @@ body::-webkit-scrollbar-thumb {
   transform-origin: 100% 0;
   width: 14px;
 }
-
 .loading-text .letter:nth-child(5) {
   animation: letterStretch 1800ms cubic-bezier(0.25, 0.23, 0.73, 0.75) infinite;
   transform-origin: 100% 70%;
 }
-
 .loading-text .letter:nth-child(5)::before {
   position: absolute;
   content: "";
@@ -10546,7 +10539,6 @@ body::-webkit-scrollbar-thumb {
     transform: rotate(0deg) translate(-111px, 10px) rotate(0deg);
   }
 }
-
 @keyframes letterStretch {
   0%, 100% {
     transform: scale(1, 0.35);
@@ -10569,7 +10561,6 @@ body::-webkit-scrollbar-thumb {
     transform-origin: 100% 75%;
   }
 }
-
 @keyframes lineStretch {
   0%, 45%, 70%, 100% {
     transform: scaleY(0.125);
@@ -10590,13 +10581,11 @@ body::-webkit-scrollbar-thumb {
     transform: scaleY(0.18);
   }
 }
-
 @media (min-width: 48rem) {
   #container {
     transform: scale(0.725rem);
   }
 }
-
 @media (min-width: 62rem) {
   #container {
     transform: scale(0.85);

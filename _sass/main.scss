@@ -226,10 +226,10 @@ $white             : #4A484B;
   font-family : 'Roboto', sans-serif;
   font-size   : 1rem;
   line-height : 1.5;
-  margin      : 0;
-  margin      : auto;
+  margin      : 0 auto;
   min-height  : 100vh;
   overflow    : hidden;
+  padding     : 150px;
   transform   : scale(0.725);
   width       : 50%;
 }
@@ -247,16 +247,16 @@ $white             : #4A484B;
 .loading-text {
   font-size   : 3.75rem;
   font-weight : 300;
-  margin      : 0;
+  margin      : 0 auto;
   position    : relative;
-  top         : 150px;
   white-space : nowrap;
+  width       : 50%;
 
   &::before {
     // For dot
     @include pseudo;
     animation     : dotMove 1800ms cubic-bezier(0.25, 0.25, 0.75, 0.75) infinite;
-    background    : ghostwhite;
+    background    : $black;
     border-radius : 50%;
     height        : 6px;
     left          : 115px;
