@@ -24,9 +24,8 @@ $primary-invert    : $pink-invert;
 
 // 4. Import the rest of Bulma
 
-
 @import '../node_modules/bulma/bulma';
-
+@import '~@creativebulma/bulma-collapsible';
 
 html {
   background-color : #4A484B;
@@ -363,7 +362,7 @@ $white             : #4A484B;
 
 @media(min-width : 48rem) {
   #container {
-    transform : scale(0.725rem);
+    transform : scale(0.725);
   }
 }
 

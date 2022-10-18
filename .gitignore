@@ -88,3 +88,5 @@ node_modules
 dist
 .cache
 /.idea/codeStyles/codeStyleConfig.xml
+/.idea/jsLinters/jshint.xml
+/.idea/inspectionProfiles/Project_Default.xml
