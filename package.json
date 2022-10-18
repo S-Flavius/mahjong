@@ -23,5 +23,5 @@
   "start"      : "npm-run-all --parallel css-watch js-watch"
 }, "dependencies": {
   "@creativebulma/bulma-collapsible": "^1.0.4", "fs": "^0.0.1-security"
-}
+}, "type"        : "module"
 }
