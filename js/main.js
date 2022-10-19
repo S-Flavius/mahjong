@@ -1,9 +1,3 @@
-import bulmaAccordion
-  from '../node_modules/@creativebulma/bulma-collapsible/src/js/index.js';
-
-const accordions = bulmaAccordion.attach(); // accordions now contains an array
-                                            // of all Accordion instances
-
 window.onload = () => {
   changeDifficulty(difficultyKey);
   changeLayout('Flower');

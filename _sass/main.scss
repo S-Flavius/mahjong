@@ -24,8 +24,9 @@ $primary-invert    : $pink-invert;
 
 // 4. Import the rest of Bulma
 
+
 @import '../node_modules/bulma/bulma';
-@import '../node_modules/@creativebulma/bulma-collapsible/src/sass/index.sass';
+
 
 html {
   background-color : #4A484B;
