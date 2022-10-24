@@ -4,7 +4,7 @@ Mahjong Solitaire is the classic Chinese game of Mahjong, also known as Shanghai
 
 ## How to play
 
-For the time being, the game is hosted on my GitHub page: https://s-flavius.github.io/mahjong/
+For the time being, the game is hosted on my [GitHub page]( https://s-flavius.github.io/mahjong/)
 
 The goal is to remove all the tiles from the board by matching pairs of free tiles. The free tiles are not covered and
 have at least one side (left or right) exposed. Tiles can be matched by clicking on them in pairs. The game is over when
