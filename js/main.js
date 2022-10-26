@@ -306,7 +306,7 @@ function changeDifficulty(key) {
   newGame();
 }
 
-function calculateHelperValues() {
+function calculateHelperButtonValues() {
   hintButton.disabled = false;
   reshuffleButton.disabled = false;
 
@@ -773,7 +773,7 @@ function newGame() {
     child.className = child.className.replaceAll(' is-active', '');
   }
 
-  calculateHelperValues();
+  calculateHelperButtonValues();
 
 }
 

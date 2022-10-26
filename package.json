@@ -20,8 +20,9 @@
   "deploy"     : "npm run css-deploy && npm run js-build",
   "js-build"   : "babel _javascript --out-dir lib",
   "js-watch"   : "npm run js-build -- --watch",
-  "start"      : "npm-run-all --parallel css-watch js-watch"
+  "start"      : "npm-run-all --parallel css-watch js-watch",
+  "test"       : "mocha"
 }, "dependencies": {
-  "fs": "^0.0.1-security"
+  "fs": "^0.0.1-security", "mocha": "^10.1.0"
 }
 }

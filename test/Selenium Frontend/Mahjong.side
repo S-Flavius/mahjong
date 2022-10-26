@@ -1,0 +1,642 @@
+{
+  "id": "b589d3cb-50e2-47b5-9167-d9b4d5533f98",
+  "version": "2.0",
+  "name": "Mahjong",
+  "url": "https://s-flavius.github.io/mahjong/",
+  "tests": [{
+    "id": "07a2c15c-5ab5-482f-996a-81fc21b0dbaf",
+    "name": "Change difficulties works",
+    "commands": [{
+      "id": "3a31578d-41ff-404a-8a92-f5ef98a5a128",
+      "comment": "",
+      "command": "open",
+      "target": "https://s-flavius.github.io/mahjong/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bc884410-e301-4d29-8b31-663c680c5b31",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "976x1040",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f98e4b27-3c13-4e32-a9be-e41fb682c1fa",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton2 > span:nth-child(1)",
+      "targets": [
+        ["css=#dropDownButton2 > span:nth-child(1)", "css:finder"],
+        ["xpath=//button[@id='dropDownButton2']/span", "xpath:idRelative"],
+        ["xpath=//div[2]/div/button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Difficulty')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f9489e52-14a5-43a0-b5fb-63d126f28f6e",
+      "comment": "",
+      "command": "click",
+      "target": "id=Easy",
+      "targets": [
+        ["id=Easy", "id"],
+        ["linkText=Easy", "linkText"],
+        ["css=#Easy", "css:finder"],
+        ["xpath=//a[contains(text(),'Easy')]", "xpath:link"],
+        ["xpath=//a[@id='Easy']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdown-menu2']/div/a", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Easy')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8bd453e1-9a29-4cb7-969d-9d73db2dbee2",
+      "comment": "Hints should be 100",
+      "command": "assertText",
+      "target": "css=#hint > p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(0/0)')]", "xpath:innerText"]
+      ],
+      "value": "(100/100)"
+    }, {
+      "id": "596f5556-5358-4c0b-a116-e0da9ebac3d9",
+      "comment": "Undo should be 100",
+      "command": "assertText",
+      "target": "css=#undo> p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(0/0)')]", "xpath:innerText"]
+      ],
+      "value": "(100/100)"
+    }, {
+      "id": "7152584b-14fe-48b3-b632-9320e18f421c",
+      "comment": "Reshuffle should be 100",
+      "command": "assertText",
+      "target": "css=#reshuffle> p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(0/0)')]", "xpath:innerText"]
+      ],
+      "value": "(100/100)"
+    }, {
+      "id": "fef834b9-9de1-4241-af1a-10f86da869e4",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton2 > .icon",
+      "targets": [
+        ["css=#dropDownButton2 > .icon", "css:finder"],
+        ["xpath=//button[@id='dropDownButton2']/span[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div/button/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "64de24f9-3eb0-44b5-b58e-cc87652851d7",
+      "comment": "",
+      "command": "click",
+      "target": "id=Medium",
+      "targets": [
+        ["id=Medium", "id"],
+        ["linkText=Medium", "linkText"],
+        ["css=#Medium", "css:finder"],
+        ["xpath=//a[contains(text(),'Medium')]", "xpath:link"],
+        ["xpath=//a[@id='Medium']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdown-menu2']/div/a[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Medium')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "05fb5f28-2cdf-4fb8-9a40-75595d2aaca4",
+      "comment": "Hints should be 5",
+      "command": "assertText",
+      "target": "css=#hint > p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(0/0)')]", "xpath:innerText"]
+      ],
+      "value": "(5/5)"
+    }, {
+      "id": "24b215ae-2dc0-43e3-9c55-5cbd6e70ece8",
+      "comment": "Undo should be 1",
+      "command": "assertText",
+      "target": "css=#undo> p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(0/0)')]", "xpath:innerText"]
+      ],
+      "value": "(1/1)"
+    }, {
+      "id": "5a35dc80-9307-4baf-bf10-29ec21e69d0d",
+      "comment": "Reshuffle should be 1",
+      "command": "assertText",
+      "target": "css=#reshuffle> p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(0/0)')]", "xpath:innerText"]
+      ],
+      "value": "(1/1)"
+    }, {
+      "id": "c1205868-a60e-4b05-af3f-ee364009fb8c",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton2 > span:nth-child(1)",
+      "targets": [
+        ["css=#dropDownButton2 > span:nth-child(1)", "css:finder"],
+        ["xpath=//button[@id='dropDownButton2']/span", "xpath:idRelative"],
+        ["xpath=//div[2]/div/button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Difficulty')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0f74216a-7f97-4fd0-a516-6f5754adb0d0",
+      "comment": "",
+      "command": "click",
+      "target": "id=Hard",
+      "targets": [
+        ["id=Hard", "id"],
+        ["linkText=Hard", "linkText"],
+        ["css=#Hard", "css:finder"],
+        ["xpath=//a[contains(text(),'Hard')]", "xpath:link"],
+        ["xpath=//a[@id='Hard']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdown-menu2']/div/a[3]", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Hard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5a9d0958-c6f0-4765-9f52-5d25f0597a8c",
+      "comment": "Hints should be 3",
+      "command": "assertText",
+      "target": "css=#hint > p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(0/0)')]", "xpath:innerText"]
+      ],
+      "value": "(3/3)"
+    }, {
+      "id": "dbcbba83-eda7-4317-abfe-331e0d9edb1a",
+      "comment": "Undo should be 0",
+      "command": "assertText",
+      "target": "css=#undo> p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(0/0)')]", "xpath:innerText"]
+      ],
+      "value": "(0/0)"
+    }, {
+      "id": "e3f51bc2-6e5d-4242-8d3a-f865c6137156",
+      "comment": "Reshuffle should be 0",
+      "command": "assertText",
+      "target": "css=#reshuffle> p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(0/0)')]", "xpath:innerText"]
+      ],
+      "value": "(0/0)"
+    }, {
+      "id": "62ed3918-08cd-47b2-bdaf-d4c2157e9a11",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton2 > span:nth-child(1)",
+      "targets": [
+        ["css=#dropDownButton2 > span:nth-child(1)", "css:finder"],
+        ["xpath=//button[@id='dropDownButton2']/span", "xpath:idRelative"],
+        ["xpath=//div[2]/div/button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Difficulty')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "77301ded-0bfe-4858-b264-ccd426444f57",
+      "comment": "",
+      "command": "click",
+      "target": "id=EXTREME",
+      "targets": [
+        ["id=EXTREME", "id"],
+        ["linkText=EXTREME", "linkText"],
+        ["css=#EXTREME", "css:finder"],
+        ["xpath=//a[contains(text(),'EXTREME')]", "xpath:link"],
+        ["xpath=//a[@id='EXTREME']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdown-menu2']/div/a[4]", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'EXTREME')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8f2daa73-034b-4703-b1e5-900861ec6aac",
+      "comment": "Hints should be 0",
+      "command": "assertText",
+      "target": "css=#hint > p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(0/0)')]", "xpath:innerText"]
+      ],
+      "value": "(0/0)"
+    }, {
+      "id": "24f38c7f-4021-4077-815c-e75f1a71594d",
+      "comment": "Undo should be 0",
+      "command": "assertText",
+      "target": "css=#undo> p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(0/0)')]", "xpath:innerText"]
+      ],
+      "value": "(0/0)"
+    }, {
+      "id": "e80e0f36-8f7a-4264-ad44-39dabc4e66a3",
+      "comment": "Reshuffle should be 0",
+      "command": "assertText",
+      "target": "css=#reshuffle> p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(0/0)')]", "xpath:innerText"]
+      ],
+      "value": "(0/0)"
+    }]
+  }, {
+    "id": "13d57e8b-b008-4e3a-8ba8-1f8a97d9e597",
+    "name": "Change layouts should work",
+    "commands": [{
+      "id": "434a3014-70f2-4031-b7d4-5fd03daad7b4",
+      "comment": "",
+      "command": "open",
+      "target": "https://s-flavius.github.io/mahjong/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9d0e9f56-26db-45c5-a7d8-a120cf2f1359",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1040",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f4a1297a-7e23-493c-9fc0-39fcfa388c6a",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton > span:nth-child(1)",
+      "targets": [
+        ["css=#dropDownButton > span:nth-child(1)", "css:finder"],
+        ["xpath=//button[@id='dropDownButton']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Layouts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f8e3bfd-da42-4d7d-96a3-03985823886b",
+      "comment": "",
+      "command": "click",
+      "target": "id=Flower",
+      "targets": [
+        ["id=Flower", "id"],
+        ["linkText=Flower", "linkText"],
+        ["css=#Flower", "css:finder"],
+        ["xpath=//a[contains(text(),'Flower')]", "xpath:link"],
+        ["xpath=//a[@id='Flower']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdown-menu']/div/a", "xpath:idRelative"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Flower')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fd64ca66-afc1-480f-b434-01468a2314a5",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton > span:nth-child(1)",
+      "targets": [
+        ["css=#dropDownButton > span:nth-child(1)", "css:finder"],
+        ["xpath=//button[@id='dropDownButton']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Layouts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fd18bdd0-7a85-4a66-9742-3f83275684a7",
+      "comment": "Flower should be selected",
+      "command": "assertText",
+      "target": "css=a.is-active",
+      "targets": [],
+      "value": "Flower"
+    }, {
+      "id": "77fe3185-8855-4999-bee4-77e6976b8e81",
+      "comment": "",
+      "command": "click",
+      "target": "id=Pyramid",
+      "targets": [
+        ["id=Pyramid", "id"],
+        ["linkText=Pyramid", "linkText"],
+        ["css=#Pyramid", "css:finder"],
+        ["xpath=//a[contains(text(),'Pyramid')]", "xpath:link"],
+        ["xpath=//a[@id='Pyramid']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdown-menu']/div/a[2]", "xpath:idRelative"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Pyramid')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "908ec90c-6644-465f-92c6-eb04f661defa",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton > span:nth-child(1)",
+      "targets": [
+        ["css=#dropDownButton > span:nth-child(1)", "css:finder"],
+        ["xpath=//button[@id='dropDownButton']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Layouts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ae88b739-49c6-4bac-8f3a-8384bafe6192",
+      "comment": "Pyramid should be selected",
+      "command": "assertText",
+      "target": "css=a.is-active",
+      "targets": [],
+      "value": "Pyramid"
+    }, {
+      "id": "95a48fb4-77ba-4784-bad9-b96a1aa54299",
+      "comment": "",
+      "command": "click",
+      "target": "id=Snake",
+      "targets": [
+        ["id=Snake", "id"],
+        ["linkText=Snake", "linkText"],
+        ["css=#Snake", "css:finder"],
+        ["xpath=//a[contains(text(),'Snake')]", "xpath:link"],
+        ["xpath=//a[@id='Snake']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdown-menu']/div/a[3]", "xpath:idRelative"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Snake')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e4f3fb8d-c076-4184-ad58-833e873ba290",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton > span:nth-child(1)",
+      "targets": [
+        ["css=#dropDownButton > span:nth-child(1)", "css:finder"],
+        ["xpath=//button[@id='dropDownButton']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Layouts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "73ae5f38-f3ca-400f-aa1c-cb58abdcc888",
+      "comment": "Snake should be selected",
+      "command": "assertText",
+      "target": "css=a.is-active",
+      "targets": [],
+      "value": "Snake"
+    }, {
+      "id": "a03dfe71-9ce6-499e-97fd-96c17cd30987",
+      "comment": "",
+      "command": "click",
+      "target": "id=Stairs",
+      "targets": [
+        ["id=Stairs", "id"],
+        ["linkText=Stairs", "linkText"],
+        ["css=#Stairs", "css:finder"],
+        ["xpath=//a[contains(text(),'Stairs')]", "xpath:link"],
+        ["xpath=//a[@id='Stairs']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdown-menu']/div/a[4]", "xpath:idRelative"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Stairs')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ba976d38-618c-4e52-b330-f133c10cfc3f",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton > span:nth-child(1)",
+      "targets": [
+        ["css=#dropDownButton > span:nth-child(1)", "css:finder"],
+        ["xpath=//button[@id='dropDownButton']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Layouts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "684257e8-59a9-43d0-95de-d02dc6a87583",
+      "comment": "Stairs should be selected",
+      "command": "assertText",
+      "target": "css=a.is-active",
+      "targets": [],
+      "value": "Stairs"
+    }, {
+      "id": "0d3a5c6a-e1fb-4954-a317-2aa7cd6aa0a9",
+      "comment": "",
+      "command": "click",
+      "target": "id=Mouse",
+      "targets": [
+        ["id=Mouse", "id"],
+        ["linkText=Mouse", "linkText"],
+        ["css=#Mouse", "css:finder"],
+        ["xpath=//a[contains(text(),'Mouse')]", "xpath:link"],
+        ["xpath=//a[@id='Mouse']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdown-menu']/div/a[5]", "xpath:idRelative"],
+        ["xpath=//a[5]", "xpath:position"],
+        ["xpath=//a[contains(.,'Mouse')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "edc9571b-53c8-4d00-84f9-b85baf3e550f",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton > span:nth-child(1)",
+      "targets": [
+        ["css=#dropDownButton > span:nth-child(1)", "css:finder"],
+        ["xpath=//button[@id='dropDownButton']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Layouts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "42d258fe-d851-4058-a20a-a5d47905ea2c",
+      "comment": "Mouse should be selected",
+      "command": "assertText",
+      "target": "css=a.is-active",
+      "targets": [],
+      "value": "Mouse"
+    }, {
+      "id": "75f3c982-99da-4aba-947d-746bca58b834",
+      "comment": "",
+      "command": "click",
+      "target": "id=Tortoise",
+      "targets": [
+        ["id=Tortoise", "id"],
+        ["linkText=Tortoise", "linkText"],
+        ["css=#Tortoise", "css:finder"],
+        ["xpath=//a[contains(text(),'Tortoise')]", "xpath:link"],
+        ["xpath=//a[@id='Tortoise']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdown-menu']/div/a[6]", "xpath:idRelative"],
+        ["xpath=//a[6]", "xpath:position"],
+        ["xpath=//a[contains(.,'Tortoise')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2d054e52-cbe2-4b7f-8cb7-7962fd037348",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton > span:nth-child(1)",
+      "targets": [
+        ["css=#dropDownButton > span:nth-child(1)", "css:finder"],
+        ["xpath=//button[@id='dropDownButton']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Layouts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5c8f4f84-2f41-49fe-8833-dda7f2f222ed",
+      "comment": "Tortoise should be selected",
+      "command": "assertText",
+      "target": "css=a.is-active",
+      "targets": [],
+      "value": "Tortoise"
+    }, {
+      "id": "4cded5b2-3ff2-436e-bd60-c5314b6ac5eb",
+      "comment": "",
+      "command": "click",
+      "target": "id=Test",
+      "targets": [
+        ["id=Test", "id"],
+        ["linkText=Test", "linkText"],
+        ["css=#Test", "css:finder"],
+        ["xpath=//a[contains(text(),'Test')]", "xpath:link"],
+        ["xpath=//a[@id='Test']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdown-menu']/div/a[7]", "xpath:idRelative"],
+        ["xpath=//a[7]", "xpath:position"],
+        ["xpath=//a[contains(.,'Test')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6890d8ea-14a7-48ec-b1a8-0af15fbe7117",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton > span:nth-child(1)",
+      "targets": [
+        ["css=#dropDownButton > span:nth-child(1)", "css:finder"],
+        ["xpath=//button[@id='dropDownButton']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Layouts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b9c30a2c-3aa9-43bc-92c0-f08cad79e1e6",
+      "comment": "Test should be selected",
+      "command": "assertText",
+      "target": "css=a.is-active",
+      "targets": [],
+      "value": "Test"
+    }]
+  }, {
+    "id": "f78ee2e9-23b2-45b8-808e-fd69456ada32",
+    "name": "Hints should work",
+    "commands": [{
+      "id": "456b95f3-1903-475d-a1a3-3590ac6c3016",
+      "comment": "",
+      "command": "open",
+      "target": "https://s-flavius.github.io/mahjong/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bf06e2c1-7810-40ae-8242-7acd56ddd0c4",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1040",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8ee4301e-ec2b-4f67-a110-a0c62955a11b",
+      "comment": "",
+      "command": "click",
+      "target": "css=#dropDownButton > span:nth-child(1)",
+      "targets": [
+        ["css=#dropDownButton > span:nth-child(1)", "css:finder"],
+        ["xpath=//button[@id='dropDownButton']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Layouts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "24a9676b-2828-4325-8c01-6514801c2283",
+      "comment": "",
+      "command": "click",
+      "target": "id=Flower",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6c6039b3-0f79-48d6-8e66-b052d59c18ed",
+      "comment": "",
+      "command": "click",
+      "target": "css=#hint > p",
+      "targets": [
+        ["css=#hint > p", "css:finder"],
+        ["xpath=//button[@id='hint']/p", "xpath:idRelative"],
+        ["xpath=//button[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'(100/100)')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2c93a063-86a6-409b-a9e3-01c495df1d9c",
+      "comment": "",
+      "command": "storeAttribute",
+      "target": "css=div.hint@style",
+      "targets": [],
+      "value": "test"
+    }, {
+      "id": "0f38f855-fac9-4bd1-8566-957fc79d6b49",
+      "comment": "",
+      "command": "clickAt",
+      "target": "css=div.hint",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "452b0fa9-7b20-4a69-9f39-3134371e5330",
+      "comment": "",
+      "command": "storeAttribute",
+      "target": "css=div.hint@style",
+      "targets": [],
+      "value": "test2"
+    }, {
+      "id": "cf1d038b-678d-4ecd-8d45-4c2c6f68a2de",
+      "comment": "",
+      "command": "clickAt",
+      "target": "css=div.hint",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "b3d2a6af-1348-4058-b07c-a5fc0a2fff1f",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["https://s-flavius.github.io/", "https://s-flavius.github.io/mahjong/"],
+  "plugins": []
+}
