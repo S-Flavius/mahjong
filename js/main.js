@@ -1,6 +1,6 @@
 window.onload = () => {
-  changeDifficulty(difficultyKey);
-  changeLayout('Flower');
+  changeDifficulty(difficultyKey, false);
+  changeLayout('Flower', false);
 
   if (window.innerHeight < 800) {
     document.getElementsByClassName('navbar')[0].style.display = 'none';
@@ -11,6 +11,8 @@ window.onload = () => {
                     });
     }, 200);
   }
+
+  newGame();
 };
 
 document.getElementById('new-game').addEventListener('click', newGame);
@@ -279,7 +281,7 @@ document.addEventListener('keydown', (e) => {
     'auto-move').disabled = false;
 });
 
-function changeLayout(key) {
+function changeLayout(key, restart = true) {
   document.getElementById('dropdown-menu').style.display = 'none';
   layoutKey = key;
   chosenManually = true;
@@ -294,16 +296,15 @@ function changeLayout(key) {
   document.getElementById('game').style.width = `${(layouts[key].length *
                                                     75.5)}px`; // Piece width
                                                                // is 75.5px
-
-  newGame();
+  if (restart) newGame();
 }
 
-function changeDifficulty(key) {
+function changeDifficulty(key, restart = true) {
   document.getElementById('dropdown-menu2').style.display = 'none';
   chosenManually = true;
   difficultyKey = key;
 
-  newGame();
+  if (restart) newGame();
 }
 
 function calculateHelperButtonValues() {
