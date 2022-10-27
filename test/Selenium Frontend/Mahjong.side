@@ -555,6 +555,13 @@
     "id": "f78ee2e9-23b2-45b8-808e-fd69456ada32",
     "name": "Hints should work",
     "commands": [{
+      "id": "a78427d4-1600-4b93-a983-01c0d4b38d00",
+      "comment": "",
+      "command": "times",
+      "target": "20",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "456b95f3-1903-475d-a1a3-3590ac6c3016",
       "comment": "",
       "command": "open",
@@ -600,31 +607,24 @@
       ],
       "value": ""
     }, {
-      "id": "2c93a063-86a6-409b-a9e3-01c495df1d9c",
-      "comment": "",
-      "command": "storeAttribute",
-      "target": "css=div.hint@style",
-      "targets": [],
-      "value": "test"
-    }, {
-      "id": "0f38f855-fac9-4bd1-8566-957fc79d6b49",
-      "comment": "",
-      "command": "clickAt",
-      "target": "css=div.hint",
+      "id": "b84c72a9-ef47-46ac-8dca-300671de0825",
+      "comment": "Checks if both highlighted elements look the same",
+      "command": "runScript",
+      "target": "let rect0 = document.getElementsByClassName('hint')[0].getBoundingClientRect();  let rect1 = document.getElementsByClassName('hint')[1].getBoundingClientRect();    let p1Src = document.elementFromPoint(rect0['x'],rect0['y'] + 90).src; let p2Src = document.elementFromPoint(rect1['x'],rect1['y']).src;if(p1Src === p2Src) {Array.from(document.getElementsByClassName('hint')).forEach(p=>p.remove())}",
       "targets": [],
       "value": ""
     }, {
-      "id": "452b0fa9-7b20-4a69-9f39-3134371e5330",
+      "id": "919ca7ae-99ee-4d33-878e-1903634b3a69",
       "comment": "",
-      "command": "storeAttribute",
-      "target": "css=div.hint@style",
+      "command": "verifyElementNotPresent",
+      "target": "css=.hint",
       "targets": [],
-      "value": "test2"
+      "value": ""
     }, {
-      "id": "cf1d038b-678d-4ecd-8d45-4c2c6f68a2de",
+      "id": "a7be7482-de7c-4b89-8c62-904d7b8c67e1",
       "comment": "",
-      "command": "clickAt",
-      "target": "css=div.hint",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }]
