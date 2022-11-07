@@ -419,6 +419,8 @@ function checkAvailableMoves() {
     if (neighbourLeft && neighbourRight || piece.style.zIndex !==
         maxHeight) continue;
     availableMoves.push(piece);
+    if (!piece.className.includes('available'))
+      piece.className += ' availableMove';
   }
 }
 
