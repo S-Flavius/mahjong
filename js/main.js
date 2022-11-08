@@ -379,6 +379,7 @@ function checkAvailableMoves() {
   let pieces = document.getElementsByClassName('piece');
 
   for (let piece of pieces) {
+    piece.className = 'piece';
     let neighbourLeft, neighbourRight, maxHeight = piece.style.zIndex;
 
     for (const piece1 of pieces) {
