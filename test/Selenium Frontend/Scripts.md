@@ -16,10 +16,16 @@ p2.click();
 // Undos should work
 // -- Does a move
 let available = document.getElementsByClassName('availableMove');
-for (move of available) {
-  if (move.innerHTML == available[0].innerHTML && move != available[0]) {
-    move.click();
-    available[0].click();
-  }
+let outterBreak = false
+for (var i = 0; i < available.length; i++) {
+  if (!outterBreak)
+    for (move of available) {
+      if (move.innerHTML == available[i].innerHTML && move != available[i]) {
+        move.click();
+        available[i].click();
+        outterBreak = true
+        break
+      }
+    }
 }
 ```

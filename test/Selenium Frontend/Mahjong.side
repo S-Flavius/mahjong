@@ -632,6 +632,13 @@
     "id": "d96dfefe-6b90-413e-8ed4-6d042ebf4ef9",
     "name": "Undo should work",
     "commands": [{
+      "id": "0f890226-c8be-461c-9c08-025fda35a646",
+      "comment": "",
+      "command": "times",
+      "target": "30",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "85985184-96ce-45a4-8198-607dcc123e4d",
       "comment": "",
       "command": "open",
@@ -656,7 +663,7 @@
       "id": "beff407a-d805-4502-8910-574b83dcbb06",
       "comment": "Do a move",
       "command": "runScript",
-      "target": "let e=document.getElementsByClassName(\"availableMove\");for(move of e)move.innerHTML==e[0].innerHTML&&move!=e[0]&&(move.click(),e[0].click());",
+      "target": "let e=document.getElementsByClassName(\"availableMove\");let l=false;for(var o=0;o<e.length;o++){if(!l)for(move of e){if(move.innerHTML==e[o].innerHTML&&move!=e[o]){move.click();e[o].click();l=true;break}}}",
       "targets": [],
       "value": ""
     }, {
@@ -680,6 +687,130 @@
       "target": "css=#undo",
       "targets": [],
       "value": ""
+    }, {
+      "id": "6930cd10-2d8e-407b-b8a4-787e7d3e6f7c",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "217fd4b7-4f69-41c6-be53-96e63b0dbd57",
+    "name": "Reshuffles should work",
+    "commands": [{
+      "id": "86d8c7ab-c61e-48be-8797-253f7ff5a62e",
+      "comment": "",
+      "command": "times",
+      "target": "20",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a34585dc-4aab-4cda-8256-2af6da136270",
+      "comment": "",
+      "command": "open",
+      "target": "https://s-flavius.github.io/mahjong/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d78bec8c-9612-490b-a3b6-7e8f10e08369",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1040",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d16d1271-b247-47e5-99ac-286840849c66",
+      "comment": "",
+      "command": "runScript",
+      "target": "localStorage.setItem('firstPiece',document.getElementById('game').innerHTML + \" \")",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d345a805-394a-4a46-948c-e03ea2be6880",
+      "comment": "",
+      "command": "click",
+      "target": "id=reshuffle",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9d817961-4555-4691-89c9-43b6fe2d66fc",
+      "comment": "",
+      "command": "runScript",
+      "target": "localStorage.setItem('secondPiece',document.getElementById('game').innerHTML + \" \")",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dc000fa0-0b66-4598-a39d-ea8302aa59c3",
+      "comment": "",
+      "command": "runScript",
+      "target": "const div = document.createElement('div');div.id = 'testDiv';if(localStorage.getItem('firstPiece') == localStorage.getItem('secondPiece'))document.getElementById('game').appendChild(div)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7a1c8ffc-8667-46a6-ae1d-565ba7f08e1e",
+      "comment": "",
+      "command": "verifyElementNotPresent",
+      "target": "id=testDiv",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "548b00ba-af62-4982-b30c-3d3e5104c62d",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "e7faa528-05a1-4e01-b0ca-f2b6323f8771",
+    "name": "Auto move should work",
+    "commands": [{
+      "id": "7be79bfa-2430-48f7-86d1-7bbe381b90c9",
+      "comment": "",
+      "command": "open",
+      "target": "https://s-flavius.github.io/mahjong/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a52b6ef0-8e28-4dea-b799-28abb1028ccd",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "976x1040",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3d91c456-ea66-4ec0-ad65-f68c6653457f",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=game",
+      "targets": [
+        ["css=body > div:nth-child(4)", "css:finder"],
+        ["xpath=//div[4]", "xpath:position"]
+      ],
+      "value": "${KEY_UP}${KEY_UP}${KEY_DOWN}${KEY_DOWN}"
+    }, {
+      "id": "dbd01f4a-209a-469b-a923-516273c4ed63",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=game",
+      "targets": [
+        ["css=body > div:nth-child(4)", "css:finder"],
+        ["xpath=//div[4]", "xpath:position"]
+      ],
+      "value": "${KEY_LEFT}${KEY_RIGHT}${KEY_LEFT}${KEY_RIGHT}"
+    }, {
+      "id": "bac26a95-24e5-4e27-af73-d3c2842e9603",
+      "comment": "",
+      "command": "type",
+      "target": "id=game",
+      "targets": [
+        ["id=game", "id"],
+        ["css=#game", "css:finder"],
+        ["xpath=//div[@id='game']", "xpath:attributes"],
+        ["xpath=//section/div", "xpath:position"]
+      ],
+      "value": "ba"
     }]
   }],
   "suites": [{
