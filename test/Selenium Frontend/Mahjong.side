@@ -610,7 +610,7 @@
       "id": "b84c72a9-ef47-46ac-8dca-300671de0825",
       "comment": "Checks if both highlighted elements look the same",
       "command": "runScript",
-      "target": "let rect0 = document.getElementsByClassName('hint')[0].getBoundingClientRect(); let rect1 = document.getElementsByClassName('hint')[1].getBoundingClientRect(); let p1 = document.elementFromPoint(rect0['left'] + rect0['width'] / 2,     rect0['top'] + rect0['height'] / 2); let p2 = document.elementFromPoint(rect1['left'] + rect1['width'] / 2, rect1['top'] + rect1['height'] / 2); p1.click(); p2.click();",
+      "target": "let e=document.getElementsByClassName(\"hint\")[0].getBoundingClientRect(),t=document.getElementsByClassName(\"hint\")[1].getBoundingClientRect(),n=document.elementFromPoint(e.left+e.width/2,e.top+e.height/2),i=document.elementFromPoint(t.left+t.width/2,t.top+t.height/2);n.click(),i.click();",
       "targets": [],
       "value": ""
     }, {
@@ -766,7 +766,7 @@
     "id": "e7faa528-05a1-4e01-b0ca-f2b6323f8771",
     "name": "Auto move should work",
     "commands": [{
-      "id": "7be79bfa-2430-48f7-86d1-7bbe381b90c9",
+      "id": "3e49b5fc-7a74-48f8-813f-3fa314f62f9f",
       "comment": "",
       "command": "open",
       "target": "https://s-flavius.github.io/mahjong/",
@@ -780,36 +780,32 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "0dbf0be0-e0b2-474c-8f06-09f0b34eba7c",
+      "comment": "",
+      "command": "assertNotEditable",
+      "target": "id=auto-move",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "3d91c456-ea66-4ec0-ad65-f68c6653457f",
       "comment": "",
-      "command": "sendKeys",
+      "command": "//sendKeys",
       "target": "id=game",
-      "targets": [
-        ["css=body > div:nth-child(4)", "css:finder"],
-        ["xpath=//div[4]", "xpath:position"]
-      ],
-      "value": "${KEY_UP}${KEY_UP}${KEY_DOWN}${KEY_DOWN}"
+      "targets": [],
+      "value": "${KEY_UP}${KEY_UP}${KEY_UP}${KEY_UP}${KEY_DOWN}${KEY_DOWN}${KEY_DOWN}${KEY_DOWN}"
     }, {
       "id": "dbd01f4a-209a-469b-a923-516273c4ed63",
       "comment": "",
-      "command": "sendKeys",
+      "command": "//sendKeys",
       "target": "id=game",
-      "targets": [
-        ["css=body > div:nth-child(4)", "css:finder"],
-        ["xpath=//div[4]", "xpath:position"]
-      ],
-      "value": "${KEY_LEFT}${KEY_RIGHT}${KEY_LEFT}${KEY_RIGHT}"
+      "targets": [],
+      "value": "${KEY_LEFT}${KEY_LEFT}${KEY_RIGHT}${KEY_RIGHT}${KEY_LEFT}${KEY_LEFT}${KEY_RIGHT}${KEY_RIGHT}"
     }, {
       "id": "bac26a95-24e5-4e27-af73-d3c2842e9603",
       "comment": "",
-      "command": "type",
+      "command": "",
       "target": "id=game",
-      "targets": [
-        ["id=game", "id"],
-        ["css=#game", "css:finder"],
-        ["xpath=//div[@id='game']", "xpath:attributes"],
-        ["xpath=//section/div", "xpath:position"]
-      ],
+      "targets": [],
       "value": "ba"
     }]
   }],
