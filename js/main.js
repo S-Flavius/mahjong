@@ -1,17 +1,16 @@
+import {
+  clickablePieces,
+  findAvailableMoves,
+  konami,
+  scrollOnSmallScreen,
+  setClickable,
+}                                      from './helpers/utils.js';
+import {difficulties, layouts, pieces} from './layouts.js';
+
 window.onload = () => {
   changeDifficulty(difficultyKey, false);
   changeLayout('Flower', false);
-
-  if (window.innerHeight < 800) {
-    document.getElementsByClassName('navbar')[0].style.display = 'none';
-
-    setTimeout(() => {
-      window.scroll({
-                      top: 10, behavior: 'smooth',
-                    });
-    }, 200);
-  }
-
+  scrollOnSmallScreen();
   newGame();
 };
 
@@ -19,7 +18,6 @@ document.getElementById('new-game').addEventListener('click', newGame);
 
 let selected = [];
 let lastMove = [];
-let availableMoves = [];
 let totalHints;
 let currentHints = totalHints;
 let totalReshuffles;
@@ -37,126 +35,33 @@ let undoButton = document.getElementById('undo');
 undoButton.innerHTML = ``;
 undoButton.disabled = true;
 
-let layouts = {
-  'Flower'                                  : [
-    [0, 0, 0, 1, 1, 1, 0, 0, 0],
-    [0, 0, 0, 1, 0, 1, 0, 0, 0],
-    [0, 0, 1, 1, 0, 1, 1, 0, 0],
-    [0, 0, 1, 0, 0, 0, 1, 0, 0],
-    [1, 1, 1, 0, 0, 0, 1, 1, 1],
-    [0, 0, 1, 0, 0, 0, 1, 0, 0],
-    [0, 0, 1, 1, 0, 1, 1, 0, 0],
-    [0, 0, 0, 1, 0, 1, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0]], 'Pyramid' : [
-    [0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 1, 1, 2, 1, 1, 0, 0],
-    [0, 0, 1, 2, 3, 2, 1, 0, 0],
-    [1, 1, 2, 3, 4, 3, 2, 1, 1],
-    [0, 0, 1, 2, 3, 2, 1, 0, 0],
-    [0, 0, 1, 1, 2, 1, 1, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0, 0]], 'Snake'   : [
-    [1, 2, 0, 1, 1, 2, 1, 1, 0],
-    [1, 2, 0, 1, 2, 3, 2, 1, 0],
-    [1, 3, 0, 1, 1, 4, 4, 1, 0],
-    [1, 2, 0, 0, 0, 0, 3, 0, 0],
-    [3, 2, 0, 0, 0, 1, 2, 3, 0],
-    [0, 2, 0, 0, 0, 2, 0, 0, 0],
-    [0, 2, 3, 0, 4, 3, 0, 0, 0],
-    [0, 0, 3, 0, 4, 0, 0, 0, 0],
-    [0, 0, 3, 3, 4, 0, 0, 0, 0]], 'Stairs'  : [
-    [1, 1, 1, 2, 2, 2],
-    [1, 1, 1, 2, 2, 2],
-    [2, 2, 2, 3, 3, 3],
-    [2, 2, 2, 3, 3, 3],
-    [3, 3, 3, 4, 4, 4],
-    [3, 3, 3, 4, 4, 4],
-    [4, 4, 4, 5, 5, 5],
-    [4, 4, 4, 6, 6, 6],
-    [5, 5, 5, 7, 7, 7],
-    [5, 5, 5, 7, 7, 8]], 'Mouse'            : [
-    [0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 1, 2, 1, 0, 0, 0],
-    [0, 0, 0, 0, 3, 0, 0, 0, 0],
-    [0, 0, 1, 2, 3, 2, 1, 0, 0],
-    [0, 1, 2, 3, 3, 3, 2, 1, 0],
-    [0, 1, 2, 3, 4, 3, 2, 1, 0],
-    [0, 1, 2, 3, 3, 3, 2, 1, 0],
-    [0, 0, 1, 2, 3, 2, 1, 0, 0],
-    [0, 0, 1, 2, 2, 2, 1, 0, 0],
-    [0, 0, 0, 1, 2, 1, 0, 0, 0],
-    [0, 0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 1, 2, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0, 0]], 'Tortoise': [
-    [1, 0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 1, 1, 0, 0, 0, 1, 1, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0],
-    [0, 0, 2, 2, 2, 2, 2, 0, 1],
-    [0, 1, 2, 3, 3, 3, 2, 1, 0],
-    [0, 0, 2, 2, 2, 2, 2, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0],
-    [0, 1, 1, 0, 0, 0, 1, 1, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 1]], 'Test'    : [
-    [0, 0, 0, 1, 1, 0, 0, 0],
-    [0, 0, 0, 1, 1, 0, 0, 0],
-    [0, 0, 1, 2, 2, 1, 0, 0],
-    [0, 0, 1, 2, 2, 1, 0, 0],
-    [1, 1, 2, 3, 3, 2, 1, 1],
-    [1, 1, 2, 3, 3, 2, 1, 1],
-    [2, 2, 3, 4, 4, 3, 2, 2],
-    [2, 2, 3, 4, 4, 3, 2, 2],
-    [3, 3, 4, 5, 5, 4, 3, 3],
-    [3, 3, 4, 5, 5, 4, 3, 3],
-    [2, 2, 3, 4, 4, 3, 2, 2],
-    [2, 2, 3, 4, 4, 3, 2, 2],
-    [1, 1, 2, 3, 3, 2, 1, 1],
-    [1, 1, 2, 3, 3, 2, 1, 1],
-    [0, 0, 1, 2, 2, 1, 0, 0],
-    [0, 0, 1, 2, 2, 1, 0, 0],
-    [0, 0, 0, 1, 1, 0, 0, 0],
-    [0, 0, 0, 1, 1, 0, 0, 0]],
-};
-
-let difficulties = {
-  //difficulty : [Hints, reshuffles, undos]
-  Easy      : {
-    hints: 100, reshuffles: 100, undos: 100,
-  }, Medium : {
-    hints: 5, reshuffles: 1, undos: 1,
-  }, Hard   : {
-    hints: 3, reshuffles: 0, undos: 0,
-  }, EXTREME: {
-    hints: 0, reshuffles: 0, undos: 0,
-  },
-};
-
 let layoutKey = 'Flower';
 let chosenLayout = 0;
 let difficultyKey = 'Easy';
 let chosenManually = false;
 
-for (let key in layouts) {
+function createElement(key) {
   let element = document.createElement('a');
   element.className = 'dropdown-item';
   element.id = key.toString();
   element.innerText = key.toString();
+  return element;
+}
+
+for (let key in layouts) {
+  let element = createElement(key);
   element.addEventListener('click', () => changeLayout(key));
   document.getElementById('dropdown-menu').children[0].appendChild(element);
 }
 
 for (let key in difficulties) {
-  let element = document.createElement('a');
-  element.className = 'dropdown-item';
-  element.id = key.toString();
-  element.innerText = key.toString();
+  let element = createElement(key);
   element.addEventListener('click', () => changeDifficulty(key));
   document.getElementById('dropdown-menu2').children[0].appendChild(element);
 }
 
 document.getElementById('undo').addEventListener('click', () => {
   undoButton.innerHTML = `<img class='undo-button'><p>(${--currentUndos}/${totalUndos})</p>`;
-  if (currentUndos <= 0) undoButton.disabled = true;
   if (selected.length !== 0) {
     selected[0].className = 'piece';
     selected = [];
@@ -168,12 +73,14 @@ document.getElementById('undo').addEventListener('click', () => {
 });
 
 document.getElementById('hint').addEventListener('click', () => {
+  // Update button text
   hintButton.innerHTML = `<img class='hint-button'/><p>(${--currentHints}/${totalHints})</p>`;
 
+  // Check all the available moves
   let hints = [];
-  for (let piece of availableMoves) {
+  for (let piece of clickablePieces) {
     if (piece.hidden) continue;
-    for (let piece1 of availableMoves) {
+    for (let piece1 of clickablePieces) {
       if (piece1.hidden || piece === piece1) continue;
       if (piece.innerHTML === piece1.innerHTML) {
         hints.push([piece, piece1]);
@@ -181,8 +88,11 @@ document.getElementById('hint').addEventListener('click', () => {
     }
   }
 
+  // Select a random move out of the available ones
   let chosenHint = hints[Math.floor(Math.random() * hints.length)];
 
+  // Create highlight location
+  // REFACTORME: too much code
   let [hintDiv, hintDiv1] = [
     document.createElement('div'), document.createElement('div')];
   [hintDiv.className, hintDiv1.className] = ['hint', 'hint'];
@@ -194,37 +104,45 @@ document.getElementById('hint').addEventListener('click', () => {
     Number.parseInt(chosenHint[0].style.zIndex) + 1 + '',
     Number.parseInt(chosenHint[1].style.zIndex) + 1 + ''];
 
+  // Highlight the pieces
   document.getElementById('game').appendChild(hintDiv);
   document.getElementById('game').appendChild(hintDiv1);
 
+  // Disable button
   hintButton.disabled = true;
 
+  // Remove highlight after 2.5 seconds
   setTimeout(() => {
     for (const piece of document.getElementsByClassName('piece')) {
       Array.from(document.getElementsByClassName('hint')).
             forEach(hint => hint.remove());
     }
-    if (currentHints > 0) hintButton.disabled = false;
+    // Re-enable button if possible
+    hintButton.disabled = currentHints > 0;
   }, 2500);
 });
 
-let curReshuffles = 0;
 document.getElementById('reshuffle').
          addEventListener('click', function reshuffle() {
+
+           // Deselect all pieces
            if (selected.length !== 0) {
              selected[0].className = 'piece';
              selected = [];
            }
 
            //  https://stackoverflow.com/a/64457744/15403179
+           // Get all the visible pieces
            let pieces = document.querySelectorAll('.piece:not([hidden])');
 
+           // Go through each piece and swap it with another random one
            for (let i = 0; i < pieces.length; i++) {
              let piece1 = pieces[i];
-
-             //piece2 could be piece1. In that case, nothing changes
              let piece2 = pieces[Math.floor(Math.random() * pieces.length)];
 
+             if (piece1 === piece2) continue;
+
+             // Swap the pieces, including their style
              [
                piece1.style.cssText,
                piece2.style.cssText,
@@ -235,9 +153,12 @@ document.getElementById('reshuffle').
                piece2.id,
                piece1.id];
            }
+           // Check if possible moves still exist, otherwise reshuffle again
+           // On 5 failed checks, alert the user and regenerate the board
            checkAvailableMoves();
 
-           let clickable = availableMoves.filter(piece => !piece.hidden);
+           let curReshuffles = 0;
+           let clickable = clickablePieces.filter(piece => !piece.hidden);
            if (clickable.length < 2) {
              curReshuffles++;
 
@@ -247,55 +168,34 @@ document.getElementById('reshuffle').
              }
              reshuffle();
            }
-           curReshuffles = 0;
 
+           // Update button and disable if no more reshuffles are available
            reshuffleButton.innerHTML = `<img class='reshuffle-button'/><p>(${--currentReshuffles}/${totalReshuffles})</p>`;
-           if (currentReshuffles <= 0) reshuffleButton.disabled = true;
-
+           reshuffleButton.disabled = currentReshuffles <= 0;
          });
 
 document.getElementById('auto-move').addEventListener('click', () => {
   let pairs = [];
 
-  for (const piece of availableMoves) {
-    for (const piece1 of availableMoves) {
-      if (piece.hidden || piece1.hidden) continue;
-      if (piece === piece1) continue;
-      if (piece.innerHTML === piece1.innerHTML) {
-        pairs.push([piece, piece1]);
-      }
-    }
-  }
-
+  findAvailableMoves(pairs);
+  // Simulate the player clicking the pieces, for better functionality with the
+  // other functions
   for (const piece of pairs[Math.floor(Math.random() * pairs.length)]) {
     piece.click();
   }
 });
 
 // https://stackoverflow.com/a/48777893/15403179
-let cursor = 0;
-const KONAMI_CODE = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
-document.addEventListener('keydown', (e) => {
-  cursor = (e.keyCode == KONAMI_CODE[cursor]) ? cursor + 1 : 0;
-  if (cursor == KONAMI_CODE.length) document.getElementById(
-    'auto-move').disabled = false;
-});
+document.addEventListener('keydown', konami);
 
 function changeLayout(key, restart = true) {
+  // Hides the layout dropdown menu
   document.getElementById('dropdown-menu').style.display = 'none';
   layoutKey = key;
   chosenManually = true;
 
-  let longestLine = 0;
-  Array.from(layouts[key]).
-        forEach((line) => longestLine = Math.max(longestLine, line.length));
-
-  document.getElementById('game').style.height = `${(longestLine * 91 /
-                                                     1.1)}px`; // Piece height
-                                                               // is 90.6px
-  document.getElementById('game').style.width = `${(layouts[key].length *
-                                                    75.5)}px`; // Piece width
-                                                               // is 75.5px
+  document.getElementById('game').style.width =
+    `${(layouts[key].length * 75.5)}px`; // Piece width is 75.5px
   if (restart) newGame();
 }
 
@@ -308,9 +208,6 @@ function changeDifficulty(key, restart = true) {
 }
 
 function calculateHelperButtonValues() {
-  hintButton.disabled = false;
-  reshuffleButton.disabled = false;
-
   totalHints = difficulties[difficultyKey]['hints'];
   totalReshuffles = difficulties[difficultyKey]['reshuffles'];
   totalUndos = difficulties[difficultyKey]['undos'];
@@ -323,9 +220,8 @@ function calculateHelperButtonValues() {
   reshuffleButton.innerHTML = `<img class='reshuffle-button'/><p>(${currentReshuffles}/${totalReshuffles})</p>`;
   undoButton.innerHTML = `<img class='undo-button'.><p>(${currentUndos}/${totalUndos})</p>`;
 
-  if (totalHints <= 0) hintButton.disabled = true;
-  if (totalReshuffles <= 0) reshuffleButton.disabled = true;
-  if (totalUndos <= 0) undoButton.disabled = true;
+  hintButton.disabled = totalHints <= 0;
+  reshuffleButton.disabled = totalReshuffles <= 0;
 
   Array.from(document.getElementById('dropdown-menu2').children[0].children).
         forEach(e => {
@@ -375,7 +271,7 @@ function generatePiece(colIndex, rowIndex, pieces, curPiece) {
 }
 
 function checkAvailableMoves() {
-  availableMoves = [];
+  setClickable([]); // clickablePieces = [];
   let pieces = document.getElementsByClassName('piece');
 
   for (let piece of pieces) {
@@ -386,12 +282,15 @@ function checkAvailableMoves() {
       if (piece.hidden || piece1.hidden) continue;
       if (piece1 === piece) continue;
 
-      let [rowLocationPiece, rowLocationPiece1] = [
-        piece.id.indexOf('row: '), piece1.id.indexOf('row: ')];
-      let [colLocationPiece, colLocationPiece1] = [
-        piece.id.indexOf('col: '), piece1.id.indexOf('col: ')];
-      let [commaLocationPiece, commaLocationPiece1] = [
-        piece.id.indexOf(','), piece1.id.indexOf(',')];
+      let [
+            rowLocationPiece, rowLocationPiece1
+            , colLocationPiece, colLocationPiece1
+            , commaLocationPiece, commaLocationPiece1,
+          ] = [
+        piece.id.indexOf('row: '), piece1.id.indexOf('row: ')
+        , piece.id.indexOf('col: '), piece1.id.indexOf('col: ')
+        , piece.id.indexOf(','), piece1.id.indexOf(','),
+      ];
 
       let [rowPiece, rowPiece1] = [
         Number.parseInt(
@@ -419,9 +318,9 @@ function checkAvailableMoves() {
     }
     if (neighbourLeft && neighbourRight || piece.style.zIndex !==
         maxHeight) continue;
-    availableMoves.push(piece);
-    if (!piece.className.includes('available'))
-      piece.className += ' availableMove';
+    clickablePieces.push(piece);
+    if (!piece.className.includes(
+      'available')) piece.className += ' availableMove';
   }
 }
 
@@ -430,152 +329,6 @@ async function createGame() {
   generateGrid();
 
   chosenLayout = JSON.parse(JSON.stringify(layouts[layoutKey]));
-
-  let pieces = [
-    'bamboo1.svg',
-    'bamboo1.svg',
-    'bamboo1.svg',
-    'bamboo1.svg',
-    'bamboo2.svg',
-    'bamboo2.svg',
-    'bamboo2.svg',
-    'bamboo2.svg',
-    'bamboo3.svg',
-    'bamboo3.svg',
-    'bamboo3.svg',
-    'bamboo3.svg',
-    'bamboo4.svg',
-    'bamboo4.svg',
-    'bamboo4.svg',
-    'bamboo4.svg',
-    'bamboo5.svg',
-    'bamboo5.svg',
-    'bamboo5.svg',
-    'bamboo5.svg',
-    'bamboo6.svg',
-    'bamboo6.svg',
-    'bamboo6.svg',
-    'bamboo6.svg',
-    'bamboo7.svg',
-    'bamboo7.svg',
-    'bamboo7.svg',
-    'bamboo7.svg',
-    'bamboo8.svg',
-    'bamboo8.svg',
-    'bamboo8.svg',
-    'bamboo8.svg',
-    'bamboo9.svg',
-    'bamboo9.svg',
-    'bamboo9.svg',
-    'bamboo9.svg',
-    'char1.svg',
-    'char1.svg',
-    'char1.svg',
-    'char1.svg',
-    'char2.svg',
-    'char2.svg',
-    'char2.svg',
-    'char2.svg',
-    'char3.svg',
-    'char3.svg',
-    'char3.svg',
-    'char3.svg',
-    'char4.svg',
-    'char4.svg',
-    'char4.svg',
-    'char4.svg',
-    'char5.svg',
-    'char5.svg',
-    'char5.svg',
-    'char5.svg',
-    'char6.svg',
-    'char6.svg',
-    'char6.svg',
-    'char6.svg',
-    'char7.svg',
-    'char7.svg',
-    'char7.svg',
-    'char7.svg',
-    'char8.svg',
-    'char8.svg',
-    'char8.svg',
-    'char8.svg',
-    'char9.svg',
-    'char9.svg',
-    'char9.svg',
-    'char9.svg',
-    'dot1.svg',
-    'dot1.svg',
-    'dot1.svg',
-    'dot1.svg',
-    'dot2.svg',
-    'dot2.svg',
-    'dot2.svg',
-    'dot2.svg',
-    'dot3.svg',
-    'dot3.svg',
-    'dot3.svg',
-    'dot3.svg',
-    'dot4.svg',
-    'dot4.svg',
-    'dot4.svg',
-    'dot4.svg',
-    'dot5.svg',
-    'dot5.svg',
-    'dot5.svg',
-    'dot5.svg',
-    'dot6.svg',
-    'dot6.svg',
-    'dot6.svg',
-    'dot6.svg',
-    'dot7.svg',
-    'dot7.svg',
-    'dot7.svg',
-    'dot7.svg',
-    'dot8.svg',
-    'dot8.svg',
-    'dot8.svg',
-    'dot8.svg',
-    'dot9.svg',
-    'dot9.svg',
-    'dot9.svg',
-    'dot9.svg',
-    'fBamboo.svg',
-    'fChrysanthemum.svg',
-    'fOrchid.svg',
-    'fPlum.svg',
-    'gDrag.svg',
-    'gDrag.svg',
-    'gDrag.svg',
-    'gDrag.svg',
-    'rDrag.svg',
-    'rDrag.svg',
-    'rDrag.svg',
-    'rDrag.svg',
-    'wDrag.svg',
-    'wDrag.svg',
-    'wDrag.svg',
-    'wDrag.svg',
-    'seasAutumn.svg',
-    'seasSpring.svg',
-    'seasSummer.svg',
-    'seasWinter.svg',
-    'windE.svg',
-    'windE.svg',
-    'windE.svg',
-    'windE.svg',
-    'windN.svg',
-    'windN.svg',
-    'windN.svg',
-    'windN.svg',
-    'windS.svg',
-    'windS.svg',
-    'windS.svg',
-    'windS.svg',
-    'windW.svg',
-    'windW.svg',
-    'windW.svg',
-    'windW.svg'];
 
   let dropdownList = document.getElementById(
     'dropdown-menu').children[0].children;
@@ -615,8 +368,8 @@ function isGameWinnable() {
 
   for (let i = 0; i < allPieces.length / 2; i++) {
     checkAvailableMoves();
-    for (const piece of availableMoves) {
-      for (const piece1 of availableMoves) {
+    for (const piece of clickablePieces) {
+      for (const piece1 of clickablePieces) {
         if (piece === piece1) continue;
         if (piece.innerHTML === piece1.innerHTML) {
           piece.hidden = true;
@@ -644,9 +397,9 @@ function checkGameState() {
     }, 100);
   } else {
     let winnable = false;
-    for (let piece of availableMoves) {
+    for (let piece of clickablePieces) {
       if (piece.hidden) continue;
-      for (let piece1 of availableMoves) {
+      for (let piece1 of clickablePieces) {
         if (piece1.hidden || piece === piece1) continue;
         if (piece.innerHTML === piece1.innerHTML) {
           winnable = true;
@@ -662,7 +415,7 @@ function checkGameState() {
 }
 
 function selectPieces(piece) {
-  if (!availableMoves.includes(piece)) return;
+  if (!clickablePieces.includes(piece)) return;
   let selectedDiv = document.createElement('div');
   selectedDiv.className = 'selected';
 
