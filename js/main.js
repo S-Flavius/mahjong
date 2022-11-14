@@ -118,7 +118,7 @@ document.getElementById('hint').addEventListener('click', () => {
             forEach(hint => hint.remove());
     }
     // Re-enable button if possible
-    hintButton.disabled = currentHints > 0;
+    hintButton.disabled = currentHints <= 0;
   }, 2500);
 });
 
@@ -191,15 +191,17 @@ document.addEventListener('keydown', konami);
 function changeLayout(key, restart = true) {
   // Hides the layout dropdown menu
   document.getElementById('dropdown-menu').style.display = 'none';
-  layoutKey = key;
   chosenManually = true;
+  layoutKey = key;
 
-  document.getElementById('game').style.width =
-    `${(layouts[key].length * 75.5)}px`; // Piece width is 75.5px
+  document.getElementById('game').style.width = `${(layouts[key].length *
+                                                    75.5)}px`; // Piece width
+                                                               // is 75.5px
   if (restart) newGame();
 }
 
 function changeDifficulty(key, restart = true) {
+  // Hides the difficulty dropdown menu
   document.getElementById('dropdown-menu2').style.display = 'none';
   chosenManually = true;
   difficultyKey = key;
@@ -208,21 +210,24 @@ function changeDifficulty(key, restart = true) {
 }
 
 function calculateHelperButtonValues() {
-  totalHints = difficulties[difficultyKey]['hints'];
-  totalReshuffles = difficulties[difficultyKey]['reshuffles'];
-  totalUndos = difficulties[difficultyKey]['undos'];
 
-  currentHints = totalHints;
-  currentReshuffles = totalReshuffles;
-  currentUndos = totalUndos;
+  // Resets currentHints and totalHints to the default values for the chosen
+  // difficulty
+  currentHints = totalHints = difficulties[difficultyKey]['hints'];
+  currentReshuffles = totalReshuffles = difficulties[difficultyKey]['reshuffles'];
+  currentUndos = totalUndos = difficulties[difficultyKey]['undos'];
 
+  // Update the button text to reflect the new values
   hintButton.innerHTML = `<img class='hint-button'/><p>(${currentHints}/${totalHints})</p>`;
   reshuffleButton.innerHTML = `<img class='reshuffle-button'/><p>(${currentReshuffles}/${totalReshuffles})</p>`;
   undoButton.innerHTML = `<img class='undo-button'.><p>(${currentUndos}/${totalUndos})</p>`;
 
+  // Disable the buttons if they are not available
   hintButton.disabled = totalHints <= 0;
   reshuffleButton.disabled = totalReshuffles <= 0;
+  undoButton.disabled = true;
 
+  // Highlight the selected difficulty
   Array.from(document.getElementById('dropdown-menu2').children[0].children).
         forEach(e => {
           if (e.id == difficultyKey) e.className += ' is-active';
@@ -230,14 +235,16 @@ function calculateHelperButtonValues() {
 }
 
 // https://stackoverflow.com/a/12646864
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
 }
 
 function generateGrid() {
+
+  // Generates a grid of empty spaces based on the chosen layout
   const grid = document.getElementById('game');
   for (let i = 0; i < layouts[layoutKey].length; i++) {
     const row = document.createElement('div');
@@ -254,24 +261,28 @@ function generateGrid() {
 function generatePiece(colIndex, rowIndex, pieces, curPiece) {
   let piecesOnPosition = chosenLayout[colIndex][rowIndex];
   let piece = document.createElement('div');
+
+  // Creates a piece with the correct image and position
   piece.className = 'piece';
   piece.id = 'row: ' + rowIndex + ', col: ' + colIndex;
-  // noinspection HtmlRequiredAltAttribute
-  piece.innerHTML = `<img class='basePiece' src='img/Pieces/svg/basePiece.svg'><img  class='pieceImage' src='img/Pieces/svg/${pieces[Math.floor(
+  piece.innerHTML = `<img class='basePiece' src='img/Pieces/svg/basePiece.svg'>
+  <img  class='pieceImage' src='img/Pieces/svg/${pieces[Math.floor(
     curPiece)]}'>`;
   piece.addEventListener('click', () => selectPieces(piece));
   piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100) + colIndex *
                        10 + piecesOnPosition;
   chosenLayout[colIndex][rowIndex]--;
-  piece.style.left = `${colIndex * 58.135 - (piecesOnPosition - 1) * 9 +
-                        (chosenLayout.length / 10 * 75.5)}px`;
-  piece.style.top = `${rowIndex * 76.104 + (piecesOnPosition - 1) * 7 + 15}px`;
+  piece.style.left = `${colIndex * 58.135 - 9 * piecesOnPosition + 9 +
+                        chosenLayout.length * 7.55}px`;
+  piece.style.top = `${rowIndex * 76.104 + 7 * piecesOnPosition + 8}px`;
+
+  // Adds the piece to the grid
   document.getElementById(
     'game').children[colIndex].children[rowIndex].appendChild(piece);
 }
 
 function checkAvailableMoves() {
-  setClickable([]); // clickablePieces = [];
+  setClickable([]);
   let pieces = document.getElementsByClassName('piece');
 
   for (let piece of pieces) {
@@ -283,14 +294,12 @@ function checkAvailableMoves() {
       if (piece1 === piece) continue;
 
       let [
-            rowLocationPiece, rowLocationPiece1
-            , colLocationPiece, colLocationPiece1
-            , commaLocationPiece, commaLocationPiece1,
-          ] = [
-        piece.id.indexOf('row: '), piece1.id.indexOf('row: ')
-        , piece.id.indexOf('col: '), piece1.id.indexOf('col: ')
-        , piece.id.indexOf(','), piece1.id.indexOf(','),
-      ];
+            rowLocationPiece, rowLocationPiece1,
+            colLocationPiece, colLocationPiece1,
+            commaLocationPiece, commaLocationPiece1] = [
+        piece.id.indexOf('row: '), piece1.id.indexOf('row: '),
+        piece.id.indexOf('col: '), piece1.id.indexOf('col: '),
+        piece.id.indexOf(','), piece1.id.indexOf(',')];
 
       let [rowPiece, rowPiece1] = [
         Number.parseInt(
@@ -301,8 +310,8 @@ function checkAvailableMoves() {
         Number.parseInt(piece.id.substring(colLocationPiece + 5)),
         Number.parseInt(piece1.id.substring(colLocationPiece1 + 5))];
 
-      let heightPiece = piece.style.zIndex % 10;
-      let heightPiece1 = piece1.style.zIndex % 10;
+      let [heightPiece, heightPiece1] = [
+        piece.style.zIndex % 10, piece1.style.zIndex % 10];
 
       if (rowPiece === rowPiece1 && heightPiece === heightPiece1) {
         if (colPiece === colPiece1 - 1) {
@@ -311,11 +320,13 @@ function checkAvailableMoves() {
           neighbourRight = true;
         }
       }
+
       if (rowPiece === rowPiece1 && colPiece === colPiece1 && heightPiece <
           heightPiece1) {
         maxHeight = Math.max(maxHeight, heightPiece1);
       }
     }
+
     if (neighbourLeft && neighbourRight || piece.style.zIndex !==
         maxHeight) continue;
     clickablePieces.push(piece);
@@ -330,11 +341,10 @@ async function createGame() {
 
   chosenLayout = JSON.parse(JSON.stringify(layouts[layoutKey]));
 
-  let dropdownList = document.getElementById(
-    'dropdown-menu').children[0].children;
-  Array.from(dropdownList).forEach(e => {
-    if (e.id == layoutKey) e.className += ' is-active';
-  });
+  Array.from(document.getElementById('dropdown-menu').children[0].children).
+        forEach(e => {
+          if (e.id === layoutKey) e.className += ' is-active';
+        });
 
   shuffleArray(pieces);
 
