@@ -1,28 +1,44 @@
 {
-  "name"         : "bulma-start", "version": "0.0.5", "description": "Start package for Bulma", "keywords": [
-  "sass", "bulma", "css", "start"
-], "author"      : "Jeremy Thomas <bbxdesign@gmail.com> (http://jgthms.com)", "repository": {
-  "type": "git", "url": "git+https://github.com/jgthms/bulma-start.git"
-}, "license"     : "MIT", "devDependencies": {
-  "autoprefixer"          : "^10.4.12",
-  "babel-cli"             : "^6.26.0",
-  "babel-preset-env"      : "^1.7.0",
-  "babel-preset-es2015-ie": "^6.7.0",
-  "bulma"                 : "^0.9.3",
-  "npm-run-all"           : "^4.1.5",
-  "postcss-cli"           : "^10.0.0",
-  "sass"                  : "^1.55.0"
-}, "scripts"     : {
-  "css-deploy" : "npm run css-build && npm run css-postcss",
-  "css-build"  : "sass --no-source-map _sass/main.scss:css/main.css",
-  "css-postcss": "postcss --use autoprefixer --output css/main.css css/main.css",
-  "css-watch"  : "npm run css-build -- --watch",
-  "deploy"     : "npm run css-deploy && npm run js-build",
-  "js-build"   : "babel _javascript --out-dir lib",
-  "js-watch"   : "npm run js-build -- --watch",
-  "start"      : "npm-run-all --parallel css-watch js-watch",
-  "test"       : "mocha"
-}, "dependencies": {
-  "fs": "^0.0.1-security", "mocha": "^10.1.0"
-}
+  "name": "Mahjong",
+  "version": "0.0.5",
+  "description": "Mahjong solitaire",
+  "keywords": [
+    "sass",
+    "bulma",
+    "css",
+    "start"
+  ],
+  "author": "S-Flavius",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^10.4.12",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015-ie": "^6.7.0",
+    "bulma": "^0.9.3",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^10.0.0",
+    "sass": "^1.55.0"
+  },
+  "scripts": {
+    "css-deploy": "npm run css-build && npm run css-postcss",
+    "css-build": "sass --no-source-map _sass/main.scss:css/main.css",
+    "css-postcss": "postcss --use autoprefixer --output css/main.css css/main.css",
+    "css-watch": "npm run css-build -- --watch",
+    "deploy": "npm run css-deploy && npm run js-build",
+    "js-build": "babel _javascript --out-dir lib",
+    "js-watch": "npm run js-build -- --watch",
+    "start": "npm-run-all --parallel css-watch js-watch",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.14",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "mocha": "^10.1.0",
+    "node-fetch": "^3.3.0",
+    "nodemon": "^2.0.20"
+  },
+  "type": "module"
 }

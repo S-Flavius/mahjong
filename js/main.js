@@ -553,6 +553,33 @@ function timer(action) {
   if (action == 'end') {
     let endTime = new Date().getTime(), timeDiff = endTime - startTime;
     timeDiff /= 1000;
-    alert(timeDiff);
+
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+
+    if (confirm('Do you want to save your score?')) {
+      let username = prompt('Enter your username to save your score');
+
+      const raw = JSON.stringify({
+                                   'username'  : username,
+                                   'time'      : timeDiff,
+                                   'layout'    : layoutKey,
+                                   'difficulty': difficultyKey,
+                                 });
+
+      const requestOptions = {
+        method  : 'POST',
+        headers : myHeaders,
+        body    : raw,
+        redirect: 'follow',
+      };
+
+      fetch('http://localhost:3000/scores', requestOptions).
+        then(response => response.text()).
+        then(result => console.log(result)).
+        catch(error => console.log('error', error));
+    }
+    alert(`time: ${timeDiff}`);
   }
 }
