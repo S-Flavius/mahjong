@@ -38,7 +38,8 @@
     "fs": "^0.0.1-security",
     "mocha": "^10.1.0",
     "node-fetch": "^3.3.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "sqlite3": "^5.1.2"
   },
   "type": "module"
 }
