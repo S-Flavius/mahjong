@@ -11,7 +11,7 @@ let db = new sqlite3.Database(
     if (err) {
       return console.error(err.message);
     }
-    console.log('Connected to the in-memory SQLite database.');
+    console.log('Connected to the SQLite database.');
   });
 
 db.run(`CREATE TABLE if not exists scores(
@@ -40,16 +40,19 @@ router.get('/scores', (req, res) => {
   let layout = req.query.layout;
   let difficulty = req.query.difficulty;
 
-  let sql = `SELECT * FROM scores where 1=1 `;
+  let sql = `SELECT * FROM scores`;
 
-  if (username) sql += ` AND username = '${username}'`;
-  if (time) sql += ` AND time >= '${time}'`;
-  if (layout) sql += ` AND layout = '${layout}'`;
-  if (difficulty) sql += ` AND difficulty = '${difficulty}'`;
+  const params = [];
+  if (username) params.push(`username = '${username}'`);
+  if (time) params.push(`time >= ${time}`);
+  if (layout) params.push(`layout = '${layout}'`);
+  if (difficulty) params.push(`difficulty = '${difficulty}'`);
 
-  db.all(sql,
-         [], function(err, rows) {
-      if (err) return console.log(err.message);
-      res.send(rows);
-    });
+  if (params.length !== 0) sql += ` WHERE ${params.join(' AND ')}`;
+
+  db.all(sql, [], function(err, rows) {
+    if (err) console.log(err.message);
+
+    res.send(rows);
+  });
 });

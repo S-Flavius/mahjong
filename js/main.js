@@ -49,16 +49,34 @@ function createElement(key) {
 }
 
 for (let key in layouts) {
+  // Adds the layouts to the layout dropdown menu
   let element = createElement(key);
   element.addEventListener('click', () => changeLayout(key));
   document.getElementById('dropdown-menu').children[0].appendChild(element);
+
+  // Adds layout options to the option modal
+  let option = document.createElement('option');
+  option.innerHTML = `${key}`;
+  document.getElementById('layout-selection').
+           appendChild(option);
 }
 
 for (let key in difficulties) {
+  // Adds the difficulties to the difficulty dropdown menu
   let element = createElement(key);
   element.addEventListener('click', () => changeDifficulty(key));
   document.getElementById('dropdown-menu2').children[0].appendChild(element);
+
+  // Adds difficulty options to the option modal
+  let option = document.createElement('option');
+  option.innerHTML = `${key}`;
+  document.getElementById('difficulty-selection').
+           appendChild(option);
 }
+
+
+
+
 
 document.getElementById('undo').addEventListener('click', () => {
   undoButton.innerHTML = `<img class='undo-button'><p>(${--currentUndos}/${totalUndos})</p>`;
@@ -556,7 +574,6 @@ function timer(action) {
 
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
-
 
     if (confirm('Do you want to save your score?')) {
       let username = prompt('Enter your username to save your score');
