@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('scores-table').innerHTML = '';
 
     const username = document.getElementById('username').value;
-    const minTime = document.getElementById('min-time').value;
     const layout = document.getElementById('layout-selection').value;
     const difficulty = document.getElementById('difficulty-selection').value;
 
@@ -17,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const params = [];
     if (username) params.push(`username=${username}`);
-    if (minTime) params.push(`min_time=${minTime}`);
     if (layout) params.push(`layout=${layout}`);
     if (difficulty) params.push(`difficulty=${difficulty}`);
 

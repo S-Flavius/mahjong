@@ -14,7 +14,7 @@ let db = new sqlite3.Database(
     console.log('Connected to the SQLite database.');
   });
 
-db.run(`CREATE TABLE if not exists scores(
+db.run(`CREATE TABLE IF NOT EXISTS scores(
                 username text,
                 time real,
                 layout text,
@@ -36,7 +36,6 @@ router.post('/score', (req, res) => {
 
 router.get('/scores', (req, res) => {
   let username = req.query.username;
-  let time = req.query.min_time;
   let layout = req.query.layout;
   let difficulty = req.query.difficulty;
 
@@ -44,7 +43,6 @@ router.get('/scores', (req, res) => {
 
   const params = [];
   if (username) params.push(`username = '${username}'`);
-  if (time) params.push(`time >= ${time}`);
   if (layout) params.push(`layout = '${layout}'`);
   if (difficulty) params.push(`difficulty = '${difficulty}'`);
 
