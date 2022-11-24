@@ -419,6 +419,11 @@ function isGameWinnable() {
 
 function checkGameState() {
   if (document.getElementsByClassName('piece').length === 2) {
+    hintButton.disabled = true;
+    undoButton.disabled = true;
+    reshuffleButton.disabled = true;
+
+
     timer('end');
     setTimeout(() => {
       alert('You won!');
@@ -509,7 +514,7 @@ function selectPieces(piece) {
 
     selected = [];
     checkAvailableMoves();
-    undoButton.disabled = totalUndos <= 0;
+    undoButton.disabled = currentUndos <= 0;
   }
 
   checkGameState();
@@ -592,7 +597,7 @@ function timer(action) {
         redirect: 'follow',
       };
 
-      fetch('http://localhost:3000/scores', requestOptions).
+      fetch('http://localhost:3000/score', requestOptions).
         then(response => response.text()).
         then(result => console.log(result)).
         catch(error => console.log('error', error));
