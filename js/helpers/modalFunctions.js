@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
               'time' :
               element.includes('layout') ?
               'layout' :
-              key = element.includes('difficulty') ? 'difficulty' : '';
+              element.includes('difficulty') ? 'difficulty' : '';
     if (lastData) {
       lastElement.innerHTML = lastElement.innerHTML.replaceAll('▲', '').
                                           replaceAll('▼', '');
