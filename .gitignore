@@ -79,6 +79,8 @@ fabric.properties
 
 # Manually added
 src/main/resources/template/persistenceTemplate.xml
+js/express/db/scores
+default.env
 
 # HTML5
 # Include your project-specific ignores in this file
@@ -90,3 +92,4 @@ dist
 /.idea/codeStyles/codeStyleConfig.xml
 /.idea/jsLinters/jshint.xml
 /.idea/inspectionProfiles/Project_Default.xml
+

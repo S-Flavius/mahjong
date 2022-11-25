@@ -6,8 +6,8 @@
   <meta content='width=device-width, initial-scale=1' name='viewport'>
   <title>Mahjong</title>
   <link href='css/main.css' rel='stylesheet'>
-  <script src='js/helpers/modalOpener.js'></script>
-  <script src='js/helpers/modalFunctions.js'></script>
+  <script type="module" src='js/helpers/modalOpener.js'></script>
+  <script type="module" src='js/helpers/modalFunctions.js'></script>
 </head>
 <body>
 <nav aria-label='main navigation' class='navbar' role='navigation'>
@@ -38,6 +38,8 @@
             <div class='control'>
               <div class='select'>
                 <select id='layout-selection'>
+                  <option>all</option>
+
                 </select>
               </div>
             </div>
@@ -49,6 +51,7 @@
             <div class='control'>
               <div class='select'>
                 <select id='difficulty-selection'>
+                  <option>all</option>
                 </select>
               </div>
             </div>
@@ -65,10 +68,10 @@
       <table class='table'>
         <thead>
         <tr>
-          <th>Username</th>
-          <th>Time</th>
-          <th>Layout</th>
-          <th>Difficulty</th>
+          <th id='table-username'>Username</th>
+          <th id='table-time'>Time</th>
+          <th id='table-layout'>Layout</th>
+          <th id='table-difficulty'>Difficulty</th>
         </tr>
         </thead>
 

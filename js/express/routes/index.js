@@ -3,16 +3,15 @@ import sqlite  from 'sqlite3';
 
 const sqlite3 = sqlite.verbose();
 
+let db = new sqlite3.Database('./js/express/db/scores',
 
-let db = new sqlite3.Database(
-  './js/express/db/scores',
-
-  (err) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log('Connected to the SQLite database.');
-  });
+                              (err) => {
+                                if (err) {
+                                  return console.error(err.message);
+                                }
+                                console.log(
+                                  'Connected to the SQLite database.');
+                              });
 
 db.run(`CREATE TABLE IF NOT EXISTS scores(
                 username text,
@@ -42,7 +41,7 @@ router.get('/scores', (req, res) => {
   let sql = `SELECT * FROM scores`;
 
   const params = [];
-  if (username) params.push(`username = '${username}'`);
+  if (username) params.push(`username LIKE '%${username}%'`);
   if (layout) params.push(`layout = '${layout}'`);
   if (difficulty) params.push(`difficulty = '${difficulty}'`);
 
