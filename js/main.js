@@ -6,10 +6,11 @@ import {
   setClickable,
 }                                      from './helpers/utils.js';
 import {difficulties, layouts, pieces} from './layouts.js';
+import {lang}                          from './intel/languages/lang.js';
 
 window.onload = () => {
   changeDifficulty(difficultyKey, false);
-  changeLayout('Flower', false);
+  changeLayout('flower', false);
   scrollOnSmallScreen();
   newGame();
 };
@@ -24,6 +25,7 @@ let totalReshuffles;
 let currentReshuffles = totalReshuffles;
 let totalUndos;
 let currentUndos = totalUndos;
+let language = 'de';
 
 let hintButton = document.getElementById('hint');
 hintButton.innerHTML = ``;
@@ -35,48 +37,78 @@ let undoButton = document.getElementById('undo');
 undoButton.innerHTML = ``;
 undoButton.disabled = true;
 
-let layoutKey = 'Flower';
+changeLanguage('de');
+
+function changeLanguage(newLanguage) {
+  language = newLanguage;
+  document.getElementById('auto-move').innerHTML = lang[language]['autoMove'];
+  console.log(language);
+  console.log(lang[language])
+  document.getElementById('new-game').innerHTML = lang[language]['newGame'];
+  document.getElementById(
+    'show-scores').innerHTML = lang[language]['showScores'];
+
+  fillDropDowns();
+}
+
+
+let layoutKey = 'flower';
 let chosenLayout = 0;
-let difficultyKey = 'Easy';
+let difficultyKey = 'easy';
 let chosenManually = false;
 
 function createElement(key) {
   let element = document.createElement('a');
   element.className = 'dropdown-item';
   element.id = key.toString();
-  element.innerText = key.toString();
+
+  console.log(lang[language][key]);
+
+  element.innerText = lang[language][key] ?
+                      lang[language][key] :
+                      key.toString().charAt(0).toUpperCase() +
+                      key.toString().slice(1);
   return element;
 }
 
-for (let key in layouts) {
-  // Adds the layouts to the layout dropdown menu
-  let element = createElement(key);
-  element.addEventListener('click', () => changeLayout(key));
-  document.getElementById('dropdown-menu').children[0].appendChild(element);
+function fillDropDowns() {
+  let dropdown = document.getElementById('dropdown-menu');
+  while (dropdown.firstChild) {
+    dropdown.firstChild.remove();
+  }
+  dropdown = document.getElementById('dropdown-menu2');
+  while (dropdown.firstChild) {
+    dropdown.firstChild.remove();
+  }
 
-  // Adds layout options to the option modal
-  let option = document.createElement('option');
-  option.innerHTML = `${key}`;
-  document.getElementById('layout-selection').
-           appendChild(option);
+  for (let key in layouts) {
+    // Adds the layouts to the layout dropdown menu
+    let element = createElement(key);
+    element.addEventListener('click', () => changeLayout(key));
+    document.getElementById('dropdown-menu').children[0].appendChild(element);
+
+    // Adds layout options to the option modal
+    let option = document.createElement('option');
+    option.innerHTML = `${lang[language][key]}`;
+    document.getElementById('layout-selection').
+             appendChild(option);
+  }
+
+  for (let key in difficulties) {
+    // Adds the difficulties to the difficulty dropdown menu
+    let element = createElement(key);
+    element.addEventListener('click', () => changeDifficulty(key));
+    document.getElementById('dropdown-menu2').children[0].appendChild(element);
+
+    // Adds difficulty options to the option modal
+    let option = document.createElement('option');
+    option.innerHTML = `${lang[language][key]}`;
+    document.getElementById('difficulty-selection').
+             appendChild(option);
+  }
 }
 
-for (let key in difficulties) {
-  // Adds the difficulties to the difficulty dropdown menu
-  let element = createElement(key);
-  element.addEventListener('click', () => changeDifficulty(key));
-  document.getElementById('dropdown-menu2').children[0].appendChild(element);
-
-  // Adds difficulty options to the option modal
-  let option = document.createElement('option');
-  option.innerHTML = `${key}`;
-  document.getElementById('difficulty-selection').
-           appendChild(option);
-}
-
-
-
-
+fillDropDowns();
 
 document.getElementById('undo').addEventListener('click', () => {
   undoButton.innerHTML = `<img class='undo-button'><p>(${--currentUndos}/${totalUndos})</p>`;
@@ -422,7 +454,6 @@ function checkGameState() {
     hintButton.disabled = true;
     undoButton.disabled = true;
     reshuffleButton.disabled = true;
-
 
     timer('end');
     setTimeout(() => {
