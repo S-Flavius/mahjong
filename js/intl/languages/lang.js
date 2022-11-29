@@ -1,6 +1,6 @@
 export let lang = {
   en   : {
-    layouts: 'Layouts',
+    layout: 'Layout',
 
     flower  : 'Flower',
     pyramid : 'Pyramid',
@@ -20,7 +20,7 @@ export let lang = {
     autoMove  : 'Auto Move',
     showScores: 'Show Scores',
   }, de: {
-    layouts: 'Layouts',
+    layout : 'Layout',
 
     flower  : 'Blume',
     pyramid : 'Pyramide',

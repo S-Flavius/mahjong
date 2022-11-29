@@ -6,10 +6,10 @@ import {
   setClickable,
 }                                      from './helpers/utils.js';
 import {difficulties, layouts, pieces} from './layouts.js';
-import {lang}                          from './intel/languages/lang.js';
+import {lang}                          from './intl/languages/lang.js';
 
 window.onload = () => {
-  changeDifficulty(difficultyKey, false);
+  changeDifficulty('easy', false);
   changeLayout('flower', false);
   scrollOnSmallScreen();
   newGame();
@@ -25,7 +25,7 @@ let totalReshuffles;
 let currentReshuffles = totalReshuffles;
 let totalUndos;
 let currentUndos = totalUndos;
-let language = 'de';
+let language = 'en';
 
 let hintButton = document.getElementById('hint');
 hintButton.innerHTML = ``;
@@ -37,13 +37,12 @@ let undoButton = document.getElementById('undo');
 undoButton.innerHTML = ``;
 undoButton.disabled = true;
 
-changeLanguage('de');
-
 function changeLanguage(newLanguage) {
   language = newLanguage;
+  document.getElementById('dropDownButton').innerText = lang[language]['layout'];
+  document.getElementById('dropDownButton2').innerText = lang[language]['difficulty'];
+
   document.getElementById('auto-move').innerHTML = lang[language]['autoMove'];
-  console.log(language);
-  console.log(lang[language])
   document.getElementById('new-game').innerHTML = lang[language]['newGame'];
   document.getElementById(
     'show-scores').innerHTML = lang[language]['showScores'];
@@ -72,13 +71,12 @@ function createElement(key) {
 }
 
 function fillDropDowns() {
-  let dropdown = document.getElementById('dropdown-menu');
-  while (dropdown.firstChild) {
-    dropdown.firstChild.remove();
-  }
-  dropdown = document.getElementById('dropdown-menu2');
-  while (dropdown.firstChild) {
-    dropdown.firstChild.remove();
+  let dropdowns = document.getElementsByClassName('dropdown-content');
+
+  for (const dropdown of dropdowns) {
+    while (dropdown.firstChild) {
+      dropdown.firstChild.remove();
+    }
   }
 
   for (let key in layouts) {
