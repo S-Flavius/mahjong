@@ -78,7 +78,6 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # Manually added
-src/main/resources/template/persistenceTemplate.xml
 js/express/db/scores
 default.env
 
