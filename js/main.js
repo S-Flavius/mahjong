@@ -50,7 +50,6 @@ function changeLanguage(newLanguage) {
   fillDropDowns();
 }
 
-
 let layoutKey = 'flower';
 let chosenLayout = 0;
 let difficultyKey = 'easy';
@@ -245,6 +244,8 @@ function changeLayout(key, restart = true) {
   document.getElementById('game').style.width = `${(layouts[key].length *
                                                     75.5)}px`; // Piece width
                                                                // is 75.5px
+  document.getElementById('game').style.height =
+    `${layouts[key][0].length * 77 + 50}px`;
   if (restart) newGame();
 }
 
