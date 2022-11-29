@@ -80,22 +80,12 @@ body > footer {
   width   : auto;
 }
 
-.navbar .navbar-brand {
-  background : #121212;
-  display    : block;
-  font-size  : x-large;
-  position   : fixed;
-  text-align : center;
-  width      : 100%;
-}
-
 .piece, .basePiece, .pieceImage {
   background : transparent;
   height     : 90.6px;
   position   : absolute;
   width      : 75.5px;
 }
-
 
 .pieceImage:hover {
   background : bulmaRgba($pink, 0.4);
@@ -203,6 +193,10 @@ body::-webkit-scrollbar-thumb {
 
 .undo-button {
   background : url('../img/Icons/undo-unlit.svg');
+}
+
+.flag:hover{
+  background: bulmaRgba($grey, 0.8);
 }
 
 

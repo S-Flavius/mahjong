@@ -37,10 +37,17 @@ let undoButton = document.getElementById('undo');
 undoButton.innerHTML = ``;
 undoButton.disabled = true;
 
+document.getElementById('german-flag').
+         addEventListener('click', () => changeLanguage('de'));
+document.getElementById('usa-flag').
+         addEventListener('click', () => changeLanguage('en'));
+
 function changeLanguage(newLanguage) {
   language = newLanguage;
-  document.getElementById('dropDownButton').innerText = lang[language]['layout'];
-  document.getElementById('dropDownButton2').innerText = lang[language]['difficulty'];
+  document.getElementById(
+    'dropDownButton').innerText = lang[language]['layout'];
+  document.getElementById(
+    'dropDownButton2').innerText = lang[language]['difficulty'];
 
   document.getElementById('auto-move').innerHTML = lang[language]['autoMove'];
   document.getElementById('new-game').innerHTML = lang[language]['newGame'];

@@ -6,13 +6,22 @@
   <meta content='width=device-width, initial-scale=1' name='viewport'>
   <title>Mahjong</title>
   <link href='css/main.css' rel='stylesheet'>
-  <script type="module" src='js/helpers/modalOpener.js'></script>
-  <script type="module" src='js/helpers/modalFunctions.js'></script>
+  <script src='js/helpers/modalOpener.js' type='module'></script>
+  <script src='js/helpers/modalFunctions.js' type='module'></script>
 </head>
 <body>
-<nav aria-label='main navigation' class='navbar' role='navigation'>
-  <div class='navbar-brand has-text-white'>
-    <h1><b>Mahjong</b></h1>
+<nav aria-label='main navigation' class='navbar is-black ' role='navigation'>
+  <div class='navbar-brand'>
+    <div class='navbar-item '>
+      <h1 class='title is-1 has-text-white-bis'>Mahjong</h1>
+    </div>
+  </div>
+  <div class='navbar-menu'>
+    <div class='navbar-item'>
+      <img alt='german flag' id='german-flag' class='navbar-item image flag' src='img/Flags/Flag_of_Germany.svg'></div>
+    <div class='navbar-item'>
+      <img alt='english flag' id='usa-flag' class='navbar-item image flag' src='img/Flags/Flag_of_the_United_States.svg'>
+    </div>
   </div>
 </nav>
 
@@ -147,7 +156,7 @@
       <button class='row button' disabled id='auto-move'>Auto move</button>
     </div>
     <div class='container is-1-desktop'>
-      <button class='js-modal-trigger row button' id='show-scores' data-target='modal-js-scores'>
+      <button class='js-modal-trigger row button' data-target='modal-js-scores' id='show-scores'>
         Shows scores
       </button>
 

@@ -10334,15 +10334,6 @@ body > footer {
   width: auto;
 }
 
-.navbar .navbar-brand {
-  background: #121212;
-  display: block;
-  font-size: x-large;
-  position: fixed;
-  text-align: center;
-  width: 100%;
-}
-
 .piece, .basePiece, .pieceImage {
   background: transparent;
   height: 90.6px;
@@ -10449,6 +10440,10 @@ body::-webkit-scrollbar-thumb {
 
 .undo-button {
   background: url("../img/Icons/undo-unlit.svg");
+}
+
+.flag:hover {
+  background: rgba(122, 122, 122, 0.8);
 }
 
 * {
