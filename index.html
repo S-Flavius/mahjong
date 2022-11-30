@@ -18,12 +18,33 @@
   </div>
   <div class='navbar-menu'>
     <div class='navbar-item'>
-      <img alt='german flag' id='german-flag' class='navbar-item image flag' src='img/Flags/Flag_of_Germany.svg'></div>
+      <img alt='german flag' class='navbar-item image flag' id='german-flag' src='img/Flags/Flag_of_Germany.svg'></div>
     <div class='navbar-item'>
-      <img alt='english flag' id='usa-flag' class='navbar-item image flag' src='img/Flags/Flag_of_the_United_States.svg'>
+      <img alt='english flag' class='navbar-item image flag' id='usa-flag'
+           src='img/Flags/Flag_of_the_United_States.svg'>
     </div>
   </div>
 </nav>
+
+<aside class='menu is-dark p-4'>
+  <h1 class='menu-label is-1 title has-text-white-bis'>
+    Settings
+  </h1>
+  <h2 class='menu-label is-2 title has-text-white' id='layout-title'>Layouts</h2>
+  <ul class='menu-list has-text-white-bis' id='layout-list'>
+    <div id='layout-components'></div>
+  </ul>
+  <h2 class='menu-label is-2 title has-text-white' id='difficulty-title'>Difficulties</h2>
+
+  <ul class='menu-list has-text-white-bis' id='difficulty-list'>
+    <div id='difficulty-components'></div>
+  </ul>
+
+  <p class='menu-label has-text-white-bis'>
+    Show scores
+  </p>
+</aside>
+
 
 <div class='modal' id='modal-js-scores'>
   <div class='modal-background'></div>
@@ -97,69 +118,23 @@
   <button aria-label='close' class='modal-close is-large'></button>
 </div>
 
-<div class='is-desktop is-centered is-vcentered' id='loading-container'>
-  <div aria-hidden='true' class='divider'></div>
-  <p aria-label='Loading' class='loading-text'>
-    <span aria-hidden='true' class='letter'>L</span>
-    <span aria-hidden='true' class='letter'>o</span>
-    <span aria-hidden='true' class='letter'>a</span>
-    <span aria-hidden='true' class='letter'>d</span>
-    <span aria-hidden='true' class='letter'>i</span>
-    <span aria-hidden='true' class='letter'>n</span>
-    <span aria-hidden='true' class='letter'>g</span>
-  </p>
-</div>
 <section class='container'>
-
   <div class='container' id='game'></div>
 </section>
 <footer>
 
   <div class='container is-4-desktop'>
-    <div>
-      <div class='dropdown mb-2 is-up'>
-        <div class='dropdown-trigger'>
-          <button aria-controls='dropdown-menu' aria-haspopup='true' class='button' id='dropDownButton'>
-            <span>Layouts</span> <span class='icon is-small'>
-              <i aria-hidden='true' class='fas fa-angle-down'></i>
-            </span>
-          </button>
-        </div>
-        <div class='dropdown-menu' id='dropdown-menu' role='menu'>
-          <div class='dropdown-content'>
-          </div>
-        </div>
-      </div>
-
-      <div class='dropdown mb-2 is-up'>
-        <div class='dropdown-trigger'>
-          <button aria-controls='dropdown-menu' aria-haspopup='true' class='button' id='dropDownButton2'>
-            <span>Difficulty</span> <span class='icon is-small'>
-              <i aria-hidden='true' class='fas fa-angle-down'></i>
-            </span>
-          </button>
-        </div>
-
-        <div class='dropdown-menu' id='dropdown-menu2' role='menu'>
-          <div class='dropdown-content'>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class='container is-5-desktop'>
+    <div class='container mb-2 is-5-desktop'>
       <button class='row button' id='new-game'>New game</button>
       <button class='row button' id='hint'>Hint</button>
       <button class='row button' id='undo'>Undo move</button>
       <button class='row button' id='reshuffle'>Reshuffle</button>
       <button class='row button' disabled id='auto-move'>Auto move</button>
     </div>
-    <div class='container is-1-desktop'>
-      <button class='js-modal-trigger row button' data-target='modal-js-scores' id='show-scores'>
+    <div class='container mb-2 is-1-desktop block'>
+      <button class='js-modal-trigger button' data-target='modal-js-scores' id='show-scores'>
         Shows scores
       </button>
-
     </div>
   </div>
 </footer>

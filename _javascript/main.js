@@ -1,41 +1,23 @@
 // noinspection DuplicatedCode
 
-let wasMenu1Clicked = false;
-let wasMenu2Clicked = false;
-
-window.addEventListener('click', () => {
-
-  if (wasMenu1Clicked) {
-    wasMenu1Clicked = false;
-    document.getElementById('dropdown-menu2').style.display = 'none';
-    return;
-  } else if (wasMenu2Clicked) {
-    wasMenu2Clicked = false;
-    document.getElementById('dropdown-menu').style.display = 'none';
-    return;
+document.getElementById('layout-title').addEventListener('click', () => {
+  let layoutList = document.getElementById('layout-list');
+  if (layoutList.style.maxHeight == '0px') {
+    layoutList.style.maxHeight = '10000px';
+    layoutList.firstElementChild.hidden = false;
+  } else {
+    layoutList.style.maxHeight = '0px';
+    layoutList.firstElementChild.hidden = true;
   }
-
-  document.getElementById('dropdown-menu').style.display = 'none';
-  document.getElementById('dropdown-menu2').style.display = 'none';
 });
 
-document.getElementById('dropDownButton').addEventListener('click', () => {
-  let dropDownMenu = document.getElementById('dropdown-menu');
-  if (dropDownMenu.style.display === 'block') {
-    dropDownMenu.style.display = 'none';
+document.getElementById('difficulty-title').addEventListener('click', () => {
+  let difficultyList = document.getElementById('difficulty-list');
+  if (difficultyList.style.maxHeight == '0px') {
+    difficultyList.style.maxHeight = '10000px';
+    // difficultyList.firstElementChild.hidden = false;
   } else {
-    dropDownMenu.style.display = 'block';
+    difficultyList.style.maxHeight = '0px';
+    // difficultyList.firstElementChild.hidden = true;
   }
-  wasMenu1Clicked = true;
-});
-
-document.getElementById('dropDownButton2').addEventListener('click', () => {
-  let dropDownMenu = document.getElementById('dropdown-menu2');
-  if (dropDownMenu.style.display === 'block') {
-    dropDownMenu.style.display = 'none';
-  } else {
-    dropDownMenu.style.display = 'block';
-  }
-
-  wasMenu2Clicked = true;
 });

@@ -1,7 +1,6 @@
 @charset "UTF-8";
 /*! bulma.io v0.9.4 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
-@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400&display=swap");
 .pagination-previous,
 .pagination-next,
 .pagination-link,
@@ -10380,6 +10379,26 @@ body::-webkit-scrollbar-thumb {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
+.menu {
+  width: 25rem;
+  position: fixed;
+  height: 100%;
+  background-color: #121212;
+  z-index: 999999;
+}
+
+.menu p {
+  color: white;
+}
+
+.menu a {
+  color: white;
+}
+
+.menu a:hover {
+  color: #06BCEF;
+}
+
 .button {
   background: #121212;
   border: 2px solid #121212;
@@ -10446,147 +10465,6 @@ body::-webkit-scrollbar-thumb {
   background: rgba(122, 122, 122, 0.8);
 }
 
-* {
-  box-sizing: border-box;
-}
-*::before, *::after {
-  box-sizing: border-box;
-}
-
-#loading-container {
-  font-family: "Roboto", sans-serif;
-  font-size: 1rem;
-  line-height: 1.5;
-  margin: 0 auto;
-  min-height: 100vh;
-  overflow: hidden;
-  padding: 150px;
-  transform: scale(0.725);
-  width: 50%;
-}
-
-.divider {
-  background: #4A484B;
-  height: 15px;
-  left: 200px;
-  position: absolute;
-  top: 65px;
-  width: 50px;
-  z-index: 2;
-}
-
-.loading-text {
-  font-size: 3.75rem;
-  font-weight: 300;
-  margin: 0 auto;
-  position: relative;
-  white-space: nowrap;
-  width: 50%;
-}
-.loading-text::before {
-  position: absolute;
-  content: "";
-  animation: dotMove 1800ms cubic-bezier(0.25, 0.25, 0.75, 0.75) infinite;
-  background: white;
-  border-radius: 50%;
-  height: 6px;
-  left: 115px;
-  top: 40px;
-  width: 6px;
-  z-index: 1;
-}
-.loading-text .letter {
-  color: white;
-  display: inline-block;
-  letter-spacing: 8px;
-  position: relative;
-}
-.loading-text .letter:nth-child(1) {
-  transform: scale(1, 1.275);
-  transform-origin: 100% 70%;
-}
-.loading-text .letter:nth-child(1)::before {
-  position: absolute;
-  content: "";
-  animation: lineStretch 1800ms cubic-bezier(0.25, 0.25, 0.75, 0.75) infinite;
-  background: #4A484B;
-  height: 36px;
-  left: 0;
-  top: 22px;
-  transform-origin: 100% 0;
-  width: 14px;
-}
-.loading-text .letter:nth-child(5) {
-  animation: letterStretch 1800ms cubic-bezier(0.25, 0.23, 0.73, 0.75) infinite;
-  transform-origin: 100% 70%;
-}
-.loading-text .letter:nth-child(5)::before {
-  position: absolute;
-  content: "";
-  background: #4A484B;
-  height: 15px;
-  left: 2px;
-  top: 15px;
-  width: 9px;
-}
-
-@keyframes dotMove {
-  0%, 100% {
-    transform: rotate(180deg) translate(-110px, -10px) rotate(-180deg);
-  }
-  50% {
-    transform: rotate(0deg) translate(-111px, 10px) rotate(0deg);
-  }
-}
-@keyframes letterStretch {
-  0%, 100% {
-    transform: scale(1, 0.35);
-    transform-origin: 100% 75%;
-  }
-  8%, 28% {
-    transform: scale(1, 2.125);
-    transform-origin: 100% 67%;
-  }
-  37% {
-    transform: scale(1, 0.875);
-    transform-origin: 100% 75%;
-  }
-  46% {
-    transform: scale(1, 1.03);
-    transform-origin: 100% 75%;
-  }
-  50%, 97% {
-    transform: scale(1);
-    transform-origin: 100% 75%;
-  }
-}
-@keyframes lineStretch {
-  0%, 45%, 70%, 100% {
-    transform: scaleY(0.125);
-  }
-  49% {
-    transform: scaleY(0.75);
-  }
-  50% {
-    transform: scaleY(0.875);
-  }
-  53% {
-    transform: scaleY(0.5);
-  }
-  60% {
-    transform: scaleY(0);
-  }
-  68% {
-    transform: scaleY(0.18);
-  }
-}
-@media (min-width: 48rem) {
-  #container {
-    transform: scale(0.725);
-  }
-}
-@media (min-width: 62rem) {
-  #container {
-    transform: scale(0.85);
-  }
+#layout-list, #difficulty-list {
+  transition: all 0.5s ease;
 }

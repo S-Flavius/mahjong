@@ -45,9 +45,9 @@ document.getElementById('usa-flag').
 function changeLanguage(newLanguage) {
   language = newLanguage;
   document.getElementById(
-    'dropDownButton').innerText = lang[language]['layout'];
+    'layout-title').innerText = lang[language]['layout'];
   document.getElementById(
-    'dropDownButton2').innerText = lang[language]['difficulty'];
+    'difficulty-title').innerText = lang[language]['difficulty'];
 
   document.getElementById('auto-move').innerHTML = lang[language]['autoMove'];
   document.getElementById('new-game').innerHTML = lang[language]['newGame'];
@@ -62,34 +62,33 @@ let chosenLayout = 0;
 let difficultyKey = 'easy';
 let chosenManually = false;
 
-function createElement(key) {
-  let element = document.createElement('a');
-  element.className = 'dropdown-item';
+function createElement(key, className) {
+  let element = document.createElement('li');
+  element.innerHTML = `<a>${lang[language][key] ?
+                            lang[language][key] :
+                            key.toString().charAt(0).toUpperCase() +
+                            key.toString().slice(1)}</a>`;
+  element.className = className;
   element.id = key.toString();
 
-  console.log(lang[language][key]);
-
-  element.innerText = lang[language][key] ?
-                      lang[language][key] :
-                      key.toString().charAt(0).toUpperCase() +
-                      key.toString().slice(1);
   return element;
 }
 
 function fillDropDowns() {
-  let dropdowns = document.getElementsByClassName('dropdown-content');
+  let lists = document.querySelectorAll(
+    '#layout-components,#difficulty-components');
 
-  for (const dropdown of dropdowns) {
-    while (dropdown.firstChild) {
-      dropdown.firstChild.remove();
+  for (const list of lists) {
+    while (list.firstChild) {
+      list.firstChild.remove();
     }
   }
 
   for (let key in layouts) {
     // Adds the layouts to the layout dropdown menu
-    let element = createElement(key);
+    let element = createElement(key, 'layout');
     element.addEventListener('click', () => changeLayout(key));
-    document.getElementById('dropdown-menu').children[0].appendChild(element);
+    document.getElementById('layout-components').appendChild(element);
 
     // Adds layout options to the option modal
     let option = document.createElement('option');
@@ -100,9 +99,9 @@ function fillDropDowns() {
 
   for (let key in difficulties) {
     // Adds the difficulties to the difficulty dropdown menu
-    let element = createElement(key);
+    let element = createElement(key, 'difficulty');
     element.addEventListener('click', () => changeDifficulty(key));
-    document.getElementById('dropdown-menu2').children[0].appendChild(element);
+    document.getElementById('difficulty-components').appendChild(element);
 
     // Adds difficulty options to the option modal
     let option = document.createElement('option');
@@ -243,8 +242,6 @@ document.getElementById('auto-move').addEventListener('click', () => {
 document.addEventListener('keydown', konami);
 
 function changeLayout(key, restart = true) {
-  // Hides the layout dropdown menu
-  document.getElementById('dropdown-menu').style.display = 'none';
   chosenManually = true;
   layoutKey = key;
 
@@ -257,8 +254,6 @@ function changeLayout(key, restart = true) {
 }
 
 function changeDifficulty(key, restart = true) {
-  // Hides the difficulty dropdown menu
-  document.getElementById('dropdown-menu2').style.display = 'none';
   chosenManually = true;
   difficultyKey = key;
 
@@ -284,9 +279,10 @@ function calculateHelperButtonValues() {
   undoButton.disabled = true;
 
   // Highlight the selected difficulty
-  Array.from(document.getElementById('dropdown-menu2').children[0].children).
+  Array.from(document.querySelectorAll('.difficulty')).
         forEach(e => {
-          if (e.id == difficultyKey) e.className += ' is-active';
+          if (e.id === difficultyKey) e.firstElementChild.classList.add(
+            'is-active');
         });
 }
 
@@ -386,8 +382,6 @@ function checkAvailableMoves() {
     if (neighbourLeft && neighbourRight || piece.style.zIndex !==
         maxHeight) continue;
     clickablePieces.push(piece);
-    if (!piece.className.includes(
-      'available')) piece.className += ' availableMove';
   }
 }
 
@@ -397,9 +391,9 @@ async function createGame() {
 
   chosenLayout = JSON.parse(JSON.stringify(layouts[layoutKey]));
 
-  Array.from(document.getElementById('dropdown-menu').children[0].children).
+  Array.from(document.querySelectorAll('.layout')).
         forEach(e => {
-          if (e.id === layoutKey) e.className += ' is-active';
+          if (e.id === layoutKey) e.firstElementChild.classList.add('is-active');
         });
 
   shuffleArray(pieces);
@@ -558,11 +552,9 @@ function selectPieces(piece) {
 }
 
 function load() {
-  document.getElementById('loading-container').hidden = false;
 
   setTimeout(async () => {
     await createGame();
-    document.getElementById('loading-container').hidden = true;
   }, 1);
 }
 
@@ -591,14 +583,9 @@ function newGame() {
   currentReshuffles = totalReshuffles;
   currentUndos = totalUndos;
 
-  for (let child of
-    document.getElementById('dropdown-menu').children[0].children) {
-    child.className = child.className.replaceAll(' is-active', '');
-  }
-  for (let child of
-    document.getElementById('dropdown-menu2').children[0].children) {
-    child.className = child.className.replaceAll(' is-active', '');
-  }
+  for (let element of document.querySelectorAll(
+    '.layout, .difficulty')) element.firstElementChild.classList.remove(
+    'is-active');
 
   calculateHelperButtonValues();
 
