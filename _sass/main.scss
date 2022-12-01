@@ -5,6 +5,7 @@
 // You can easily customize Bulma with your own variables.
 // Just uncomment the following block to see the result.
 
+
 // 1. Import the initial variables
 @import '../node_modules/bulma/sass/utilities/initial-variables';
 
@@ -22,9 +23,14 @@ $family-sans-serif : 'Helvetica', 'Arial', sans-serif;
 $primary           : $pink;
 $primary-invert    : $pink-invert;
 
+$menu-item-color   : $white;
+$menu-item-active-color : $white;
+
+$menu-item-background-color : $grey-dark;
+$menu-item-active-background-color : $grey-dark;
+$menu-item-hover-background-color : $grey-darker;
+
 // 4. Import the rest of Bulma
-
-
 @import '../node_modules/bulma/bulma';
 
 
@@ -128,11 +134,18 @@ body::-webkit-scrollbar-thumb {
 }
 
 .menu {
-  width            : 25rem;
   position         : fixed;
   height           : 100%;
   background-color : #121212;
   z-index          : 999999;
+}
+
+#open {
+  display : none;
+}
+
+#closed {
+  display : flex;
 }
 
 .menu p {
@@ -218,6 +231,13 @@ body::-webkit-scrollbar-thumb {
   background : bulmaRgba($grey, 0.8);
 }
 
-#layout-list, #difficulty-list{
-  transition: all 0.5s ease;
+#layout-list, #difficulty-list {
+  transition : all 0.5s ease;
+}
+
+#close-img, #open-img {
+  &:hover {
+    background : $grey-darker;
+    cursor     : pointer;
+  }
 }

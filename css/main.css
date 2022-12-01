@@ -4160,17 +4160,17 @@ button.dropdown-item.is-active {
 }
 .menu-list a {
   border-radius: 2px;
-  color: hsl(0deg, 0%, 29%);
+  color: hsl(0deg, 0%, 100%);
   display: block;
   padding: 0.5em 0.75em;
 }
 .menu-list a:hover {
-  background-color: hsl(0deg, 0%, 96%);
+  background-color: hsl(0deg, 0%, 21%);
   color: hsl(0deg, 0%, 21%);
 }
 .menu-list a.is-active {
-  background-color: #06BCEF;
-  color: #fff;
+  background-color: hsl(0deg, 0%, 29%);
+  color: hsl(0deg, 0%, 100%);
 }
 .menu-list li ul {
   border-left: 1px solid hsl(0deg, 0%, 86%);
@@ -10380,11 +10380,18 @@ body::-webkit-scrollbar-thumb {
 }
 
 .menu {
-  width: 25rem;
   position: fixed;
   height: 100%;
   background-color: #121212;
   z-index: 999999;
+}
+
+#open {
+  display: none;
+}
+
+#closed {
+  display: flex;
 }
 
 .menu p {
@@ -10467,4 +10474,9 @@ body::-webkit-scrollbar-thumb {
 
 #layout-list, #difficulty-list {
   transition: all 0.5s ease;
+}
+
+#close-img:hover, #open-img:hover {
+  cursor: pointer;
+  background: hsl(0deg, 0%, 21%);
 }

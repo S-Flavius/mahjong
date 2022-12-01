@@ -10,23 +10,24 @@
   <script src='js/helpers/modalFunctions.js' type='module'></script>
 </head>
 <body>
-<nav aria-label='main navigation' class='navbar is-black ' role='navigation'>
-  <div class='navbar-brand'>
-    <div class='navbar-item '>
+<nav aria-label='main navigation' class='navbar is-black  p-3' role='navigation'>
+  <div class='navbar-brand ml-5' id='brand'>
+    <div class='is-64x64 image spacing'></div>
+    <div class='navbar-item p-3'>
       <h1 class='title is-1 has-text-white-bis'>Mahjong</h1>
     </div>
   </div>
-  <div class='navbar-menu'>
-    <div class='navbar-item'>
+  <div class='navbar-menu '>
+    <div class='navbar-item p-3'>
       <img alt='german flag' class='navbar-item image flag' id='german-flag' src='img/Flags/Flag_of_Germany.svg'></div>
-    <div class='navbar-item'>
+    <div class='navbar-item p-3'>
       <img alt='english flag' class='navbar-item image flag' id='usa-flag'
            src='img/Flags/Flag_of_the_United_States.svg'>
     </div>
   </div>
 </nav>
 
-<aside class='menu is-dark p-4'>
+<aside class='menu is-dark p-4' id='open'>
   <h1 class='menu-label is-1 title has-text-white-bis'>
     Settings
   </h1>
@@ -40,9 +41,16 @@
     <div id='difficulty-components'></div>
   </ul>
 
-  <p class='menu-label has-text-white-bis'>
-    Show scores
-  </p>
+  <ul class='menu-list is-2 has-text-white-bis'>
+    <li><a class='button title js-modal-trigger button' data-target='modal-js-scores' id='show-scores'>
+      Show scores
+    </a></li>
+  </ul>
+  <img class='image is-64x64 p-2' id='close-img' src='img/Icons/exit-svgrepo-com.svg'>
+</aside>
+
+<aside class='menu is-dark p-2 is-align-items-flex-end' id='closed'>
+  <img class='image is-64x64 p-2' id='open-img' src='img/Icons/open-svgrepo-com.svg'>
 </aside>
 
 
@@ -90,7 +98,7 @@
 
         <div class='field'>
           <div class='control'>
-            <button class='button is-link' id='scores-get-data'>Submit</button>
+            <button class='button is-link' id='scores-get-data'>Search</button>
           </div>
         </div>
       </form>
@@ -118,26 +126,20 @@
   <button aria-label='close' class='modal-close is-large'></button>
 </div>
 
-<section class='container'>
+<section class='container '>
   <div class='container' id='game'></div>
 </section>
 <footer>
 
-  <div class='container is-4-desktop'>
-    <div class='container mb-2 is-5-desktop'>
-      <button class='row button' id='new-game'>New game</button>
-      <button class='row button' id='hint'>Hint</button>
-      <button class='row button' id='undo'>Undo move</button>
-      <button class='row button' id='reshuffle'>Reshuffle</button>
-      <button class='row button' disabled id='auto-move'>Auto move</button>
-    </div>
-    <div class='container mb-2 is-1-desktop block'>
-      <button class='js-modal-trigger button' data-target='modal-js-scores' id='show-scores'>
-        Shows scores
-      </button>
-    </div>
+  <div class='container is-max-desktop'>
+    <button class='row button' id='new-game'>New game</button>
+    <button class='row button' id='hint'>Hint</button>
+    <button class='row button' id='undo'>Undo move</button>
+    <button class='row button' id='reshuffle'>Reshuffle</button>
+    <button class='row button' disabled id='auto-move'>Auto move</button>
   </div>
 </footer>
+<script src='js/helpers/menuFunctions.js' type='module'></script>
 <script src='lib/main.js' type='text/javascript'></script>
 <script src='js/vendor/modernizr-3.11.2.min.js'></script>
 <script src='https://polyfill.io/v3/polyfill.min.js'></script>
