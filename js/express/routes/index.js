@@ -1,19 +1,7 @@
-import express from 'express';
-import sqlite  from 'sqlite3';
+import express     from 'express';
+import {con as db} from '../db/mysql.js';
 
-const sqlite3 = sqlite.verbose();
-
-let db = new sqlite3.Database('./js/express/db/scores',
-
-                              (err) => {
-                                if (err) {
-                                  return console.error(err.message);
-                                }
-                                console.log(
-                                  'Connected to the SQLite database.');
-                              });
-
-db.run(`CREATE TABLE IF NOT EXISTS scores(
+db.query(`CREATE TABLE IF NOT EXISTS scores(
                 username text,
                 time real,
                 layout text,
@@ -24,7 +12,7 @@ export const router = express.Router();
 
 router.post('/score', (req, res) => {
 
-  db.run(`INSERT INTO scores(username, time, layout, difficulty) VALUES(?,?,?,?)`,
+  db.query(`INSERT INTO scores(username, time, layout, difficulty) VALUES(?,?,?,?)`,
     [req.body.username, req.body.time, req.body.layout, req.body.difficulty],
     function(err) {
       if (err) return console.log(err.message);
@@ -47,7 +35,7 @@ router.get('/scores', (req, res) => {
 
   if (params.length !== 0) sql += ` WHERE ${params.join(' AND ')}`;
 
-  db.all(sql, [], function(err, rows) {
+  db.query(sql, [], function(err, rows) {
     if (err) console.log(err.message);
 
     res.send(rows);

@@ -78,8 +78,7 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # Manually added
-js/express/db/scores
-default.env
+.env
 
 # HTML5
 # Include your project-specific ignores in this file
