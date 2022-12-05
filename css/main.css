@@ -10480,3 +10480,16 @@ body::-webkit-scrollbar-thumb {
   background: hsl(0deg, 0%, 21%);
   cursor: pointer;
 }
+
+#current-time, #old-time {
+  color: white;
+  pointer-events: none;
+}
+
+#current-time:hover, #current-time:active, #current-time:focus, #current-time:disabled, #current-time:visited, #old-time:hover, #old-time:active, #old-time:focus, #old-time:disabled, #old-time:visited {
+  background: #121212;
+}
+
+#old-time {
+  color: darkorange;
+}

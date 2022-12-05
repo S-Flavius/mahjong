@@ -5,30 +5,29 @@
 // You can easily customize Bulma with your own variables.
 // Just uncomment the following block to see the result.
 
-
 // 1. Import the initial variables
 @import '../node_modules/bulma/sass/utilities/initial-variables';
 
 // 2. Set your own initial variables
 // Update the blue shade, used for links
-$blue              : #06BCEF;
+$blue                              : #06BCEF;
 // Add pink and its invert
-$pink              : #FF8080;
-$pink-invert       : #FFF;
+$pink                              : #FF8080;
+$pink-invert                       : #FFF;
 // Update the sans-serif font family
-$family-sans-serif : 'Helvetica', 'Arial', sans-serif;
+$family-sans-serif                 : 'Helvetica', 'Arial', sans-serif;
 
 // 3. Set the derived variables
 // Use the new pink as the primary color
-$primary           : $pink;
-$primary-invert    : $pink-invert;
+$primary                           : $pink;
+$primary-invert                    : $pink-invert;
 
-$menu-item-color   : $white;
-$menu-item-active-color : $white;
+$menu-item-color                   : $white;
+$menu-item-active-color            : $white;
 
-$menu-item-background-color : $grey-dark;
+$menu-item-background-color        : $grey-dark;
 $menu-item-active-background-color : $grey-dark;
-$menu-item-hover-background-color : $grey-darker;
+$menu-item-hover-background-color  : $grey-darker;
 
 // 4. Import the rest of Bulma
 @import '../node_modules/bulma/bulma';
@@ -240,4 +239,17 @@ body::-webkit-scrollbar-thumb {
     background : $grey-darker;
     cursor     : pointer;
   }
+}
+
+#current-time, #old-time {
+  color          : white;
+  pointer-events : none;
+
+  &:hover, &:active, &:focus, &:disabled, &:visited {
+    background : #121212;
+  }
+}
+
+#old-time {
+  color : darkorange;
 }

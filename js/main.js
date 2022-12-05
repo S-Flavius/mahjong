@@ -393,7 +393,8 @@ async function createGame() {
 
   Array.from(document.querySelectorAll('.layout')).
         forEach(e => {
-          if (e.id === layoutKey) e.firstElementChild.classList.add('is-active');
+          if (e.id === layoutKey) e.firstElementChild.classList.add(
+            'is-active');
         });
 
   shuffleArray(pieces);
@@ -592,14 +593,37 @@ function newGame() {
 }
 
 let startTime;
+let endTime;
+let runningTimer;
 
 function timer(action) {
   if (action == 'start') {
-    startTime = new Date().getTime();
-  }
-  if (action == 'end') {
-    let endTime = new Date().getTime(), timeDiff = endTime - startTime;
-    timeDiff /= 1000;
+    document.querySelector('#current-time').innerHTML = '00:00';
+    startTime = new Date();
+    runningTimer = setInterval(() => {
+      let time = new Date(new Date() - startTime);
+      document.querySelector('#current-time').innerHTML =
+        `${time.getMinutes() < 10 ?
+           '0' :
+           ''}${time.getMinutes()}:${time.getSeconds() < 10 ?
+                                     '0' :
+                                     ''}${time.getSeconds()}`;
+
+      if (endTime) {
+        document.querySelector('#current-time').style.color = endTime - time >=
+                                                              0 ?
+                                                              'green' :
+                                                              'red';
+      }
+    }, 1000);
+  } else if (action == 'end') {
+    console.log(runningTimer);
+    clearInterval(runningTimer);
+
+    document.querySelector('#old-time').style.visibility = 'visible';
+
+    endTime = new Date(new Date() - startTime);
+    let timeDiff = endTime / 1000;
 
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -626,6 +650,16 @@ function timer(action) {
         then(result => console.log(result)).
         catch(error => console.log('error', error));
     }
-    alert(`time: ${timeDiff}`);
+
+    const neededTime = new Date(endTime);
+    document.querySelector('#old-time').innerHTML =
+      `${neededTime.getMinutes() < 10 ?
+         '0' :
+         ''}${neededTime.getMinutes()}:${neededTime.getSeconds() < 10 ?
+                                         '0' :
+                                         ''}${neededTime.getSeconds()}`;
+    document.querySelector('#current-time').innerHTML;
+    document.querySelector('#current-time').innerHTML = '00:00';
+
   }
 }
