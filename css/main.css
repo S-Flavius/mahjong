@@ -10477,6 +10477,6 @@ body::-webkit-scrollbar-thumb {
 }
 
 #close-img:hover, #open-img:hover {
-  cursor: pointer;
   background: hsl(0deg, 0%, 21%);
+  cursor: pointer;
 }
