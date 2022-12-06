@@ -42,6 +42,8 @@ document.getElementById('german-flag').
 document.getElementById('usa-flag').
          addEventListener('click', () => changeLanguage('en'));
 
+const autoMoveButton = document.getElementById('auto-move');
+
 function changeLanguage(newLanguage) {
   language = newLanguage;
   document.getElementById(
@@ -49,7 +51,7 @@ function changeLanguage(newLanguage) {
   document.getElementById(
     'difficulty-title').innerText = lang[language]['difficulty'];
 
-  document.getElementById('auto-move').innerHTML = lang[language]['autoMove'];
+  autoMoveButton.innerHTML = lang[language]['autoMove'];
   document.getElementById('new-game').innerHTML = lang[language]['newGame'];
   document.getElementById(
     'show-scores').innerHTML = lang[language]['showScores'];
@@ -113,7 +115,9 @@ function fillDropDowns() {
 
 fillDropDowns();
 
-document.getElementById('undo').addEventListener('click', () => {
+document.getElementById('undo').addEventListener('click', undo);
+
+function undo() {
   undoButton.innerHTML = `<img class='undo-button'><p>(${--currentUndos}/${totalUndos})</p>`;
   if (selected.length !== 0) {
     selected[0].className = 'piece';
@@ -123,7 +127,7 @@ document.getElementById('undo').addEventListener('click', () => {
   lastMove[1].hidden = false;
   checkAvailableMoves();
   undoButton.disabled = true;
-});
+}
 
 document.getElementById('hint').addEventListener('click', () => {
   // Update button text
@@ -227,7 +231,7 @@ document.getElementById('reshuffle').
            reshuffleButton.disabled = currentReshuffles <= 0;
          });
 
-document.getElementById('auto-move').addEventListener('click', () => {
+autoMoveButton.addEventListener('click', () => {
   let pairs = [];
 
   findAvailableMoves(pairs);
@@ -455,10 +459,29 @@ function checkGameState() {
     hintButton.disabled = true;
     undoButton.disabled = true;
     reshuffleButton.disabled = true;
+    autoMoveButton.disabled = true;
 
-    timer('end');
     setTimeout(() => {
-      alert('You won!');
+      timer('end');
+      const submitWinButton = document.getElementById('modal-win-submit');
+      submitWinButton.disabled = false;
+
+      document.getElementById('modal-win').classList.add('is-active');
+      document.getElementById('modal-win-time').innerHTML = new Date(
+        new Date() - startTime).toISOString().substring(14, 19);
+      submitWinButton.addEventListener('click', () => {
+        submitScore();
+        submitWinButton.disabled = true; // Prevents submitting multiple times
+      });
+      document.getElementById('modal-win-new-game').
+               addEventListener('click', () => {
+                 chosenManually = true;
+                 newGame();
+                 document.getElementById('modal-win').
+                          classList.
+                          remove('is-active');
+               });
+
     }, 100);
   } else {
     let winnable = false;
@@ -473,8 +496,30 @@ function checkGameState() {
     }
     if (!winnable) {
       setTimeout(() => {
-        alert('You lost!');
-      }, 100);
+        timer('end');
+        document.getElementById('modal-lose').classList.add('is-active');
+        document.getElementById('modal-lose-time').innerHTML = new Date(
+          new Date() - startTime).toISOString().substring(14, 19);
+        if (currentUndos > 0) {
+          document.getElementById('modal-lose-undo').
+                   addEventListener('click', () => {
+                     undo();
+                     document.getElementById('modal-lose').
+                              classList.
+                              remove('is-active');
+                   });
+        } else {
+          document.getElementById('modal-lose-undo').disabled = true;
+        }
+        document.getElementById('modal-lose-new-game').
+                 addEventListener('click', () => {
+                   newGame();
+                   document.getElementById('modal-lose').
+                            classList.
+                            remove('is-active');
+                 });
+      });
+
     }
   }
 }
@@ -500,8 +545,8 @@ function selectPieces(piece) {
           forEach(i => i.remove());
   } else if (selected[0].innerHTML !== piece.innerHTML &&
              !selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/)) {
-    // If the pieces are not the same, nor are they special ones select the new
-    // one
+    // If the pieces are not the same, nor are they special ones select the
+    // new one
     Array.from(document.getElementsByClassName('selected')).
           forEach(i => i.remove());
 
@@ -523,8 +568,10 @@ function selectPieces(piece) {
       return;
     }
 
-    // Remove selected pieces if they're of the same type && the move is legal
-    // Completely delete the pieces after the 2nd move if they are still hidden
+    // Remove selected pieces if they're of the same type && the move is
+    // legal
+    // Completely delete the pieces after the 2nd move if they are still
+    // hidden
     if (lastMove.length === 2) {
       for (const piece of lastMove) {
         if (piece.hidden) {
@@ -589,12 +636,36 @@ function newGame() {
     'is-active');
 
   calculateHelperButtonValues();
-
 }
 
 let startTime;
 let endTime;
 let runningTimer;
+
+function submitScore() {
+  const myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  const raw = JSON.stringify({
+                               'username'  : document.getElementById(
+                                 'modal-win-username').value,
+                               'time'      : endTime / 1000,
+                               'layout'    : layoutKey,
+                               'difficulty': difficultyKey,
+                             });
+
+  const requestOptions = {
+    method  : 'POST',
+    headers : myHeaders,
+    body    : raw,
+    redirect: 'follow',
+  };
+
+  fetch('http://localhost:3000/score', requestOptions).
+    then(response => response.text()).
+    catch(error => console.log('error', error));
+
+}
 
 function timer(action) {
   if (action == 'start') {
@@ -603,61 +674,26 @@ function timer(action) {
     runningTimer = setInterval(() => {
       let time = new Date(new Date() - startTime);
       document.querySelector('#current-time').innerHTML =
-        `${time.getMinutes() < 10 ?
-           '0' :
-           ''}${time.getMinutes()}:${time.getSeconds() < 10 ?
-                                     '0' :
-                                     ''}${time.getSeconds()}`;
+        time.toISOString().substring(14, 19);
 
       if (endTime) {
-        document.querySelector('#current-time').style.color = endTime - time >=
+        document.querySelector('#current-time').style.color = endTime -
+                                                              time >=
                                                               0 ?
                                                               'green' :
                                                               'red';
       }
     }, 1000);
   } else if (action == 'end') {
-    console.log(runningTimer);
     clearInterval(runningTimer);
 
     document.querySelector('#old-time').style.visibility = 'visible';
 
     endTime = new Date(new Date() - startTime);
-    let timeDiff = endTime / 1000;
-
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-
-    if (confirm('Do you want to save your score?')) {
-      let username = prompt('Enter your username to save your score');
-
-      const raw = JSON.stringify({
-                                   'username'  : username,
-                                   'time'      : timeDiff,
-                                   'layout'    : layoutKey,
-                                   'difficulty': difficultyKey,
-                                 });
-
-      const requestOptions = {
-        method  : 'POST',
-        headers : myHeaders,
-        body    : raw,
-        redirect: 'follow',
-      };
-
-      fetch('http://localhost:3000/score', requestOptions).
-        then(response => response.text()).
-        then(result => console.log(result)).
-        catch(error => console.log('error', error));
-    }
 
     const neededTime = new Date(endTime);
     document.querySelector('#old-time').innerHTML =
-      `${neededTime.getMinutes() < 10 ?
-         '0' :
-         ''}${neededTime.getMinutes()}:${neededTime.getSeconds() < 10 ?
-                                         '0' :
-                                         ''}${neededTime.getSeconds()}`;
+      neededTime.toISOString().substring(14, 19);
     document.querySelector('#current-time').innerHTML;
     document.querySelector('#current-time').innerHTML = '00:00';
 

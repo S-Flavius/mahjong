@@ -6,8 +6,8 @@
   <meta content='width=device-width, initial-scale=1' name='viewport'>
   <title>Mahjong</title>
   <link href='css/main.css' rel='stylesheet'>
-  <script src='js/helpers/modalOpener.js' type='module'></script>
   <script src='js/helpers/modalFunctions.js' type='module'></script>
+  <script src='js/helpers/scoresModalFunctions.js' type='module'></script>
 </head>
 <body>
 <nav aria-label='main navigation' class='navbar is-black  p-3' role='navigation'>
@@ -53,6 +53,38 @@
   <img class='image is-64x64 p-2' id='open-img' src='img/Icons/open-svgrepo-com.svg'>
 </aside>
 
+
+<div class='modal' id='modal-lose'>
+  <div class='modal-background'></div>
+  <div class='modal-content'>
+    <div class='box'>
+      <h1 class='title is-1 has-text-centered '>You lost!</h1>
+      <h2 class='title is-2 has-text-centered '>Your time: <span id='modal-lose-time'></span></h2>
+      <div class='buttons is-centered'>
+        <button class='button is-primary is-large' id='modal-lose-undo'>Undo</button>
+        <button class='button is-primary is-large' id='modal-lose-new-game'>New Game</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='modal' id='modal-win'>
+  <div class='modal-background'></div>
+  <div class='modal-content'>
+    <div class='box'>
+      <h1 class='title is-1 has-text-centered '>You won!</h1>
+      <h2 class='title is-2 has-text-centered '>Your time: <span id='modal-win-time'></span></h2>
+
+      <h3 class='title is-3 has-text-centered'>Feel free to submit your score and start a new game!</h3>
+
+      <div class='buttons is-centered'>
+        <input class='input mb-2' id='modal-win-username' placeholder='Username' type='text'>
+        <button class='button is-primary is-large' id='modal-win-submit'>Submit</button>
+        <button class='button is-primary is-large' id='modal-win-new-game'>Restart</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class='modal' id='modal-js-scores'>
   <div class='modal-background'></div>
