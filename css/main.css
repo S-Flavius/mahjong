@@ -10362,27 +10362,28 @@ body > footer {
   background: rgba(72, 199, 142, 0.4);
 }
 
-body::-webkit-scrollbar-track {
-  background-color: #121212;
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-body::-webkit-scrollbar {
+::-webkit-scrollbar {
   background-color: #121212;
   width: 1rem;
 }
 
-body::-webkit-scrollbar-thumb {
-  background-color: white;
+::-webkit-scrollbar-track {
+  background-color: #121212;
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
+::-webkit-scrollbar-thumb {
+  background-color: darkslategrey;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
 .menu {
-  position: fixed;
-  height: 100%;
   background-color: #121212;
+  max-height: 100%;
+  min-height: 100%;
+  overflow: auto;
+  position: fixed;
   z-index: 999999;
 }
 
@@ -10485,7 +10486,6 @@ body::-webkit-scrollbar-thumb {
   color: white;
   pointer-events: none;
 }
-
 #current-time:hover, #current-time:active, #current-time:focus, #current-time:disabled, #current-time:visited, #old-time:hover, #old-time:active, #old-time:focus, #old-time:disabled, #old-time:visited {
   background: #121212;
 }
