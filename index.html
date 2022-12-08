@@ -174,13 +174,13 @@
 
     <button class='row button' id='auto-shuffle'>
       <label class='checkbox'>
-        <span>Auto shuffle</span>
+        <span id='auto-shuffle-text'>Auto shuffle</span>
         <input id='auto-shuffle-checkbox' type='checkbox'>
       </label>
 
       <div class='dropdown is-hoverable is-up'>
         <div class='dropdown-trigger'>
-          <div class='icon-text' id='auto-shuffle-info'>
+          <div class='icon-text'>
         <span class='icon has-text-info'>
           <!--TODO import font awesome-->
           <i class='fas fa-info-circle'></i>
@@ -190,8 +190,8 @@
         </div>
         <div class='dropdown-menu' id='dropdown-auto-reshuffle' role='menu'>
           <div class='dropdown-content'>
-            <div class='dropdown-item'>
-              <p>Automatically reshuffles when you lose <strong>if</strong> you still have reshuffles left.</p>
+            <div class='dropdown-item' id='auto-shuffle-info'>
+              <p></p>
             </div>
           </div>
         </div>

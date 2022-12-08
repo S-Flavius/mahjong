@@ -16,11 +16,14 @@ export let lang = {
     hard  : 'Hard',
     expert: 'EXTREME',
 
-    newGame   : 'New Game',
-    autoMove  : 'Auto Move',
-    showScores: 'Show Scores',
+    newGame    : 'New Game',
+    autoMove   : 'Auto Move',
+    showScores : 'Show Scores',
+    autoShuffle: 'Auto Shuffle',
+
+    autoShuffleInfo: 'Automatically reshuffles when you lose if you still have reshuffles left.',
   }, de: {
-    layout : 'Layout',
+    layout: 'Layout',
 
     flower  : 'Blume',
     pyramid : 'Pyramide',
@@ -36,8 +39,11 @@ export let lang = {
     hard  : 'Schwer',
     expert: 'EXTREM',
 
-    newGame   : 'Neues Spiel',
-    autoMove  : 'Automatisch Bewegen',
-    showScores: 'Scores anzeigen',
+    newGame    : 'Neues Spiel',
+    autoMove   : 'Automatisch Bewegen',
+    showScores : 'Scores anzeigen',
+    autoShuffle: 'Automatisch mischen',
+
+    autoShuffleInfo: 'Mischt automatisch, wenn du verlierst und du noch mischen kannst.',
   },
 };

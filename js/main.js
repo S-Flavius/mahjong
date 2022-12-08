@@ -38,13 +38,13 @@ undoButton.innerHTML = ``;
 undoButton.disabled = true;
 
 document.getElementById('german-flag').
-         addEventListener('click', () => changeLanguage('de'));
+         addEventListener('click', () => translate('de'));
 document.getElementById('usa-flag').
-         addEventListener('click', () => changeLanguage('en'));
+         addEventListener('click', () => translate('en'));
 
 const autoMoveButton = document.getElementById('auto-move');
 
-function changeLanguage(newLanguage) {
+function translate(newLanguage) {
   language = newLanguage;
   document.getElementById('layout-title').innerText = lang[language]['layout'];
   document.getElementById(
@@ -56,7 +56,17 @@ function changeLanguage(newLanguage) {
     'show-scores').innerHTML = lang[language]['showScores'];
 
   fillDropDowns();
+
+  document.getElementById(
+    'auto-shuffle-text').innerText = lang[language]['autoShuffle'];
+  document.getElementById(
+    'auto-shuffle-info').innerText = lang[language]['autoShuffleInfo'];
 }
+
+document.getElementById(
+  'auto-shuffle-text').innerText = lang[language]['autoShuffle'];
+document.getElementById(
+  'auto-shuffle-info').innerText = lang[language]['autoShuffleInfo'];
 
 let layoutKey = 'flower';
 let chosenLayout = 0;
