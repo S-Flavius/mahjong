@@ -62,6 +62,7 @@
       <h2 class='title is-2 has-text-centered '>Your time: <span id='modal-lose-time'></span></h2>
       <div class='buttons is-centered'>
         <button class='button is-primary is-large' id='modal-lose-undo'>Undo</button>
+        <button class='button is-primary is-large' id='modal-lose-reshuffle'>Reshuffle</button>
         <button class='button is-primary is-large' id='modal-lose-new-game'>New Game</button>
       </div>
     </div>
@@ -169,6 +170,36 @@
     <button class='row button' id='undo'>Undo move</button>
     <button class='row button' id='reshuffle'>Reshuffle</button>
     <button class='row button' disabled id='auto-move'>Auto move</button>
+
+
+    <button class='row button' id='auto-shuffle'>
+      <label class='checkbox'>
+        <span>Auto shuffle</span>
+        <input id='auto-shuffle-checkbox' type='checkbox'>
+      </label>
+
+      <div class='dropdown is-hoverable is-up'>
+        <div class='dropdown-trigger'>
+          <div class='icon-text' id='auto-shuffle-info'>
+        <span class='icon has-text-info'>
+          <!--TODO import font awesome-->
+          <i class='fas fa-info-circle'></i>
+          i
+        </span>
+          </div>
+        </div>
+        <div class='dropdown-menu' id='dropdown-auto-reshuffle' role='menu'>
+          <div class='dropdown-content'>
+            <div class='dropdown-item'>
+              <p>Automatically reshuffles when you lose <strong>if</strong> you still have reshuffles left.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </button>
+
     <div class='row button' id='current-time'></div>
     <div class='row button' id='old-time' style='visibility: hidden'></div>
   </div>

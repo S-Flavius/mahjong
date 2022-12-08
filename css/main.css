@@ -10486,10 +10486,19 @@ body > footer {
   color: white;
   pointer-events: none;
 }
+
 #current-time:hover, #current-time:active, #current-time:focus, #current-time:disabled, #current-time:visited, #old-time:hover, #old-time:active, #old-time:focus, #old-time:disabled, #old-time:visited {
   background: #121212;
 }
 
 #old-time {
   color: darkorange;
+}
+
+#auto-shuffle label:hover, #auto-shuffle label:active, #auto-shuffle label:focus, #auto-shuffle label:disabled, #auto-shuffle label:visited {
+  color: white;
+}
+
+#auto-shuffle:hover, #auto-shuffle:active, #auto-shuffle:focus, #auto-shuffle:disabled, #auto-shuffle:visited {
+  background: #121212;
 }

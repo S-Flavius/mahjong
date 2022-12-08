@@ -254,3 +254,16 @@ body > footer {
 #old-time {
   color : darkorange;
 }
+
+#auto-shuffle label {
+  &:hover, &:active, &:focus, &:disabled, &:visited {
+    color : white;
+  }
+}
+
+#auto-shuffle {
+  &:hover, &:active, &:focus, &:disabled, &:visited {
+    background : #121212;
+  }
+}
+

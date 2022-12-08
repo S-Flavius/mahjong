@@ -46,8 +46,7 @@ const autoMoveButton = document.getElementById('auto-move');
 
 function changeLanguage(newLanguage) {
   language = newLanguage;
-  document.getElementById(
-    'layout-title').innerText = lang[language]['layout'];
+  document.getElementById('layout-title').innerText = lang[language]['layout'];
   document.getElementById(
     'difficulty-title').innerText = lang[language]['difficulty'];
 
@@ -186,56 +185,52 @@ document.getElementById('hint').addEventListener('click', () => {
 });
 
 document.getElementById('reshuffle').
-         addEventListener('click', function reshuffle() {
+         addEventListener('click', reshuffle);
 
-           // Deselect all pieces
-           if (selected.length !== 0) {
-             selected[0].className = 'piece';
-             selected = [];
-           }
+function reshuffle() {
 
-           //  https://stackoverflow.com/a/64457744/15403179
-           // Get all the visible pieces
-           let pieces = document.querySelectorAll('.piece:not([hidden])');
+  // Deselect all pieces
+  if (selected.length !== 0) {
+    selected[0].className = 'piece';
+    selected = [];
+  }
 
-           // Go through each piece and swap it with another random one
-           for (let i = 0; i < pieces.length; i++) {
-             let piece1 = pieces[i];
-             let piece2 = pieces[Math.floor(Math.random() * pieces.length)];
+  //  https://stackoverflow.com/a/64457744/15403179
+  // Get all the visible pieces
+  let pieces = document.querySelectorAll('.piece:not([hidden])');
 
-             if (piece1 === piece2) continue;
+  // Go through each piece and swap it with another random one
+  for (let i = 0; i < pieces.length; i++) {
+    let piece1 = pieces[i];
+    let piece2 = pieces[Math.floor(Math.random() * pieces.length)];
 
-             // Swap the pieces, including their style
-             [
-               piece1.style.cssText,
-               piece2.style.cssText,
-               piece1.id,
-               piece2.id] = [
-               piece2.style.cssText,
-               piece1.style.cssText,
-               piece2.id,
-               piece1.id];
-           }
-           // Check if possible moves still exist, otherwise reshuffle again
-           // On 5 failed checks, alert the user and regenerate the board
-           checkAvailableMoves();
+    if (piece1 === piece2) continue;
 
-           let curReshuffles = 0;
-           let clickable = clickablePieces.filter(piece => !piece.hidden);
-           if (clickable.length < 2) {
-             curReshuffles++;
+    // Swap the pieces, including their style
+    [
+      piece1.style.cssText, piece2.style.cssText, piece1.id, piece2.id] = [
+      piece2.style.cssText, piece1.style.cssText, piece2.id, piece1.id];
+  }
+  // Check if possible moves still exist, otherwise reshuffle again
+  // On 5 failed checks, alert the user and regenerate the board
+  checkAvailableMoves();
 
-             if (curReshuffles > 5) {
-               alert('No more moves available. You lose!');
-               newGame();
-             }
-             reshuffle();
-           }
+  let curReshuffles = 0;
+  let clickable = clickablePieces.filter(piece => !piece.hidden);
+  if (clickable.length < 2) {
+    curReshuffles++;
 
-           // Update button and disable if no more reshuffles are available
-           reshuffleButton.innerHTML = `<img class='reshuffle-button'/><p>(${--currentReshuffles}/${totalReshuffles})</p>`;
-           reshuffleButton.disabled = currentReshuffles <= 0;
-         });
+    if (curReshuffles > 5) {
+      alert('No more moves available. You lose!');
+      newGame();
+    }
+    reshuffle();
+  }
+
+  // Update button and disable if no more reshuffles are available
+  reshuffleButton.innerHTML = `<img class='reshuffle-button'/><p>(${--currentReshuffles}/${totalReshuffles})</p>`;
+  reshuffleButton.disabled = currentReshuffles <= 0;
+}
 
 autoMoveButton.addEventListener('click', () => {
   let pairs = [];
@@ -258,8 +253,8 @@ function changeLayout(key, restart = true) {
   document.getElementById('game').style.width = `${(layouts[key].length *
                                                     75.5)}px`; // Piece width
                                                                // is 75.5px
-  document.getElementById('game').style.height =
-    `${layouts[key][0].length * 77 + 50}px`;
+  document.getElementById('game').style.height = `${layouts[key][0].length *
+                                                    77 + 50}px`;
   if (restart) newGame();
 }
 
@@ -356,12 +351,13 @@ function checkAvailableMoves() {
       if (piece1 === piece) continue;
 
       let [
-            rowLocationPiece, rowLocationPiece1,
-            colLocationPiece, colLocationPiece1,
-            commaLocationPiece, commaLocationPiece1] = [
-        piece.id.indexOf('row: '), piece1.id.indexOf('row: '),
-        piece.id.indexOf('col: '), piece1.id.indexOf('col: '),
-        piece.id.indexOf(','), piece1.id.indexOf(',')];
+            rowLocationPiece, rowLocationPiece1, colLocationPiece, colLocationPiece1, commaLocationPiece, commaLocationPiece1] = [
+        piece.id.indexOf('row: '),
+        piece1.id.indexOf('row: '),
+        piece.id.indexOf('col: '),
+        piece1.id.indexOf('col: '),
+        piece.id.indexOf(','),
+        piece1.id.indexOf(',')];
 
       let [rowPiece, rowPiece1] = [
         Number.parseInt(
@@ -501,31 +497,46 @@ function checkGameState() {
       }
     }
     if (!winnable) {
-      setTimeout(() => {
-        timer('end');
-        document.getElementById('modal-lose').classList.add('is-active');
-        document.getElementById('modal-lose-time').innerHTML = new Date(
-          new Date() - startTime).toISOString().substring(14, 19);
-        if (currentUndos > 0) {
-          document.getElementById('modal-lose-undo').
+      if (document.getElementById('auto-shuffle-checkbox').checked &&
+          currentReshuffles > 0) {
+        reshuffle();
+      } else {
+        setTimeout(() => {
+          timer('end');
+          document.getElementById('modal-lose').classList.add('is-active');
+          document.getElementById('modal-lose-time').innerHTML = new Date(
+            new Date() - startTime).toISOString().substring(14, 19);
+          if (currentUndos > 0) {
+            document.getElementById('modal-lose-undo').
+                     addEventListener('click', () => {
+                       undo();
+                       document.getElementById('modal-lose').
+                                classList.
+                                remove('is-active');
+                     });
+          } else {
+            document.getElementById('modal-lose-undo').disabled = true;
+          }
+          if (currentReshuffles > 0) {
+            document.getElementById('modal-lose-reshuffle').
+                     addEventListener('click', () => {
+                       reshuffle();
+                       document.getElementById('modal-lose').
+                                classList.
+                                remove('is-active');
+                     });
+          } else {
+            document.getElementById('modal-lose-reshuffle').disabled = true;
+          }
+          document.getElementById('modal-lose-new-game').
                    addEventListener('click', () => {
-                     undo();
+                     newGame();
                      document.getElementById('modal-lose').
                               classList.
                               remove('is-active');
                    });
-        } else {
-          document.getElementById('modal-lose-undo').disabled = true;
-        }
-        document.getElementById('modal-lose-new-game').
-                 addEventListener('click', () => {
-                   newGame();
-                   document.getElementById('modal-lose').
-                            classList.
-                            remove('is-active');
-                 });
-      });
-
+        });
+      }
     }
   }
 }
@@ -655,16 +666,14 @@ function submitScore() {
   const raw = JSON.stringify({
                                'username'  : document.getElementById(
                                  'modal-win-username').value,
-                               'time'      : endTime / 1000,
+                               'time'      : endTime /
+                                             1000,
                                'layout'    : layoutKey,
                                'difficulty': difficultyKey,
                              });
 
   const requestOptions = {
-    method  : 'POST',
-    headers : myHeaders,
-    body    : raw,
-    redirect: 'follow',
+    method: 'POST', headers: myHeaders, body: raw, redirect: 'follow',
   };
 
   fetch('http://localhost:3000/score', requestOptions).
@@ -679,12 +688,12 @@ function timer(action) {
     startTime = new Date();
     runningTimer = setInterval(() => {
       let time = new Date(new Date() - startTime);
-      document.querySelector('#current-time').innerHTML =
-        time.toISOString().substring(14, 19);
+      document.querySelector('#current-time').innerHTML = time.toISOString().
+                                                               substring(14,
+                                                                         19);
 
       if (endTime) {
-        document.querySelector('#current-time').style.color = endTime -
-                                                              time >=
+        document.querySelector('#current-time').style.color = endTime - time >=
                                                               0 ?
                                                               'green' :
                                                               'red';
@@ -698,8 +707,9 @@ function timer(action) {
     endTime = new Date(new Date() - startTime);
 
     const neededTime = new Date(endTime);
-    document.querySelector('#old-time').innerHTML =
-      neededTime.toISOString().substring(14, 19);
+    document.querySelector('#old-time').innerHTML = neededTime.toISOString().
+                                                               substring(14,
+                                                                         19);
     document.querySelector('#current-time').innerHTML;
     document.querySelector('#current-time').innerHTML = '00:00';
 
