@@ -94,7 +94,10 @@ function fillDropDowns() {
 
     // Adds layout options to the option modal
     let option = document.createElement('option');
-    option.innerHTML = `${lang[language][key]}`;
+    option.innerHTML = `${lang[language][key] ?
+                          lang[language][key] :
+                          key.toString().charAt(0).toUpperCase() +
+                          key.toString().slice(1)}`;
     document.getElementById('layout-selection').
              appendChild(option);
   }
@@ -107,7 +110,10 @@ function fillDropDowns() {
 
     // Adds difficulty options to the option modal
     let option = document.createElement('option');
-    option.innerHTML = `${lang[language][key]}`;
+    option.innerHTML = `${lang[language][key] ?
+                          lang[language][key] :
+                          key.toString().charAt(0).toUpperCase() +
+                          key.toString().slice(1)}`;
     document.getElementById('difficulty-selection').
              appendChild(option);
   }
