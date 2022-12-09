@@ -1,12 +1,6 @@
-import {
-  clickablePieces,
-  findAvailableMoves,
-  konami,
-  scrollOnSmallScreen,
-  setClickable,
-}                                      from './helpers/utils.js';
+import {clickablePieces, findAvailableMoves, konami, scrollOnSmallScreen, setClickable,} from './helpers/utils.js';
 import {difficulties, layouts, pieces} from './layouts.js';
-import {lang}                          from './intl/languages/lang.js';
+import {lang} from './intl/languages/lang.js';
 
 window.onload = () => {
   changeDifficulty('easy', false);
@@ -37,10 +31,8 @@ let undoButton = document.getElementById('undo');
 undoButton.innerHTML = ``;
 undoButton.disabled = true;
 
-document.getElementById('german-flag').
-         addEventListener('click', () => translate('de'));
-document.getElementById('usa-flag').
-         addEventListener('click', () => translate('en'));
+document.getElementById('german-flag').addEventListener('click', () => translate('de'));
+document.getElementById('usa-flag').addEventListener('click', () => translate('en'));
 
 const autoMoveButton = document.getElementById('auto-move');
 
@@ -73,17 +65,22 @@ let chosenLayout = 0;
 let difficultyKey = 'easy';
 let chosenManually = false;
 
-function createElement(key, className) {
+function createLiElement(key, className) {
   let element = document.createElement('li');
   element.innerHTML = `<a>${lang[language][key] ?
-                            lang[language][key] :
-                            key.toString().charAt(0).toUpperCase() +
-                            key.toString().slice(1)}</a>`;
+    lang[language][key] :
+    key.toString().charAt(0).toUpperCase() +
+    key.toString().slice(1)}</a>`;
   element.className = className;
   element.id = key.toString();
 
   return element;
 }
+
+const capitalize = (s) => (typeof s !== 'string') ?
+  throw new Error('Not a string') :
+  s.charAt(0).toUpperCase() + s.slice(1)
+
 
 function fillDropDowns() {
   let lists = document.querySelectorAll(
@@ -97,34 +94,26 @@ function fillDropDowns() {
 
   for (let key in layouts) {
     // Adds the layouts to the layout dropdown menu
-    let element = createElement(key, 'layout');
+    let element = createLiElement(key, 'layout');
     element.addEventListener('click', () => changeLayout(key));
     document.getElementById('layout-components').appendChild(element);
 
     // Adds layout options to the option modal
     let option = document.createElement('option');
-    option.innerHTML = `${lang[language][key] ?
-                          lang[language][key] :
-                          key.toString().charAt(0).toUpperCase() +
-                          key.toString().slice(1)}`;
-    document.getElementById('layout-selection').
-             appendChild(option);
+    option.innerHTML = `${lang[language][key] ? lang[language][key] : capitalize(key)}`;
+    document.getElementById('layout-selection').appendChild(option);
   }
 
   for (let key in difficulties) {
     // Adds the difficulties to the difficulty dropdown menu
-    let element = createElement(key, 'difficulty');
+    let element = createLiElement(key, 'difficulty');
     element.addEventListener('click', () => changeDifficulty(key));
     document.getElementById('difficulty-components').appendChild(element);
 
     // Adds difficulty options to the option modal
     let option = document.createElement('option');
-    option.innerHTML = `${lang[language][key] ?
-                          lang[language][key] :
-                          key.toString().charAt(0).toUpperCase() +
-                          key.toString().slice(1)}`;
-    document.getElementById('difficulty-selection').
-             appendChild(option);
+    option.innerHTML = `${lang[language][key] ? lang[language][key] : capitalize(key)}`;
+    document.getElementById('difficulty-selection').appendChild(option);
   }
 }
 
@@ -186,16 +175,14 @@ document.getElementById('hint').addEventListener('click', () => {
   // Remove highlight after 2.5 seconds
   setTimeout(() => {
     for (const piece of document.getElementsByClassName('piece')) {
-      Array.from(document.getElementsByClassName('hint')).
-            forEach(hint => hint.remove());
+      Array.from(document.getElementsByClassName('hint')).forEach(hint => hint.remove());
     }
     // Re-enable button if possible
     hintButton.disabled = currentHints <= 0;
   }, 2500);
 });
 
-document.getElementById('reshuffle').
-         addEventListener('click', reshuffle);
+document.getElementById('reshuffle').addEventListener('click', reshuffle);
 
 function reshuffle() {
 
@@ -261,10 +248,10 @@ function changeLayout(key, restart = true) {
   layoutKey = key;
 
   document.getElementById('game').style.width = `${(layouts[key].length *
-                                                    75.5)}px`; // Piece width
-                                                               // is 75.5px
+    75.5)}px`; // Piece width
+               // is 75.5px
   document.getElementById('game').style.height = `${layouts[key][0].length *
-                                                    77 + 50}px`;
+  77 + 50}px`;
   if (restart) newGame();
 }
 
@@ -294,11 +281,10 @@ function calculateHelperButtonValues() {
   undoButton.disabled = true;
 
   // Highlight the selected difficulty
-  Array.from(document.querySelectorAll('.difficulty')).
-        forEach(e => {
-          if (e.id === difficultyKey) e.firstElementChild.classList.add(
-            'is-active');
-        });
+  Array.from(document.querySelectorAll('.difficulty')).forEach(e => {
+    if (e.id === difficultyKey) e.firstElementChild.classList.add(
+      'is-active');
+  });
 }
 
 // https://stackoverflow.com/a/12646864
@@ -337,10 +323,10 @@ function generatePiece(colIndex, rowIndex, pieces, curPiece) {
     curPiece)]}'>`;
   piece.addEventListener('click', () => selectPieces(piece));
   piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100) + colIndex *
-                       10 + piecesOnPosition;
+    10 + piecesOnPosition;
   chosenLayout[colIndex][rowIndex]--;
   piece.style.left = `${colIndex * 58.135 - 9 * piecesOnPosition + 9 +
-                        chosenLayout.length * 7.55}px`;
+  chosenLayout.length * 7.55}px`;
   piece.style.top = `${rowIndex * 76.104 + 7 * piecesOnPosition + 8}px`;
 
   // Adds the piece to the grid
@@ -361,7 +347,7 @@ function checkAvailableMoves() {
       if (piece1 === piece) continue;
 
       let [
-            rowLocationPiece, rowLocationPiece1, colLocationPiece, colLocationPiece1, commaLocationPiece, commaLocationPiece1] = [
+        rowLocationPiece, rowLocationPiece1, colLocationPiece, colLocationPiece1, commaLocationPiece, commaLocationPiece1] = [
         piece.id.indexOf('row: '),
         piece1.id.indexOf('row: '),
         piece.id.indexOf('col: '),
@@ -390,13 +376,13 @@ function checkAvailableMoves() {
       }
 
       if (rowPiece === rowPiece1 && colPiece === colPiece1 && heightPiece <
-          heightPiece1) {
+        heightPiece1) {
         maxHeight = Math.max(maxHeight, heightPiece1);
       }
     }
 
     if (neighbourLeft && neighbourRight || piece.style.zIndex !==
-        maxHeight) continue;
+      maxHeight) continue;
     clickablePieces.push(piece);
   }
 }
@@ -407,11 +393,10 @@ async function createGame() {
 
   chosenLayout = JSON.parse(JSON.stringify(layouts[layoutKey]));
 
-  Array.from(document.querySelectorAll('.layout')).
-        forEach(e => {
-          if (e.id === layoutKey) e.firstElementChild.classList.add(
-            'is-active');
-        });
+  Array.from(document.querySelectorAll('.layout')).forEach(e => {
+    if (e.id === layoutKey) e.firstElementChild.classList.add(
+      'is-active');
+  });
 
   shuffleArray(pieces);
 
@@ -461,7 +446,7 @@ function isGameWinnable() {
   }
 
   if (Array.from(allPieces).filter(piece => !piece.hidden).length !==
-      0) return false;
+    0) return false;
   for (let piece of allPieces) piece.hidden = false;
   return true;
 }
@@ -485,14 +470,11 @@ function checkGameState() {
         submitScore();
         submitWinButton.disabled = true; // Prevents submitting multiple times
       });
-      document.getElementById('modal-win-new-game').
-               addEventListener('click', () => {
-                 chosenManually = true;
-                 newGame();
-                 document.getElementById('modal-win').
-                          classList.
-                          remove('is-active');
-               });
+      document.getElementById('modal-win-new-game').addEventListener('click', () => {
+        chosenManually = true;
+        newGame();
+        document.getElementById('modal-win').classList.remove('is-active');
+      });
 
     }, 100);
   } else {
@@ -508,7 +490,7 @@ function checkGameState() {
     }
     if (!winnable) {
       if (document.getElementById('auto-shuffle-checkbox').checked &&
-          currentReshuffles > 0) {
+        currentReshuffles > 0) {
         reshuffle();
       } else {
         setTimeout(() => {
@@ -517,34 +499,25 @@ function checkGameState() {
           document.getElementById('modal-lose-time').innerHTML = new Date(
             new Date() - startTime).toISOString().substring(14, 19);
           if (currentUndos > 0) {
-            document.getElementById('modal-lose-undo').
-                     addEventListener('click', () => {
-                       undo();
-                       document.getElementById('modal-lose').
-                                classList.
-                                remove('is-active');
-                     });
+            document.getElementById('modal-lose-undo').addEventListener('click', () => {
+              undo();
+              document.getElementById('modal-lose').classList.remove('is-active');
+            });
           } else {
             document.getElementById('modal-lose-undo').disabled = true;
           }
           if (currentReshuffles > 0) {
-            document.getElementById('modal-lose-reshuffle').
-                     addEventListener('click', () => {
-                       reshuffle();
-                       document.getElementById('modal-lose').
-                                classList.
-                                remove('is-active');
-                     });
+            document.getElementById('modal-lose-reshuffle').addEventListener('click', () => {
+              reshuffle();
+              document.getElementById('modal-lose').classList.remove('is-active');
+            });
           } else {
             document.getElementById('modal-lose-reshuffle').disabled = true;
           }
-          document.getElementById('modal-lose-new-game').
-                   addEventListener('click', () => {
-                     newGame();
-                     document.getElementById('modal-lose').
-                              classList.
-                              remove('is-active');
-                   });
+          document.getElementById('modal-lose-new-game').addEventListener('click', () => {
+            newGame();
+            document.getElementById('modal-lose').classList.remove('is-active');
+          });
         });
       }
     }
@@ -568,14 +541,12 @@ function selectPieces(piece) {
   } else if (selected[0] === piece) { // Deselect the currently chosen piece
     selected = [];
 
-    Array.from(document.getElementsByClassName('selected')).
-          forEach(i => i.remove());
+    Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
   } else if (selected[0].innerHTML !== piece.innerHTML &&
-             !selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/)) {
+    !selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/)) {
     // If the pieces are not the same, nor are they special ones select the
     // new one
-    Array.from(document.getElementsByClassName('selected')).
-          forEach(i => i.remove());
+    Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
 
     piece.parentNode.appendChild(selectedDiv);
 
@@ -583,12 +554,11 @@ function selectPieces(piece) {
   } else {
 
     if (selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/) &&
-        (selected[0].innerHTML.match(/f.*\.svg/) &&
-         !piece.innerHTML.match(/f.*\.svg/) ||
-         selected[0].innerHTML.match(/seas.*\.svg/) &&
-         !piece.innerHTML.match(/seas.*\.svg/))) {
-      Array.from(document.getElementsByClassName('selected')).
-            forEach(i => i.remove());
+      (selected[0].innerHTML.match(/f.*\.svg/) &&
+        !piece.innerHTML.match(/f.*\.svg/) ||
+        selected[0].innerHTML.match(/seas.*\.svg/) &&
+        !piece.innerHTML.match(/seas.*\.svg/))) {
+      Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
       piece.parentNode.appendChild(selectedDiv);
 
       selected[0] = piece;
@@ -606,10 +576,8 @@ function selectPieces(piece) {
         }
       }
     }
-    Array.from(document.getElementsByClassName('selected')).
-          forEach(i => i.remove());
-    Array.from(document.getElementsByClassName('hint')).
-          forEach(i => i.remove());
+    Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
+    Array.from(document.getElementsByClassName('hint')).forEach(i => i.remove());
 
     // Save the last move for the undo button
     lastMove = [selected[0], piece];
@@ -674,21 +642,19 @@ function submitScore() {
   myHeaders.append('Content-Type', 'application/json');
 
   const raw = JSON.stringify({
-                               'username'  : document.getElementById(
-                                 'modal-win-username').value,
-                               'time'      : endTime /
-                                             1000,
-                               'layout'    : layoutKey,
-                               'difficulty': difficultyKey,
-                             });
+    'username': document.getElementById(
+      'modal-win-username').value,
+    'time': endTime /
+      1000,
+    'layout': layoutKey,
+    'difficulty': difficultyKey,
+  });
 
   const requestOptions = {
     method: 'POST', headers: myHeaders, body: raw, redirect: 'follow',
   };
 
-  fetch('http://localhost:3000/score', requestOptions).
-    then(response => response.text()).
-    catch(error => console.log('error', error));
+  fetch('http://localhost:3000/score', requestOptions).then(response => response.text()).catch(error => console.log('error', error));
 
 }
 
@@ -698,15 +664,14 @@ function timer(action) {
     startTime = new Date();
     runningTimer = setInterval(() => {
       let time = new Date(new Date() - startTime);
-      document.querySelector('#current-time').innerHTML = time.toISOString().
-                                                               substring(14,
-                                                                         19);
+      document.querySelector('#current-time').innerHTML = time.toISOString().substring(14,
+        19);
 
       if (endTime) {
         document.querySelector('#current-time').style.color = endTime - time >=
-                                                              0 ?
-                                                              'green' :
-                                                              'red';
+        0 ?
+          'green' :
+          'red';
       }
     }, 1000);
   } else if (action == 'end') {
@@ -717,9 +682,8 @@ function timer(action) {
     endTime = new Date(new Date() - startTime);
 
     const neededTime = new Date(endTime);
-    document.querySelector('#old-time').innerHTML = neededTime.toISOString().
-                                                               substring(14,
-                                                                         19);
+    document.querySelector('#old-time').innerHTML = neededTime.toISOString().substring(14,
+      19);
     document.querySelector('#current-time').innerHTML;
     document.querySelector('#current-time').innerHTML = '00:00';
 
