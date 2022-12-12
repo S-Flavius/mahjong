@@ -1,5 +1,5 @@
 import {clickablePieces, findAvailableMoves, konami, scrollOnSmallScreen, setClickable,} from './helpers/utils.js';
-import {difficulties, layouts, pieces} from './layouts.js';
+import {difficulties, importLayout, layouts, pieces, updateLayouts} from './gameSettings.js';
 import {lang} from './intl/languages/lang.js';
 
 window.onload = () => {
@@ -77,10 +77,7 @@ function createLiElement(key, className) {
   return element;
 }
 
-const capitalize = (s) => (typeof s !== 'string') ?
-  throw new Error('Not a string') :
-  s.charAt(0).toUpperCase() + s.slice(1)
-
+const capitalize = (s) => s.toString().charAt(0).toUpperCase() + s.toString().slice(1);
 
 function fillDropDowns() {
   let lists = document.querySelectorAll(
@@ -655,7 +652,6 @@ function submitScore() {
   };
 
   fetch('http://localhost:3000/score', requestOptions).then(response => response.text()).catch(error => console.log('error', error));
-
 }
 
 function timer(action) {
