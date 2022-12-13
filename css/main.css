@@ -10389,6 +10389,12 @@ body > footer {
 
 #open {
   display: none;
+  z-index: 40;
+}
+
+#sidebar-footer {
+  position: absolute;
+  bottom: 0;
 }
 
 #closed {
@@ -10486,7 +10492,6 @@ body > footer {
   color: white;
   pointer-events: none;
 }
-
 #current-time:hover, #current-time:active, #current-time:focus, #current-time:disabled, #current-time:visited, #old-time:hover, #old-time:active, #old-time:focus, #old-time:disabled, #old-time:visited {
   background: #121212;
 }
@@ -10501,4 +10506,8 @@ body > footer {
 
 #auto-shuffle:hover, #auto-shuffle:active, #auto-shuffle:focus, #auto-shuffle:disabled, #auto-shuffle:visited {
   background: #121212;
+}
+
+#add-layout-button {
+  border: darkslategrey solid 3px;
 }

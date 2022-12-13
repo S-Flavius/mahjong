@@ -15,9 +15,9 @@ document.getElementById('difficulty-title').addEventListener('click', () => {
   let difficultyList = document.getElementById('difficulty-list');
   if (difficultyList.style.maxHeight == '0px') {
     difficultyList.style.maxHeight = '10000px';
-    // difficultyList.firstElementChild.hidden = false;
+    difficultyList.firstElementChild.hidden = false;
   } else {
     difficultyList.style.maxHeight = '0px';
-    // difficultyList.firstElementChild.hidden = true;
+    difficultyList.firstElementChild.hidden = true;
   }
 });
