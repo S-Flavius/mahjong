@@ -8,6 +8,7 @@
   <link href='css/main.css' rel='stylesheet'>
   <script src='js/helpers/modalFunctions.js' type='module'></script>
   <script src='js/helpers/scoresModalFunctions.js' type='module'></script>
+  <script defer src='/node_modules/@fortawesome/fontawesome-free/js/all.min.js'></script>
 </head>
 <body>
 <nav aria-label='main navigation' class='navbar is-black  p-3' role='navigation'>
@@ -24,29 +25,45 @@
       <img alt='english flag' class='navbar-item image flag' id='usa-flag'
            src='img/Flags/Flag_of_the_United_States.svg'>
     </div>
+    <div class='navbar-item p-3'>
+      <img alt='korean flag' class='navbar-item image flag' id='south-korean-flag'
+           src='img/Flags/Flag_of_South_Korea.svg'>
+    </div>
   </div>
 </nav>
 
 <aside class='menu is-dark p-4' id='open'>
-  <h1 class='menu-label is-1 title has-text-white-bis'>
-    Settings
-  </h1>
-  <h2 class='menu-label is-2 title has-text-white' id='layout-title'>Layouts</h2>
-  <ul class='menu-list has-text-white-bis' id='layout-list'>
-    <div id='layout-components'></div>
-  </ul>
-  <h2 class='menu-label is-2 title has-text-white' id='difficulty-title'>Difficulties</h2>
+  <div class='sidebar-spacing-helper-bottom'>
+    <h1 class='menu-label is-1 title has-text-white-bis'>
+      Settings
+    </h1>
+    <div>
+      <h2 class='menu-label is-2 title has-text-white'>
+        <div id='layout-title'>Layout</div>
+        <button class='button js-modal-trigger' data-target='modal-create-layout' id='add-layout-button'>+</button>
+        <button class='button' id='remove-layouts'>-</button>
+        <button class='button' id='refresh-layout-list'>
+          <img class='image' src='img/Icons/undo-unlit.svg'>
+        </button>
+      </h2>
+    </div>
 
-  <ul class='menu-list has-text-white-bis' id='difficulty-list'>
-    <div id='difficulty-components'></div>
-  </ul>
+    <ul class='menu-list has-text-white-bis' id='layout-list'>
+      <div id='layout-components'></div>
+    </ul>
+    <h2 class='menu-label is-2 title has-text-white' id='difficulty-title'>Difficulties</h2>
 
-  <ul class='menu-list is-2 has-text-white-bis'>
-    <li><a class='button title js-modal-trigger' data-target='modal-js-scores' id='show-scores'>
-      Show scores
-    </a></li>
-  </ul>
-  <footer class="mb-0 pb-4 is-fixed-bottom" id="sidebar-footer">
+    <ul class='menu-list has-text-white-bis' id='difficulty-list'>
+      <div id='difficulty-components'></div>
+    </ul>
+
+    <ul class='menu-list is-2 has-text-white-bis'>
+      <li><a class='button title js-modal-trigger' data-target='modal-js-scores' id='show-scores'>
+        Show scores
+      </a></li>
+    </ul>
+  </div>
+  <footer class='mb-0 pb-4 is-fixed-bottom' id='sidebar-footer'>
     <img class='image is-64x64 p-2' id='close-img' src='img/Icons/exit-svgrepo-com.svg'>
   </footer>
 </aside>
@@ -55,13 +72,28 @@
   <img class='image is-64x64 p-2' id='open-img' src='img/Icons/open-svgrepo-com.svg'>
 </aside>
 
+<div class='modal' id='modal-create-layout'>
+  <div class='modal-background'></div>
+  <div class='modal-content'>
+    <div class='box'>
+      <h1 class='title is-1 has-text-centered ' id="create-layout">Create layout</h1>
+      <input class='input' id='modal-layout-title' placeholder='Layout name'>
+      <div class='container m-3' id='layout-builder'></div>
+      <div class='buttons'>
+        <button class='button is-dark' id='layout-modal-add'>Add layout</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
 <div class='modal' id='modal-lose'>
   <div class='modal-background'></div>
   <div class='modal-content'>
     <div class='box'>
-      <h1 class='title is-1 has-text-centered '>You lost!</h1>
-      <h2 class='title is-2 has-text-centered '>Your time: <span id='modal-lose-time'></span></h2>
+      <h1 class='title is-1 has-text-centered' id="lose-title">You lost!</h1>
+      <h2 class='title is-2 has-text-centered '><span id="lose-time">Your time</span>:<span id='modal-lose-time'></span>
+      </h2>
       <div class='buttons is-centered'>
         <button class='button is-primary is-large' id='modal-lose-undo'>Undo</button>
         <button class='button is-primary is-large' id='modal-lose-reshuffle'>Reshuffle</button>
@@ -75,15 +107,17 @@
   <div class='modal-background'></div>
   <div class='modal-content'>
     <div class='box'>
-      <h1 class='title is-1 has-text-centered '>You won!</h1>
-      <h2 class='title is-2 has-text-centered '>Your time: <span id='modal-win-time'></span></h2>
+      <h1 class='title is-1 has-text-centered' id="win-title">You won!</h1>
+      <h2 class='title is-2 has-text-centered'><span id="win-time">Your time</span>: <span id='modal-win-time'></span>
+      </h2>
 
-      <h3 class='title is-3 has-text-centered'>Feel free to submit your score and start a new game!</h3>
+      <h3 class='title is-3 has-text-centered' id="win-submit-prompt">Feel free to submit your score and start a new
+        game!</h3>
 
       <div class='buttons is-centered'>
         <input class='input mb-2' id='modal-win-username' placeholder='Username' type='text'>
         <button class='button is-primary is-large' id='modal-win-submit'>Submit</button>
-        <button class='button is-primary is-large' id='modal-win-new-game'>Restart</button>
+        <button class='button is-primary is-large' id='modal-win-restart'>Restart</button>
       </div>
     </div>
   </div>
@@ -94,7 +128,7 @@
 
   <div class='modal-content'>
     <div class='box'>
-      <h1><b>Scores</b></h1>
+      <h1><b id="score-title">Scores</b></h1>
 
       <form id='scores-form'>
 
@@ -107,11 +141,11 @@
         <div class='field is-grouped'>
 
           <div>
-            <label class='label mr-2'>Layout</label>
+            <label class='label mr-2' id="layout-selection-label">Layout</label>
             <div class='control'>
               <div class='select'>
                 <select id='layout-selection'>
-                  <option>all</option>
+                  <option id="layout-all-option">all</option>
 
                 </select>
               </div>
@@ -120,11 +154,11 @@
 
 
           <div>
-            <label class='label'>Difficulty</label>
+            <label class='label' id="difficulty-selection-label">Difficulty</label>
             <div class='control'>
               <div class='select'>
                 <select id='difficulty-selection'>
-                  <option>all</option>
+                  <option id="difficulty-all-option">all</option>
                 </select>
               </div>
             </div>
@@ -184,9 +218,7 @@
         <div class='dropdown-trigger'>
           <div class='icon-text'>
         <span class='icon has-text-info'>
-          <!--TODO import font awesome-->
-          <i class='fas fa-info-circle'></i>
-          i
+          <i class='ml-4 p-4 fas fa-info-circle'></i>
         </span>
           </div>
         </div>

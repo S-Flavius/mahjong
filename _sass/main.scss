@@ -146,8 +146,12 @@ body > footer {
 }
 
 #sidebar-footer {
-  position : absolute;
+  position : fixed;
   bottom   : 0;
+}
+
+.sidebar-spacing-helper-bottom {
+  padding-bottom : 2rem;
 }
 
 #closed {
@@ -273,3 +277,32 @@ body > footer {
   }
 }
 
+#add-layout-button, #refresh-layout-list, #remove-layouts {
+  border : darkslategrey solid 3px;
+  color  : white;
+}
+
+#refresh-layout-list > img {
+  height : 20px;
+}
+
+#layout-builder > div > input {
+  text-align : center;
+  width      : 50px;
+  height     : 50px;
+  background : white;
+  color      : black;
+  border     : 1px solid black;
+  flex-grow  : unset;
+  padding    : unset;
+}
+
+#layout-builder > div > input:hover {
+  background : lightgreen;
+}
+
+.black-placeholder, #layout-builder > div > input:hover {
+  &::placeholder {
+    color : black;
+  }
+}

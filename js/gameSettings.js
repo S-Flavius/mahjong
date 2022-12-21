@@ -24,14 +24,43 @@ export let difficulties = {
 export let pieces = ['bamboo1.svg', 'bamboo1.svg', 'bamboo1.svg', 'bamboo1.svg', 'bamboo2.svg', 'bamboo2.svg', 'bamboo2.svg', 'bamboo2.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo3.svg', 'bamboo4.svg', 'bamboo4.svg', 'bamboo4.svg', 'bamboo4.svg', 'bamboo5.svg', 'bamboo5.svg', 'bamboo5.svg', 'bamboo5.svg', 'bamboo6.svg', 'bamboo6.svg', 'bamboo6.svg', 'bamboo6.svg', 'bamboo7.svg', 'bamboo7.svg', 'bamboo7.svg', 'bamboo7.svg', 'bamboo8.svg', 'bamboo8.svg', 'bamboo8.svg', 'bamboo8.svg', 'bamboo9.svg', 'bamboo9.svg', 'bamboo9.svg', 'bamboo9.svg', 'char1.svg', 'char1.svg', 'char1.svg', 'char1.svg', 'char2.svg', 'char2.svg', 'char2.svg', 'char2.svg', 'char3.svg', 'char3.svg', 'char3.svg', 'char3.svg', 'char4.svg', 'char4.svg', 'char4.svg', 'char4.svg', 'char5.svg', 'char5.svg', 'char5.svg', 'char5.svg', 'char6.svg', 'char6.svg', 'char6.svg', 'char6.svg', 'char7.svg', 'char7.svg', 'char7.svg', 'char7.svg', 'char8.svg', 'char8.svg', 'char8.svg', 'char8.svg', 'char9.svg', 'char9.svg', 'char9.svg', 'char9.svg', 'dot1.svg', 'dot1.svg', 'dot1.svg', 'dot1.svg', 'dot2.svg', 'dot2.svg', 'dot2.svg', 'dot2.svg', 'dot3.svg', 'dot3.svg', 'dot3.svg', 'dot3.svg', 'dot4.svg', 'dot4.svg', 'dot4.svg', 'dot4.svg', 'dot5.svg', 'dot5.svg', 'dot5.svg', 'dot5.svg', 'dot6.svg', 'dot6.svg', 'dot6.svg', 'dot6.svg', 'dot7.svg', 'dot7.svg', 'dot7.svg', 'dot7.svg', 'dot8.svg', 'dot8.svg', 'dot8.svg', 'dot8.svg', 'dot9.svg', 'dot9.svg', 'dot9.svg', 'dot9.svg', 'fBamboo.svg', 'fChrysanthemum.svg', 'fOrchid.svg', 'fPlum.svg', 'gDrag.svg', 'gDrag.svg', 'gDrag.svg', 'gDrag.svg', 'rDrag.svg', 'rDrag.svg', 'rDrag.svg', 'rDrag.svg', 'wDrag.svg', 'wDrag.svg', 'wDrag.svg', 'wDrag.svg', 'seasAutumn.svg', 'seasSpring.svg', 'seasSummer.svg', 'seasWinter.svg', 'windE.svg', 'windE.svg', 'windE.svg', 'windE.svg', 'windN.svg', 'windN.svg', 'windN.svg', 'windN.svg', 'windS.svg', 'windS.svg', 'windS.svg', 'windS.svg', 'windW.svg', 'windW.svg', 'windW.svg', 'windW.svg'];
 
 export const importLayout = (title, layout) => {
-  layouts[title] = layout;
+  const layoutData = {[title]: layout};
 
-  const layoutJson = JSON.stringify(layout);
+  let currentLayouts = localStorage.getItem('layouts');
 
-  fetch('http://localhost:3000/layout', {
-    method: 'POST', headers: {
-      'Content-Type': 'application/json',
-    }, body: JSON.stringify({name: title, layout: layoutJson}),
-  }).then(r => console.log(r));
+  try {
+    currentLayouts = JSON.parse(currentLayouts || '{}');
+  } catch (ignored) {
+    currentLayouts = {};
+  }
+
+  Object.assign(currentLayouts, layoutData);
+  localStorage.setItem('layouts', JSON.stringify(currentLayouts));
+};
+
+export const updateLayouts = () => {
+  const localStorageLayouts = localStorage.getItem('layouts');
+
+  if (typeof localStorageLayouts === 'string') {
+    try {
+      const parsedLayouts = JSON.parse(localStorageLayouts);
+      Object.assign(layouts, parsedLayouts);
+    } catch (ignored) {
+    }
+  }
+};
+
+export const removeLayout = (title) => {
+  let currentLayouts = localStorage.getItem('layouts');
+
+  try {
+    currentLayouts = JSON.parse(currentLayouts || '{}');
+  } catch (ignored) {
+    currentLayouts = {};
+  }
+
+  delete layouts[title];
+  delete currentLayouts[title];
+  localStorage.setItem('layouts', JSON.stringify(currentLayouts));
 };
 

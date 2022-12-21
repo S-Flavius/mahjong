@@ -1,6 +1,9 @@
 // noinspection DuplicatedCode
 
-document.getElementById('layout-title').addEventListener('click', () => {
+document.getElementById('layout-title').addEventListener('click', (event) => {
+  if (event.target.id === 'add-layout-button' || event.target.id === 'refresh-layout-list' || event.target.parent.id === 'refresh-layout-list' || event.target.id === 'remove-layouts') {
+    return;
+  }
   let layoutList = document.getElementById('layout-list');
   if (layoutList.style.maxHeight == '0px') {
     layoutList.style.maxHeight = '10000px';

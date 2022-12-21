@@ -71,7 +71,7 @@ fieldset[disabled] .file-name, fieldset[disabled] .select select, .select fields
   border-radius: 2px;
   border-right: 0;
   border-top: 0;
-  content: " ";
+  content: ' ';
   display: block;
   height: 0.625em;
   margin-top: -0.4375em;
@@ -117,7 +117,7 @@ fieldset[disabled] .file-name, fieldset[disabled] .select select, .select fields
 }
 .modal-close::before, .delete::before, .modal-close::after, .delete::after {
   background-color: hsl(0deg, 0%, 100%);
-  content: "";
+  content: '';
   display: block;
   left: 50%;
   position: absolute;
@@ -170,7 +170,7 @@ fieldset[disabled] .file-name, fieldset[disabled] .select select, .select fields
   border-radius: 9999px;
   border-right-color: transparent;
   border-top-color: transparent;
-  content: "";
+  content: '';
   display: block;
   height: 1em;
   position: relative;
@@ -323,7 +323,7 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: "Helvetica", "Arial", sans-serif;
+  font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
 code,
@@ -2557,7 +2557,7 @@ div.icon-text {
 }
 .tag:not(body).is-delete::before, .tag:not(body).is-delete::after {
   background-color: currentColor;
-  content: "";
+  content: '';
   display: block;
   left: 50%;
   position: absolute;
@@ -3771,7 +3771,7 @@ a.tag:hover {
 }
 .breadcrumb li + li::before {
   color: hsl(0deg, 0%, 71%);
-  content: "/";
+  content: '/';
 }
 .breadcrumb ul,
 .breadcrumb ol {
@@ -3804,16 +3804,16 @@ a.tag:hover {
   font-size: 1.5rem;
 }
 .breadcrumb.has-arrow-separator li + li::before {
-  content: "→";
+  content: '→';
 }
 .breadcrumb.has-bullet-separator li + li::before {
-  content: "•";
+  content: '•';
 }
 .breadcrumb.has-dot-separator li + li::before {
-  content: "·";
+  content: '·';
 }
 .breadcrumb.has-succeeds-separator li + li::before {
-  content: "≻";
+  content: '≻';
 }
 
 .card {
@@ -8235,7 +8235,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 .is-clearfix::after {
   clear: both;
-  content: " ";
+  content: ' ';
   display: table;
 }
 
@@ -9159,15 +9159,15 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 }
 
 .is-family-primary {
-  font-family: "Helvetica", "Arial", sans-serif !important;
+  font-family: 'Helvetica', 'Arial', sans-serif !important;
 }
 
 .is-family-secondary {
-  font-family: "Helvetica", "Arial", sans-serif !important;
+  font-family: 'Helvetica', 'Arial', sans-serif !important;
 }
 
 .is-family-sans-serif {
-  font-family: "Helvetica", "Arial", sans-serif !important;
+  font-family: 'Helvetica', 'Arial', sans-serif !important;
 }
 
 .is-family-monospace {
@@ -10388,21 +10388,25 @@ body > footer {
 }
 
 #open {
-  display: none;
-  z-index: 40;
+  display : none;
+  z-index : 40;
 }
 
 #sidebar-footer {
-  position: absolute;
-  bottom: 0;
+  position : fixed;
+  bottom   : 0;
+}
+
+.sidebar-spacing-helper-bottom {
+  padding-bottom : 2rem;
 }
 
 #closed {
-  display: flex;
+  display : flex;
 }
 
 .menu p {
-  color: white;
+  color : white;
 }
 
 .menu a {
@@ -10443,7 +10447,7 @@ body > footer {
 }
 
 #hint:hover > .hint-button {
-  background: url("../img/Icons/idea-lit.svg");
+  background: url('../img/Icons/idea-lit.svg');
 }
 
 .hint-button, .reshuffle-button, .undo-button {
@@ -10456,23 +10460,23 @@ body > footer {
 }
 
 .hint-button {
-  background: url("../img/Icons/idea-unlit.svg");
+  background: url('../img/Icons/idea-unlit.svg');
 }
 
 #reshuffle:hover > .reshuffle-button {
-  background: url("../img/Icons/reshuffle-lit.svg");
+  background: url('../img/Icons/reshuffle-lit.svg');
 }
 
 .reshuffle-button {
-  background: url("../img/Icons/reshuffle-unlit.svg");
+  background: url('../img/Icons/reshuffle-unlit.svg');
 }
 
 #undo:hover > .undo-button {
-  background: url("../img/Icons/undo-lit.svg");
+  background: url('../img/Icons/undo-lit.svg');
 }
 
 .undo-button {
-  background: url("../img/Icons/undo-unlit.svg");
+  background: url('../img/Icons/undo-unlit.svg');
 }
 
 .flag:hover {
@@ -10501,13 +10505,37 @@ body > footer {
 }
 
 #auto-shuffle label:hover, #auto-shuffle label:active, #auto-shuffle label:focus, #auto-shuffle label:disabled, #auto-shuffle label:visited {
-  color: white;
+  color : white;
 }
 
 #auto-shuffle:hover, #auto-shuffle:active, #auto-shuffle:focus, #auto-shuffle:disabled, #auto-shuffle:visited {
-  background: #121212;
+  background : #121212;
 }
 
-#add-layout-button {
-  border: darkslategrey solid 3px;
+#add-layout-button, #refresh-layout-list, #remove-layouts {
+  border : darkslategrey solid 3px;
+  color  : white;
+}
+
+#refresh-layout-list > img {
+  height : 20px;
+}
+
+#layout-builder > div > input {
+  text-align : center;
+  width      : 50px;
+  height     : 50px;
+  background : white;
+  color      : black;
+  border     : 1px solid black;
+  flex-grow  : unset;
+  padding    : unset;
+}
+
+#layout-builder > div > input:hover {
+  background : lightgreen;
+}
+
+.black-placeholder::placeholder, #layout-builder > div > input:hover::placeholder {
+  color : black;
 }

@@ -90,4 +90,4 @@ dist
 /.idea/codeStyles/codeStyleConfig.xml
 /.idea/jsLinters/jshint.xml
 /.idea/inspectionProfiles/Project_Default.xml
-
+/doc/project/**

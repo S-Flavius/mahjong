@@ -8,12 +8,6 @@ db.query(`CREATE TABLE IF NOT EXISTS scores(
                 difficulty VARCHAR(25)
               )`);
 
-db.query(`CREATE TABLE IF NOT EXISTS layouts(
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(25),
-                layout VARCHAR(1000)
-                )`);
-
 export const router = express.Router();
 
 router.post('/score', (req, res) => {
@@ -43,11 +37,4 @@ router.get('/scores', (req, res) => {
 
     res.send(rows);
   });
-});
-router.post('/layout', (req, res) => {
-  db.query(`INSERT INTO layouts(name, layout) VALUES(?,?)`, [req.body.name, req.body.layout], function (err) {
-    if (err) return console.log(err.message);
-  });
-
-  res.send('Layout saved');
 });
