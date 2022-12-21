@@ -503,7 +503,7 @@ function checkGameState() {
         submitScore();
         submitWinButton.disabled = true; // Prevents submitting multiple times
       });
-      document.getElementById('modal-win-new-game').addEventListener('click', () => {
+      document.getElementById('modal-win-restart').addEventListener('click', () => {
         chosenManually = true;
         newGame();
         document.getElementById('modal-win').classList.remove('is-active');
