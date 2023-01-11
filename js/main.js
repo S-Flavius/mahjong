@@ -47,6 +47,14 @@ const autoMoveButton = document.getElementById('auto-move');
 
 function translate(newLanguage) {
   language = newLanguage;
+
+  const elements = document.querySelectorAll('.translate');
+  for (const element of elements) {
+    element.innerHTML = lang[language][element.id] ? lang[language][element.id] : capitalize(element.id);
+  }
+
+  document.getElementById('sidebar-title').innerText = lang[language].settings;
+
   document.getElementById('layout-title').innerText = lang[language]['layout'];
   document.getElementById('difficulty-title').innerText = lang[language]['difficulty'];
 
@@ -54,7 +62,6 @@ function translate(newLanguage) {
   document.getElementById('new-game').innerHTML = lang[language]['newGame'];
   document.getElementById('show-scores').innerHTML = lang[language]['showScores'];
 
-  fillDropDowns();
 
   document.getElementById('auto-shuffle-text').innerText = lang[language]['autoShuffle'];
   document.getElementById('auto-shuffle-info').innerText = lang[language]['autoShuffleInfo'];
@@ -91,6 +98,9 @@ function translate(newLanguage) {
   document.getElementById('modal-lose-undo').innerText = lang[language]['undo'];
   document.getElementById('modal-lose-reshuffle').innerText = lang[language]['reshuffle'];
   document.getElementById('modal-lose-new-game').innerText = lang[language]['newGame'];
+
+  fillDropDowns();
+
 }
 
 document.getElementById('auto-shuffle-text').innerText = lang[language]['autoShuffle'];

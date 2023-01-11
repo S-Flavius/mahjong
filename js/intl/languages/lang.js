@@ -1,5 +1,6 @@
 export let lang = {
   en   : {
+    settings: 'Settings',
     layout: 'Layout',
     flower: 'Flower',
     pyramid: 'Pyramid',
@@ -46,6 +47,7 @@ export let lang = {
     undo: 'Undo',
     reshuffle: 'Reshuffle',
   }, de: {
+    settings: 'Einstellungen',
     layout: 'Layout',
     flower: 'Blume',
     pyramid: 'Pyramide',
@@ -92,6 +94,7 @@ export let lang = {
     undo: 'Rückgängig',
     reshuffle: 'Mischen',
   }, ko: {
+    settings: '설정',
     layout: '레이아웃',
     flower: '꽃',
     pyramid: '피라미드',
