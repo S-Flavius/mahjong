@@ -122,7 +122,8 @@ function createLiElement(key, className) {
 
 
 function fillDropDowns() {
-  let lists = document.querySelectorAll('#layout-components,#difficulty-components');
+  let lists = document.querySelectorAll(
+    '#layout-components,#difficulty-components');
 
   for (const list of lists) {
     while (list.firstChild) {
@@ -195,6 +196,14 @@ document.getElementById('remove-layouts').addEventListener('click', () => {
   updateLayouts();
   fillDropDowns();
 });
+
+const clickAutoShuffle = () => {
+  document.getElementById('auto-shuffle-checkbox').click();
+};
+document.getElementById('auto-shuffle').
+         addEventListener('click', clickAutoShuffle);
+document.getElementById('auto-shuffle-icon').
+         addEventListener('click', clickAutoShuffle);
 
 
 document.getElementById('undo').addEventListener('click', undo);
@@ -288,7 +297,6 @@ function reshuffle() {
     curReshuffles++;
 
     if (curReshuffles > 5) {
-      alert('No more moves available. You lose!');
       newGame();
     }
     reshuffle();
@@ -497,6 +505,14 @@ function isGameWinnable() {
 
 function checkGameState() {
   if (document.getElementsByClassName('piece').length === 2) {
+
+    // Check if both remaining pieces are hidden (both of them were clicked as
+    // the last pair). If so, the game is won Otherwise, the layout had only 2
+    // pieces to begin with
+    for (const piece of document.getElementsByClassName('piece')) {
+      if (!piece.hidden) return;
+    }
+
     hintButton.disabled = true;
     undoButton.disabled = true;
     reshuffleButton.disabled = true;
