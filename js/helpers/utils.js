@@ -26,7 +26,6 @@ export function setClickable(value) {
 }
 
 export function findAvailableMoves(pairs) {
-
   for (const piece of clickablePieces) {
     for (const piece1 of clickablePieces) {
       if (piece.hidden || piece1.hidden) continue;

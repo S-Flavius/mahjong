@@ -215,7 +215,8 @@ document.getElementById('layout-modal-add').addEventListener('click', () => {
     });
   });
 
-  importLayout(document.getElementById('modal-layout-title').value, layout);
+  importLayout(document.getElementById('modal-layout-title').value ||
+               `layout #${Object.keys(layouts).length + 1}`, layout);
   updateLayouts();
   fillDropDowns();
 });
