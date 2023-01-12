@@ -516,7 +516,6 @@ function checkGameState() {
     hintButton.disabled = true;
     undoButton.disabled = true;
     reshuffleButton.disabled = true;
-    autoMoveButton.disabled = true;
 
     setTimeout(() => {
       timer('end');
