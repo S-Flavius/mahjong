@@ -1,5 +1,8 @@
 'use strict';
 
+import {lang}     from '../intl/languages/lang.js';
+import {language} from '../main.js';
+
 function insertData(data) {
   document.getElementById('scores-table').innerHTML = '';
 
@@ -31,8 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const params = [];
     if (username) params.push(`username=${username}`);
-    if (layout !== 'all') params.push(`layout=${layout}`);
-    if (difficulty !== 'all') params.push(`difficulty=${difficulty}`);
+    if (layout !== lang[language]['all']) params.push(`layout=${layout}`);
+    if (difficulty !== lang[language]['all']) params.push(
+      `difficulty=${difficulty}`);
 
     url += params.join('&');
 

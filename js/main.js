@@ -34,7 +34,7 @@ let totalReshuffles;
 let currentReshuffles = totalReshuffles;
 let totalUndos;
 let currentUndos = totalUndos;
-let language = 'en';
+export let language = 'en';
 
 let hintButton = document.getElementById('hint');
 hintButton.innerHTML = ``;
