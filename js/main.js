@@ -166,6 +166,13 @@ function fillDropDowns() {
     }
   }
 
+  // Removes everything but the first element from the dropdowns inside the
+  // scores modal
+  document.querySelectorAll('#layout-selection,#difficulty-selection').
+           forEach((s) => {
+             s.length = 1;
+           });
+
   for (let key in layouts) {
     // Adds the layouts to the layout dropdown menu
     let element = createLiElement(key, 'layout');
