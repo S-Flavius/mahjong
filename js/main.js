@@ -6,8 +6,15 @@ import {
   konami,
   scrollOnSmallScreen,
   setClickable,
-} from './helpers/utils.js';
-import {difficulties, importLayout, layouts, pieces, removeLayout, updateLayouts} from './gameSettings.js';
+}             from './helpers/utils.js';
+import {
+  difficulties,
+  importLayout,
+  layouts,
+  pieces,
+  removeLayout,
+  updateLayouts,
+}             from './gameSettings.js';
 import {lang} from './intl/languages/lang.js';
 
 window.onload = () => {
@@ -39,9 +46,12 @@ let undoButton = document.getElementById('undo');
 undoButton.innerHTML = ``;
 undoButton.disabled = true;
 
-document.getElementById('german-flag').addEventListener('click', () => translate('de'));
-document.getElementById('usa-flag').addEventListener('click', () => translate('en'));
-document.getElementById('south-korean-flag').addEventListener('click', () => translate('ko'));
+document.getElementById('german-flag').
+         addEventListener('click', () => translate('de'));
+document.getElementById('usa-flag').
+         addEventListener('click', () => translate('en'));
+document.getElementById('south-korean-flag').
+         addEventListener('click', () => translate('ko'));
 
 const autoMoveButton = document.getElementById('auto-move');
 
@@ -50,61 +60,84 @@ function translate(newLanguage) {
 
   const elements = document.querySelectorAll('.translate');
   for (const element of elements) {
-    element.innerHTML = lang[language][element.id] ? lang[language][element.id] : capitalize(element.id);
+    element.innerHTML = lang[language][element.id] ?
+                        lang[language][element.id] :
+                        capitalize(element.id);
   }
 
   document.getElementById('sidebar-title').innerText = lang[language].settings;
 
   document.getElementById('layout-title').innerText = lang[language]['layout'];
-  document.getElementById('difficulty-title').innerText = lang[language]['difficulty'];
+  document.getElementById(
+    'difficulty-title').innerText = lang[language]['difficulty'];
 
   autoMoveButton.innerHTML = lang[language]['autoMove'];
   document.getElementById('new-game').innerHTML = lang[language]['newGame'];
-  document.getElementById('show-scores').innerHTML = lang[language]['showScores'];
+  document.getElementById(
+    'show-scores').innerHTML = lang[language]['showScores'];
 
-
-  document.getElementById('auto-shuffle-text').innerText = lang[language]['autoShuffle'];
-  document.getElementById('auto-shuffle-info').innerText = lang[language]['autoShuffleInfo'];
+  document.getElementById(
+    'auto-shuffle-text').innerText = lang[language]['autoShuffle'];
+  document.getElementById(
+    'auto-shuffle-info').innerText = lang[language]['autoShuffleInfo'];
 
   // score, username, all, time
   document.getElementById('score-title').innerText = lang[language]['score'];
   document.getElementById('username').placeholder = lang[language]['username'];
-  document.getElementById('layout-selection-label').innerHTML = lang[language]['layout'];
-  document.getElementById('difficulty-selection-label').innerHTML = lang[language]['difficulty'];
-  document.getElementById('difficulty-all-option').innerText = lang[language]['all'];
-  document.getElementById('layout-all-option').innerText = lang[language]['all'];
-  document.getElementById('scores-get-data').innerText = lang[language]['search'];
-  document.getElementById('table-username').innerText = lang[language]['username'];
+  document.getElementById(
+    'layout-selection-label').innerHTML = lang[language]['layout'];
+  document.getElementById(
+    'difficulty-selection-label').innerHTML = lang[language]['difficulty'];
+  document.getElementById(
+    'difficulty-all-option').innerText = lang[language]['all'];
+  document.getElementById(
+    'layout-all-option').innerText = lang[language]['all'];
+  document.getElementById(
+    'scores-get-data').innerText = lang[language]['search'];
+  document.getElementById(
+    'table-username').innerText = lang[language]['username'];
   document.getElementById('table-time').innerText = lang[language]['time'];
   document.getElementById('table-layout').innerText = lang[language]['layout'];
-  document.getElementById('table-difficulty').innerText = lang[language]['difficulty'];
+  document.getElementById(
+    'table-difficulty').innerText = lang[language]['difficulty'];
 
   // createLayout, layoutName, addLayout
-  document.getElementById('create-layout').innerText = lang[language]['createLayout'];
-  document.getElementById('modal-layout-title').placeholder = lang[language]['layoutName'];
-  document.getElementById('layout-modal-add').innerText = lang[language]['addLayout'];
+  document.getElementById(
+    'create-layout').innerText = lang[language]['createLayout'];
+  document.getElementById(
+    'modal-layout-title').placeholder = lang[language]['layoutName'];
+  document.getElementById(
+    'layout-modal-add').innerText = lang[language]['addLayout'];
 
   // Modal win
   document.getElementById('win-title').innerText = lang[language]['win'];
   document.getElementById('win-time').innerText = lang[language]['yourTime'];
-  document.getElementById('win-submit-prompt').innerText = lang[language]['submitScorePrompt'];
-  document.getElementById('modal-win-username').placeholder = lang[language]['username'];
-  document.getElementById('modal-win-submit').innerText = lang[language]['submit'];
-  document.getElementById('modal-win-restart').innerText = lang[language]['restart'];
+  document.getElementById(
+    'win-submit-prompt').innerText = lang[language]['submitScorePrompt'];
+  document.getElementById(
+    'modal-win-username').placeholder = lang[language]['username'];
+  document.getElementById(
+    'modal-win-submit').innerText = lang[language]['submit'];
+  document.getElementById(
+    'modal-win-restart').innerText = lang[language]['restart'];
 
   // Modal lose
   document.getElementById('lose-title').innerText = lang[language]['lose'];
   document.getElementById('lose-time').innerText = lang[language]['yourTime'];
   document.getElementById('modal-lose-undo').innerText = lang[language]['undo'];
-  document.getElementById('modal-lose-reshuffle').innerText = lang[language]['reshuffle'];
-  document.getElementById('modal-lose-new-game').innerText = lang[language]['newGame'];
+  document.getElementById(
+    'modal-lose-reshuffle').innerText = lang[language]['reshuffle'];
+  document.getElementById(
+    'modal-lose-new-game').innerText = lang[language]['newGame'];
 
   fillDropDowns();
 
 }
 
-document.getElementById('auto-shuffle-text').innerText = lang[language]['autoShuffle'];
-document.getElementById('auto-shuffle-info').innerText = lang[language]['autoShuffleInfo'];
+document.getElementById(
+  'auto-shuffle-text').innerText = lang[language]['autoShuffle'];
+document.getElementById(
+  'auto-shuffle-info').innerText = lang[language]['autoShuffleInfo'];
 
 let layoutKey = 'flower';
 let chosenLayout = 0;
@@ -113,13 +146,15 @@ let chosenManually = false;
 
 function createLiElement(key, className) {
   let element = document.createElement('li');
-  element.innerHTML = `<a>${lang[language][key] ? lang[language][key] : key.toString().charAt(0).toUpperCase() + key.toString().slice(1)}</a>`;
+  element.innerHTML = `<a>${lang[language][key] ?
+                            lang[language][key] :
+                            key.toString().charAt(0).toUpperCase() +
+                            key.toString().slice(1)}</a>`;
   element.className = className;
   element.id = key.toString();
 
   return element;
 }
-
 
 function fillDropDowns() {
   let lists = document.querySelectorAll(
@@ -139,7 +174,9 @@ function fillDropDowns() {
 
     // Adds layout options to the option modal
     let option = document.createElement('option');
-    option.innerHTML = `${lang[language][key] ? lang[language][key] : capitalize(key)}`;
+    option.innerHTML = `${lang[language][key] ?
+                          lang[language][key] :
+                          capitalize(key)}`;
     document.getElementById('layout-selection').appendChild(option);
   }
 
@@ -151,7 +188,9 @@ function fillDropDowns() {
 
     // Adds difficulty options to the option modal
     let option = document.createElement('option');
-    option.innerHTML = `${lang[language][key] ? lang[language][key] : capitalize(key)}`;
+    option.innerHTML = `${lang[language][key] ?
+                          lang[language][key] :
+                          capitalize(key)}`;
     document.getElementById('difficulty-selection').appendChild(option);
   }
 }
@@ -205,7 +244,6 @@ document.getElementById('auto-shuffle').
 document.getElementById('auto-shuffle-icon').
          addEventListener('click', clickAutoShuffle);
 
-
 document.getElementById('undo').addEventListener('click', undo);
 
 function undo() {
@@ -240,11 +278,21 @@ document.getElementById('hint').addEventListener('click', () => {
   let chosenHint = hints[Math.floor(Math.random() * hints.length)];
 
   // Create highlight location
-  const [hintDiv, hintDiv1] = [document.createElement('div'), document.createElement('div')];
+  const [hintDiv, hintDiv1] = [
+    document.createElement('div'),
+    document.createElement('div')];
   hintDiv.className = hintDiv1.className = 'hint';
-  [hintDiv.style.left, hintDiv1.style.left] = [chosenHint[0].style.left, chosenHint[1].style.left];
-  [hintDiv.style.top, hintDiv1.style.top] = [chosenHint[0].style.top, chosenHint[1].style.top];
-  [hintDiv.style.zIndex, hintDiv1.style.zIndex] = [`${+chosenHint[0].style.zIndex + 1}`, `${+chosenHint[1].style.zIndex + 1}`];
+  [hintDiv.style.left, hintDiv1.style.left] = [
+    chosenHint[0].style.left,
+    chosenHint[1].style.left];
+  [hintDiv.style.top, hintDiv1.style.top] = [
+    chosenHint[0].style.top,
+    chosenHint[1].style.top];
+  [
+    hintDiv.style.zIndex,
+    hintDiv1.style.zIndex] = [
+    `${+chosenHint[0].style.zIndex + 1}`,
+    `${+chosenHint[1].style.zIndex + 1}`];
 
   // Highlight the pieces
   document.getElementById('game').appendChild(hintDiv);
@@ -256,7 +304,8 @@ document.getElementById('hint').addEventListener('click', () => {
   // Remove highlight after 2.5 seconds
   setTimeout(() => {
     for (const piece of document.getElementsByClassName('piece')) {
-      Array.from(document.getElementsByClassName('hint')).forEach(hint => hint.remove());
+      Array.from(document.getElementsByClassName('hint')).
+            forEach(hint => hint.remove());
     }
     // Re-enable button if possible
     hintButton.disabled = currentHints <= 0;
@@ -285,7 +334,15 @@ function reshuffle() {
     if (piece1 === piece2) continue;
 
     // Swap the pieces, including their style
-    [piece1.style.cssText, piece2.style.cssText, piece1.id, piece2.id] = [piece2.style.cssText, piece1.style.cssText, piece2.id, piece1.id];
+    [
+      piece1.style.cssText,
+      piece2.style.cssText,
+      piece1.id,
+      piece2.id] = [
+      piece2.style.cssText,
+      piece1.style.cssText,
+      piece2.id,
+      piece1.id];
   }
   // Check if possible moves still exist, otherwise reshuffle again
   // On 5 failed checks, alert the user and regenerate the board
@@ -325,9 +382,11 @@ function changeLayout(key, restart = true) {
   chosenManually = true;
   layoutKey = key;
 
-  document.getElementById('game').style.width = `${(layouts[key].length * 75.5)}px`; // Piece width
-                                                                                     // is 75.5px
-  document.getElementById('game').style.height = `${layouts[key][0].length * 77 + 50}px`;
+  document.getElementById('game').style.width = `${(layouts[key].length *
+                                                    75.5)}px`; // Piece width
+                                                               // is 75.5px
+  document.getElementById('game').style.height = `${layouts[key][0].length *
+                                                    77 + 50}px`;
   if (restart) newGame();
 }
 
@@ -394,15 +453,19 @@ function generatePiece(colIndex, rowIndex, pieces, curPiece) {
   piece.className = 'piece';
   piece.id = 'row: ' + rowIndex + ', col: ' + colIndex;
   piece.innerHTML = `<img class='basePiece' src='img/Pieces/svg/basePiece.svg'>
-  <img  class='pieceImage' src='img/Pieces/svg/${pieces[Math.floor(curPiece)]}'>`;
+  <img  class='pieceImage' src='img/Pieces/svg/${pieces[Math.floor(
+    curPiece)]}'>`;
   piece.addEventListener('click', () => selectPieces(piece));
-  piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100) + colIndex * 10 + piecesOnPosition;
+  piece.style.zIndex = chosenLayout.length * 100 - (rowIndex * 100) + colIndex *
+                       10 + piecesOnPosition;
   chosenLayout[colIndex][rowIndex]--;
-  piece.style.left = `${colIndex * 58.135 - 9 * piecesOnPosition + 9 + chosenLayout.length * 7.55}px`;
+  piece.style.left = `${colIndex * 58.135 - 9 * piecesOnPosition + 9 +
+                        chosenLayout.length * 7.55}px`;
   piece.style.top = `${rowIndex * 76.104 + 7 * piecesOnPosition + 8}px`;
 
   // Adds the piece to the grid
-  document.getElementById('game').children[colIndex].children[rowIndex].appendChild(piece);
+  document.getElementById(
+    'game').children[colIndex].children[rowIndex].appendChild(piece);
 }
 
 function checkAvailableMoves() {
@@ -417,12 +480,26 @@ function checkAvailableMoves() {
       if (piece.hidden || piece1.hidden) continue;
       if (piece1 === piece) continue;
 
-      let [rowLocationPiece, rowLocationPiece1, colLocationPiece, colLocationPiece1, commaLocationPiece, commaLocationPiece1] = [piece.id.indexOf('row: '), piece1.id.indexOf('row: '), piece.id.indexOf('col: '), piece1.id.indexOf('col: '), piece.id.indexOf(','), piece1.id.indexOf(',')];
+      let [rowLocationPiece, rowLocationPiece1, colLocationPiece, colLocationPiece1, commaLocationPiece, commaLocationPiece1] = [
+        piece.id.indexOf('row: '),
+        piece1.id.indexOf('row: '),
+        piece.id.indexOf('col: '),
+        piece1.id.indexOf('col: '),
+        piece.id.indexOf(','),
+        piece1.id.indexOf(',')];
 
-      let [rowPiece, rowPiece1] = [Number.parseInt(piece.id.substring(rowLocationPiece + 5, commaLocationPiece)), Number.parseInt(piece1.id.substring(rowLocationPiece1 + 5, commaLocationPiece1))];
-      let [colPiece, colPiece1] = [Number.parseInt(piece.id.substring(colLocationPiece + 5)), Number.parseInt(piece1.id.substring(colLocationPiece1 + 5))];
+      let [rowPiece, rowPiece1] = [
+        Number.parseInt(
+          piece.id.substring(rowLocationPiece + 5, commaLocationPiece)),
+        Number.parseInt(piece1.id.substring(rowLocationPiece1 + 5,
+                                            commaLocationPiece1))];
+      let [colPiece, colPiece1] = [
+        Number.parseInt(piece.id.substring(colLocationPiece + 5)),
+        Number.parseInt(piece1.id.substring(colLocationPiece1 + 5))];
 
-      let [heightPiece, heightPiece1] = [piece.style.zIndex % 10, piece1.style.zIndex % 10];
+      let [heightPiece, heightPiece1] = [
+        piece.style.zIndex % 10,
+        piece1.style.zIndex % 10];
 
       if (rowPiece === rowPiece1 && heightPiece === heightPiece1) {
         if (colPiece === colPiece1 - 1) {
@@ -432,12 +509,14 @@ function checkAvailableMoves() {
         }
       }
 
-      if (rowPiece === rowPiece1 && colPiece === colPiece1 && heightPiece < heightPiece1) {
+      if (rowPiece === rowPiece1 && colPiece === colPiece1 && heightPiece <
+          heightPiece1) {
         maxHeight = Math.max(maxHeight, heightPiece1);
       }
     }
 
-    if (neighbourLeft && neighbourRight || piece.style.zIndex !== maxHeight) continue;
+    if (neighbourLeft && neighbourRight || piece.style.zIndex !==
+        maxHeight) continue;
     clickablePieces.push(piece);
   }
 }
@@ -460,7 +539,8 @@ async function createGame() {
   while (hasPieces) {
     hasPieces = false;
     for (let colIndex = 0; colIndex < chosenLayout.length; colIndex++) {
-      for (let rowIndex = 0; rowIndex < chosenLayout[colIndex].length; rowIndex++) {
+      for (let rowIndex = 0; rowIndex < chosenLayout[colIndex].length;
+           rowIndex++) {
         if (chosenLayout[colIndex][rowIndex] === 0) continue;
         hasPieces = true;
         if (Math.random() >= 0.5) continue;
@@ -498,7 +578,8 @@ function isGameWinnable() {
     }
   }
 
-  if (Array.from(allPieces).filter(piece => !piece.hidden).length !== 0) return false;
+  if (Array.from(allPieces).filter(piece => !piece.hidden).length !==
+      0) return false;
   for (let piece of allPieces) piece.hidden = false;
   return true;
 }
@@ -523,16 +604,20 @@ function checkGameState() {
       submitWinButton.disabled = false;
 
       document.getElementById('modal-win').classList.add('is-active');
-      document.getElementById('modal-win-time').innerHTML = new Date(new Date() - startTime).toISOString().substring(14, 19);
+      document.getElementById('modal-win-time').innerHTML = new Date(
+        new Date() - startTime).toISOString().substring(14, 19);
       submitWinButton.addEventListener('click', () => {
         submitScore();
         submitWinButton.disabled = true; // Prevents submitting multiple times
       });
-      document.getElementById('modal-win-restart').addEventListener('click', () => {
-        chosenManually = true;
-        newGame();
-        document.getElementById('modal-win').classList.remove('is-active');
-      });
+      document.getElementById('modal-win-restart').
+               addEventListener('click', () => {
+                 chosenManually = true;
+                 newGame();
+                 document.getElementById('modal-win').
+                          classList.
+                          remove('is-active');
+               });
 
     }, 100);
   } else {
@@ -547,33 +632,44 @@ function checkGameState() {
       }
     }
     if (!winnable) {
-      if (document.getElementById('auto-shuffle-checkbox').checked && currentReshuffles > 0) {
+      if (document.getElementById('auto-shuffle-checkbox').checked &&
+          currentReshuffles > 0) {
         reshuffle();
       } else {
         setTimeout(() => {
           timer('end');
           document.getElementById('modal-lose').classList.add('is-active');
-          document.getElementById('modal-lose-time').innerHTML = new Date(new Date() - startTime).toISOString().substring(14, 19);
+          document.getElementById('modal-lose-time').innerHTML = new Date(
+            new Date() - startTime).toISOString().substring(14, 19);
           if (currentUndos > 0) {
-            document.getElementById('modal-lose-undo').addEventListener('click', () => {
-              undo();
-              document.getElementById('modal-lose').classList.remove('is-active');
-            });
+            document.getElementById('modal-lose-undo').
+                     addEventListener('click', () => {
+                       undo();
+                       document.getElementById('modal-lose').
+                                classList.
+                                remove('is-active');
+                     });
           } else {
             document.getElementById('modal-lose-undo').disabled = true;
           }
           if (currentReshuffles > 0) {
-            document.getElementById('modal-lose-reshuffle').addEventListener('click', () => {
-              reshuffle();
-              document.getElementById('modal-lose').classList.remove('is-active');
-            });
+            document.getElementById('modal-lose-reshuffle').
+                     addEventListener('click', () => {
+                       reshuffle();
+                       document.getElementById('modal-lose').
+                                classList.
+                                remove('is-active');
+                     });
           } else {
             document.getElementById('modal-lose-reshuffle').disabled = true;
           }
-          document.getElementById('modal-lose-new-game').addEventListener('click', () => {
-            newGame();
-            document.getElementById('modal-lose').classList.remove('is-active');
-          });
+          document.getElementById('modal-lose-new-game').
+                   addEventListener('click', () => {
+                     newGame();
+                     document.getElementById('modal-lose').
+                              classList.
+                              remove('is-active');
+                   });
         });
       }
     }
@@ -597,19 +693,27 @@ function selectPieces(piece) {
   } else if (selected[0] === piece) { // Deselect the currently chosen piece
     selected = [];
 
-    Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
-  } else if (selected[0].innerHTML !== piece.innerHTML && !selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/)) {
+    Array.from(document.getElementsByClassName('selected')).
+          forEach(i => i.remove());
+  } else if (selected[0].innerHTML !== piece.innerHTML &&
+             !selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/)) {
     // If the pieces are not the same, nor are they special ones select the
     // new one
-    Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
+    Array.from(document.getElementsByClassName('selected')).
+          forEach(i => i.remove());
 
     piece.parentNode.appendChild(selectedDiv);
 
     selected[0] = piece;
   } else {
 
-    if (selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/) && (selected[0].innerHTML.match(/f.*\.svg/) && !piece.innerHTML.match(/f.*\.svg/) || selected[0].innerHTML.match(/seas.*\.svg/) && !piece.innerHTML.match(/seas.*\.svg/))) {
-      Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
+    if (selected[0].innerHTML.match(/f.*\.svg|seas.*\.svg/) &&
+        (selected[0].innerHTML.match(/f.*\.svg/) &&
+         !piece.innerHTML.match(/f.*\.svg/) ||
+         selected[0].innerHTML.match(/seas.*\.svg/) &&
+         !piece.innerHTML.match(/seas.*\.svg/))) {
+      Array.from(document.getElementsByClassName('selected')).
+            forEach(i => i.remove());
       piece.parentNode.appendChild(selectedDiv);
 
       selected[0] = piece;
@@ -627,8 +731,10 @@ function selectPieces(piece) {
         }
       }
     }
-    Array.from(document.getElementsByClassName('selected')).forEach(i => i.remove());
-    Array.from(document.getElementsByClassName('hint')).forEach(i => i.remove());
+    Array.from(document.getElementsByClassName('selected')).
+          forEach(i => i.remove());
+    Array.from(document.getElementsByClassName('hint')).
+          forEach(i => i.remove());
 
     // Save the last move for the undo button
     lastMove = [selected[0], piece];
@@ -662,7 +768,8 @@ function newGame() {
     layoutKey = layoutKeys[Math.floor(Math.random() * layoutKeys.length)];
 
     let difficultyKeys = Object.keys(difficulties);
-    difficultyKey = difficultyKeys[Math.floor(Math.random() * difficultyKeys.length)];
+    difficultyKey = difficultyKeys[Math.floor(
+      Math.random() * difficultyKeys.length)];
   }
 
   const grid = document.getElementById('game');
@@ -676,7 +783,9 @@ function newGame() {
   currentReshuffles = totalReshuffles;
   currentUndos = totalUndos;
 
-  for (let element of document.querySelectorAll('.layout, .difficulty')) element.firstElementChild.classList.remove('is-active');
+  for (let element of document.querySelectorAll(
+    '.layout, .difficulty')) element.firstElementChild.classList.remove(
+    'is-active');
 
   calculateHelperButtonValues();
 }
@@ -690,17 +799,20 @@ function submitScore() {
   myHeaders.append('Content-Type', 'application/json');
 
   const raw = JSON.stringify({
-    'username': document.getElementById('modal-win-username').value,
-    'time': endTime / 1000,
-    'layout': layoutKey,
-    'difficulty': difficultyKey,
-  });
+                               'username'  : document.getElementById(
+                                 'modal-win-username').value || 'Anon',
+                               'time'      : endTime / 1000,
+                               'layout'    : layoutKey,
+                               'difficulty': difficultyKey,
+                             });
 
   const requestOptions = {
     method: 'POST', headers: myHeaders, body: raw, redirect: 'follow',
   };
 
-  fetch('http://localhost:3000/score', requestOptions).then(response => response.text()).catch(error => console.log('error', error));
+  fetch('http://localhost:3000/score', requestOptions).
+    then(response => response.text()).
+    catch(error => console.log('error', error));
 }
 
 function timer(action) {
@@ -709,10 +821,15 @@ function timer(action) {
     startTime = new Date();
     runningTimer = setInterval(() => {
       let time = new Date(new Date() - startTime);
-      document.querySelector('#current-time').innerHTML = time.toISOString().substring(14, 19);
+      document.querySelector('#current-time').innerHTML = time.toISOString().
+                                                               substring(14,
+                                                                         19);
 
       if (endTime) {
-        document.querySelector('#current-time').style.color = endTime - time >= 0 ? 'green' : 'red';
+        document.querySelector('#current-time').style.color = endTime - time >=
+                                                              0 ?
+                                                              'green' :
+                                                              'red';
       }
     }, 1000);
   } else if (action == 'end') {
@@ -723,7 +840,9 @@ function timer(action) {
     endTime = new Date(new Date() - startTime);
 
     const neededTime = new Date(endTime);
-    document.querySelector('#old-time').innerHTML = neededTime.toISOString().substring(14, 19);
+    document.querySelector('#old-time').innerHTML = neededTime.toISOString().
+                                                               substring(14,
+                                                                         19);
     document.querySelector('#current-time').innerHTML;
     document.querySelector('#current-time').innerHTML = '00:00';
 
