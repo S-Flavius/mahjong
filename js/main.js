@@ -530,7 +530,7 @@ function checkGameState() {
         submitWinButton.disabled = true; // Prevents submitting multiple times
       });
       document.getElementById('modal-win-restart').addEventListener('click', () => {
-        chosenManually = true;
+        chosenManually = false;
         newGame();
         document.getElementById('modal-win').classList.remove('is-active');
       });
@@ -701,7 +701,7 @@ function submitScore() {
     method: 'POST', headers: myHeaders, body: raw, redirect: 'follow',
   };
 
-  fetch('http://localhost:3000/score', requestOptions).then(response => response.text()).catch(error => console.log('error', error));
+  fetch('http://192.168.178.22:3000/score', requestOptions).then(response => response.text()).catch(error => console.log('error', error));
 }
 
 function timer(action) {
