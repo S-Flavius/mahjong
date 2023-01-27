@@ -17,11 +17,21 @@ import {
 }             from './gameSettings.js';
 import {lang} from './intl/languages/lang.js';
 
+const submitWinButton = document.getElementById('modal-win-submit');
+
 window.onload = () => {
   changeDifficulty('easy', false);
   changeLayout('flower', false);
   scrollOnSmallScreen();
   newGame();
+
+  updateLayouts();
+  fillDropDowns();
+
+  submitWinButton.addEventListener('click', () => {
+    submitScore();
+    submitWinButton.disabled = true; // Prevents submitting multiple times
+  });
 };
 
 document.getElementById('new-game').addEventListener('click', newGame);
@@ -227,12 +237,6 @@ document.getElementById('layout-modal-add').addEventListener('click', () => {
   updateLayouts();
   fillDropDowns();
 });
-
-document.getElementById('refresh-layout-list').addEventListener('click', () => {
-  updateLayouts();
-  fillDropDowns();
-});
-
 document.getElementById('remove-layouts').addEventListener('click', () => {
   const localStorageLayouts = JSON.parse(localStorage.getItem('layouts'));
 
@@ -249,7 +253,7 @@ const clickAutoShuffle = () => {
 };
 document.getElementById('auto-shuffle').
          addEventListener('click', clickAutoShuffle);
-document.getElementById('auto-shuffle-icon').
+document.getElementById('auto-shuffle-info').
          addEventListener('click', clickAutoShuffle);
 
 document.getElementById('undo').addEventListener('click', undo);
@@ -395,6 +399,7 @@ function changeLayout(key, restart = true) {
                                                                // is 75.5px
   document.getElementById('game').style.height = `${layouts[key][0].length *
                                                     77 + 50}px`;
+
   if (restart) newGame();
 }
 
@@ -608,20 +613,19 @@ function checkGameState() {
 
     setTimeout(() => {
       timer('end');
-      const submitWinButton = document.getElementById('modal-win-submit');
+
       submitWinButton.disabled = false;
 
       document.getElementById('modal-win').classList.add('is-active');
       document.getElementById('modal-win-time').innerHTML = new Date(
         new Date() - startTime).toISOString().substring(14, 19);
+
       submitWinButton.addEventListener('click', () => {
-        submitScore();
-        submitWinButton.disabled = true; // Prevents submitting multiple times
+        console.log("Michi stinks")
       });
       document.getElementById('modal-win-restart').
                addEventListener('click', () => {
-                 chosenManually = false;
-                 newGame();
+                 changeLayout(layoutKey, false);
                  document.getElementById('modal-win').
                           classList.
                           remove('is-active');
@@ -818,7 +822,7 @@ function submitScore() {
     method: 'POST', headers: myHeaders, body: raw, redirect: 'follow',
   };
 
-  fetch('http://192.168.178.22:3000/score', requestOptions).
+  fetch('http://localhost:3000/score', requestOptions).
     then(response => response.text()).
     catch(error => console.log('error', error));
 }

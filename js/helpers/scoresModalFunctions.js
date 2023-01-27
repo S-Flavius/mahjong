@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const layout = document.getElementById('layout-selection').value;
     const difficulty = document.getElementById('difficulty-selection').value;
 
-    let url = `http://192.168.178.22:3000/scores?`;
+    let url = `http://localhost:3000/scores?`;
 
     const params = [];
     if (username) params.push(`username=${username}`);
