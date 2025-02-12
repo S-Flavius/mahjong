@@ -61,7 +61,7 @@ importers:
         specifier: ^10.0.0
         version: 10.1.0(postcss@8.5.2)
       sass:
-        specifier: ^1.55.0
+        specifier: ^1.84.0
         version: 1.84.0
 
 packages:
