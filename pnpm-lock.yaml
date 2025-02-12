@@ -27,7 +27,7 @@ importers:
         specifier: ^0.0.1-security
         version: 0.0.1-security
       mocha:
-        specifier: ^10.1.0
+        specifier: ^10.8.2
         version: 10.8.2
       mysql2:
         specifier: ^3.12.0
