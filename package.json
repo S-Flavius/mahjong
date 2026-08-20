@@ -11,7 +11,7 @@
   "author": "S-Flavius",
   "license": "MIT",
   "devDependencies": {
-    "autoprefixer": "^10.4.12",
+    "autoprefixer": "^10.5.4",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015-ie": "^6.7.0",
